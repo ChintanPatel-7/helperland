@@ -1,4 +1,25 @@
 @media (max-width: 1200px) {
+    .navbar .navbar-nav .rounded-link{
+        margin-top: 7px;
+        margin-bottom: 7px;
+    }
+
+    .navbar-collapse{
+        background-color: #525252;
+        height: 100vh;
+    }
+
+    .navbar-collapse .navbar-nav{
+        align-items: center;
+    }
+
+    .navbar-collapse ul li{
+        margin: 7px;
+    }
+
+    .navbar-collapse ul li a{
+        display: inline-block;
+    }
 
     .scroll-up-btn.top-arrow{
         left: 10px;
@@ -19,28 +40,6 @@
 }
 
 @media (max-width: 991px) {
-
-    .navbar .navbar-nav .rounded-link{
-        margin-top: 7px;
-        margin-bottom: 7px;
-    }
-
-    .navbar-collapse{
-        background-color: #2d2c2c;
-        height: 100vh;
-    }
-
-    .navbar-collapse .navbar-nav{
-        align-items: center;
-    }
-
-    .navbar-collapse ul li{
-        margin: 7px;
-    }
-
-    .navbar-collapse ul li a{
-        display: inline-block;
-    }
 
     .home .home-content .button button {
         margin-bottom: 30px;
@@ -124,27 +123,25 @@
         margin-bottom: 15px;
     }
 
-    /* .home .home-content .payment-process {
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-    }
-
-    .home .home-content .payment-process .icon-box{
-        height: 45px;
-        margin-bottom: 10px;
-    }
-
-    .home .home-content .payment-process .img-size{
-        width: 35px;
-    } */
-
     footer .footer-max-width .logo img{
         width: 70px;
+    }
+
+    /* Faq page */
+
+    .faq .faq-questions .question-tab .nav-item{
+        display: contents;
     }
 }
 
 @media (max-width: 420px){
     .home .home-content .payment-process .payment-process-box {
         margin: 0px 10px;
+    }
+
+    /* Faq page */
+
+    .faq .faq-questions p br{
+        display: none;
     }
 }
