@@ -23,8 +23,20 @@ html{
     padding: 0px 46px;
 }
 
+.max-width-654{
+    max-width: 654px;
+    margin: auto;
+    padding: 0px 20px;
+}
+
 .max-width-946{
     max-width: 986px;
+    margin: auto;
+    padding: 0px 20px;
+}
+
+.max-width-1180{
+    max-width: 1180px;
     margin: auto;
     padding: 0px 20px;
 }
@@ -72,12 +84,24 @@ section .star-title::after{
     background-color: #f4f5f8;
 }
 
+.bg-color-section{
+    background-color: #F6F6F6;
+}
+
 .mb-40{
     margin-bottom: 40px;;
 }
 
 .mt-17{
     margin-top: 17px;
+}
+
+.mt-30{
+    margin-top: 30px !important;
+}
+
+.mt-40{
+    margin-top: 40px;
 }
 
 .mb-36{
@@ -92,8 +116,20 @@ section .star-title::after{
     margin-bottom: 75px !important;
 }
 
+.border-bottom{
+    border-bottom: 1px solid #dcdcdc;
+}
+
+.pb-60{
+    padding-bottom: 60px;
+}
+
 .p-lr-22{
     padding: 0px 22px;
+}
+
+.p-lr-40{
+    padding: 0px 40px;
 }
 
 .card .card-body a{
@@ -596,3 +632,222 @@ footer .terms-condition p{
 }
 
 /* FAQ Page End */
+
+/* Prices page Start */
+
+.prices .prices-content .card{
+    max-width: 553px;
+    min-height: 304px;
+    border-radius: 0px;
+    border: 1px solid #B0C9CE;
+    margin: 0 auto 50px auto;
+}
+
+.prices .prices-content .card .card-header{
+    background-color: #1D7A8C;
+    font-size: 28px;
+    color: white;
+    border-radius: 0px;
+}
+
+.prices .prices-content .card .card-title{
+    font-size: 48px;
+    font-weight: bold;
+    color: #646464;
+    margin-bottom: 30px;
+}
+
+.prices .prices-content .card .card-title span{
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.prices .prices-content .card ul{
+    position: relative;
+    text-align: left;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.prices .prices-content .card ul li{
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+
+.prices .prices-content .card ul li::before{
+    position: absolute;
+    content: "";
+    display: inline-block;
+    background: url('../img/prices/forma-1_5.png');
+    height: 24px;
+    width: 24px;
+    left: 0;
+}
+
+.prices .extra-services .service-box{
+    text-align: center;
+    width: 140px;
+    margin: 0px 5px 10px 5px;
+}
+
+.prices .extra-services .service-box .img-box{
+    width: 109px;
+    height: 109px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #B0C9CE;
+    border-radius: 50%;
+    margin: 0 auto 17px auto;
+}
+
+.prices .extra-services .service-box .heading{
+    font-size: 16px;
+    color: #646464;
+    line-height: 22px;
+    font-weight: 400;
+}
+
+.prices .extra-services .service-box .time-text{
+    font-size: 18px;
+    line-height: 26px;
+    color: #1d7a8c;
+}
+
+.cleaning-service .star-title::after{
+    background-color: #F6F6F6;
+}
+
+.cleaning-service .cleaning-service-box{
+    max-width: 360px;
+    margin: 0px 15px 10px 15px;
+}
+
+.cleaning-service .cleaning-service-box img{
+    width: 100%;
+}
+
+.cleaning-service .cleaning-service-box h5{
+    color: #4F4F4F;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 18px 0;
+}
+
+.cleaning-service .cleaning-service-box ul{
+    position: relative;
+}
+
+.cleaning-service .cleaning-service-box ul li{
+    list-style: none;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4f4f4f;
+    margin-bottom: 9px;
+}
+
+.cleaning-service .cleaning-service-box ul li::before{
+    content: "";
+    position: absolute;
+    display: inline-block;
+    background: url('../img/prices/right-arrow-grey.png') no-repeat center;
+    height: 24px;
+    width: 24px;
+    left: 0;
+}
+
+.prices-why-helperland .prices-why-helperland-content{
+    display: flex;
+    justify-content: center;
+}
+
+.prices-why-helperland .card{
+    border: 0px;
+    width: 377px;
+    margin-bottom: 20px;
+}
+
+.prices-why-helperland .img-box{
+    max-width: 375px;
+    margin-bottom: 20px;
+}
+
+.prices-why-helperland .img-box img{
+    width: 100%;
+}
+
+.prices-why-helperland .card .card-title{
+    font-size: 20px;
+    line-height: 24px;
+    color: #646464;
+}
+
+.prices-why-helperland .card .card-text{
+    font-size: 14px;
+    line-height: 20px;
+    color: #646464;
+    max-width: 290px;
+}
+
+/* Prices page end */
+
+/* Contact Page start */
+
+.contact-us .contact-detail{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.contact-us .contact-detail .contact-detail-box{
+    margin: 0px 10px;
+}
+
+.contact-us .contact-detail .contact-detail-box .img-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.contact-us .contact-detail .contact-detail-box p{
+    font-size: 16px;
+    line-height: 24px;
+    color: #4f4f4f;
+}
+
+.contact-us-map{
+    background: url('../img/contact/group-16.png') no-repeat center;
+    height: 400px;
+}
+
+.contact-us-form form .contact-title{
+    color: #4F4F4F;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.contact-us-form form input{
+    height: 46px;
+    font-size: 16px;
+    color: #a0a0a0;
+}
+
+.contact-us-form form select{
+    height: 46px;
+    font-size: 16px;
+    color: #798289;
+}
+
+.contact-us-form form .btn-submit{
+    background-color: #1D7A8C;
+    color: #fff;
+    font-size: 20px;
+    padding: 10px 50px;
+}
+
+/* Contact Page end */
+
