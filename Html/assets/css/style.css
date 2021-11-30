@@ -35,6 +35,12 @@ html{
     padding: 0px 20px;
 }
 
+.max-width-1031{
+    max-width: 1031px;
+    margin: auto;
+    padding: 0px 20px;
+}
+
 .max-width-1180{
     max-width: 1180px;
     margin: auto;
@@ -98,6 +104,10 @@ section .star-title::after{
 
 .mt-30{
     margin-top: 30px !important;
+}
+
+.mt-37{
+    margin-top: 37px !important;
 }
 
 .mt-40{
@@ -851,3 +861,14 @@ footer .terms-condition p{
 
 /* Contact Page end */
 
+/* About Page Start */
+
+.about-page .about-page-content p{
+    font-size: 16px;
+    line-height: 24px;
+    color: #646464;
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* About Page end */
