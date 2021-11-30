@@ -189,13 +189,31 @@ section .star-title::after{
     border-radius: 30px;
     padding: 0px  25px;
     margin: 0px 5px;
+    transition: all 0.3s ease;
+}
+
+.navbar .navbar-nav .rounded-link:hover{
+    color: #006072 !important;
+    background-color: #fff;
 }
 
 .navbar .navbar-nav li a{
-    padding: 0px;
+    padding: 0px 15px !important;
     line-height: 40px;
     font-size: 17px;
     color: #ffffff !important;
+    border: 1px solid transparent;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.navbar .navbar-nav li.dropdown a:hover{
+    border: 1px solid transparent;
+}
+
+.navbar .navbar-nav li a:hover{
+    border: 1px solid white;
+    border-radius: 30px;
 }
 
 .navbar .navbar-nav .county-flag{
@@ -207,7 +225,7 @@ section .star-title::after{
     background-color: transparent;
     border: none;
     min-width: 0px;
-    left: -15px;
+    left: 2px;
     padding: 0px;
 }
 
@@ -292,6 +310,11 @@ section.header-img img{
     font-size: 14px;
     color: #fff;
     line-height: 32px;
+    transition: all 0.3s ease;
+}
+
+.newsletter button:hover{
+    background-color: #29626d;
 }
 
 /* -- newsLetter Start end */
@@ -316,6 +339,11 @@ footer .footer-max-width{
 footer .footer-max-width .nav li a{
     color: #F1F1F1;
     font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+footer .footer-max-width .nav li a:hover{
+    color: #006072;
 }
 
 footer .footer-max-width .logo img{
@@ -323,7 +351,17 @@ footer .footer-max-width .logo img{
 }
 
 footer .footer-max-width .socil-icon a{
-    margin: 0px 10px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3px;
+}
+footer .footer-max-width .socil-icon a:hover{
+    background-color: #006072;
+    
 }
 
 footer .privacy-policy{
@@ -419,6 +457,11 @@ footer .terms-condition p{
     line-height: 24px;
     padding: 18px 32px;
     margin-bottom: 60px;
+}
+
+.home .home-content .button button:hover{
+    background-color: white;
+    color: #006072;
 }
 
 .home .home-content .payment-process{
