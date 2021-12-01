@@ -52,13 +52,15 @@ section{
 }
 
 section .title{
-    height: 40px;
-    color: #4f4f4f;
+    font-size: 50px;
+    line-height: 54px 50px;
+    color: #4f4f4f 50px;
     font-weight: bold;
 }
 
 section .star-title{
     color: #4F4F4F;
+    font-size: 36px;
 }
 
 section .star-title::before{
@@ -422,7 +424,7 @@ footer .terms-condition p{
     padding-top: 330px;
 }
 
-.home .home-content .home-text h1{
+.home .home-content .home-text h2{
     line-height: 54px;
     font-size: 50px;
 }
@@ -501,10 +503,6 @@ footer .terms-condition p{
     transform: rotateX(180deg);
 }
 
-.home .home-content .payment-process .payment-process-box h6 span{
-    display: none;
-}
-
 .home .home-content .down-arrow{
     border: 1px solid white;
     padding: 9px 11px;
@@ -539,7 +537,7 @@ footer .terms-condition p{
 
 /* text-blog */
 
-.text-blog .row h2{
+.text-blog .row h3{
     font-size: 30px;
     line-height: 36px;
     color: #4f4f4f;
