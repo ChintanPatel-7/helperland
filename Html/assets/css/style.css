@@ -47,6 +47,18 @@ html{
     padding: 0px 20px;
 }
 
+.max-width-470{
+    max-width: 470px;
+    margin: auto;
+    padding: 0px 20px;
+}
+
+.max-width-788{
+    max-width: 788px;
+    margin: auto;
+    padding: 0px 20px;
+}
+
 section{
     padding: 40px 0px;
 }
@@ -96,10 +108,6 @@ section .star-title::after{
     background-color: #F6F6F6;
 }
 
-.mb-40{
-    margin-bottom: 40px;;
-}
-
 .mt-17{
     margin-top: 17px;
 }
@@ -116,6 +124,14 @@ section .star-title::after{
     margin-top: 40px;
 }
 
+.mt-77{
+    margin-top: 77px !important;
+}
+
+.mb-40{
+    margin-bottom: 40px;;
+}
+
 .mb-36{
     margin-bottom: 36px;
 }
@@ -128,12 +144,24 @@ section .star-title::after{
     margin-bottom: 75px !important;
 }
 
+.mb-40{
+    margin-bottom: 40px;;
+}
+
+.mb-20{
+    margin-bottom: 20px !important;
+}
+
 .border-bottom{
     border-bottom: 1px solid #dcdcdc;
 }
 
 .pb-60{
     padding-bottom: 60px;
+}
+
+.pt-68{
+    padding-top: 68px;
 }
 
 .p-lr-22{
@@ -520,6 +548,7 @@ footer .terms-condition p{
 .helperland .row img{
     height: 320px;
     width: 320px;
+    border-radius: 50%;
 }
 
 .helperland .row h3{
@@ -913,3 +942,195 @@ footer .terms-condition p{
 }
 
 /* About Page end */
+
+/* Service Provider > Become a Pro   Page Start */
+
+.register-now-page .navbar-brand img {
+    height: 102px;
+    width: 138px;
+}
+
+.register-now{
+    min-height: 100vh;
+}
+
+.register-now .register-now-content{
+    background: url("../img/become-a-pro/become-a-pro-banner.png") no-repeat center;
+    background-size: cover;
+    height: 100%;
+    /* display: flex;
+    padding: 0px 30px;
+    flex-direction: column;
+    justify-content: end;
+    color: white; */
+    padding-bottom: 30px;
+    padding-top: 152px;
+}
+
+.register-now .register-now-form{
+    padding: 23px 36px 19px 36px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-bottom: 63px;
+}
+
+.register-now .register-now-form h3{
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.register-now .register-now-form .form-input-text{
+    height: 46px;
+    margin-bottom: 15px;
+}
+
+.register-now .register-now-form .form-input-text .input-group{
+    height: 100%;
+}
+
+.register-now .register-now-form .form-input-text input{
+    height: 100%;
+    font-size: 16px;
+    line-height: 24px;
+    /* color: #a0a0a0; -- check for placeholder color*/
+    padding: 16px;
+}
+
+.register-now .register-now-form .form-check{
+    margin-bottom: 10px;
+}
+
+.register-now .register-now-form .form-check .form-check-input{
+    margin-top: 2px;
+    height: 20px;
+    width: 20px;
+}
+
+.register-now .register-now-form .form-check .form-check-label{
+    font-size: 16px;
+    line-height: 24px;
+    color: #4F4F4F;
+}
+
+.register-now .register-now-form .form-check a{
+    color: #1fb6ff;
+    text-decoration: none;
+}
+
+.register-now .register-now-form .submitBox{
+    margin-top: 20px;
+}
+
+.register-now .register-now-form .submitBox button{
+    font-size: 16px;
+    line-height: 24px;
+    background-color: #1D7A8C;
+    padding: 13px 19px 14px 27px;
+    border-radius: 46px;
+    color: white;
+    border: 0px;
+    font-weight: bold;
+}
+
+.register-now .register-now-form .submitBox button img{
+    margin-left: 8px;
+}
+
+.register-now .register-now-content .down-arrow{
+    border: 1px solid white;
+    padding: 9px 11px;
+    border-radius: 50%;
+    color: #FFFFFF00;
+} 
+
+/* .register-now .register-now-form .form-input-text input:focus{
+    border: 2px solid #006072 ;    
+} */
+
+/* how-it-works */
+
+.how-it-works .forma-1{
+    top: 20px;
+    height: 219px;
+    width: 147px;
+    object-fit: cover;
+    object-position: right;
+}
+
+.how-it-works .forma-2{
+    top: 454px;
+    height: 273px;
+    width: 188px;
+    object-fit: cover;
+    object-position: right;
+}
+
+.how-it-works .forma-3{
+    top: 890px;
+    height: 303px;
+    width: 165px;
+    object-fit: cover;
+    object-position: right;
+}
+
+.how-it-works .forma-4{
+    top: 20px;
+    height: 236px;
+    width: 214px;
+    object-fit: cover;
+    object-position: left;
+}
+
+.how-it-works .forma-5{
+    top: 426px;
+    height: 255px;
+    width: 143px;
+    object-fit: cover;
+    object-position: left;
+}
+
+.how-it-works .forma-6{
+    top: 962px;
+    height: 234px;
+    width: 198px;
+    object-fit: cover;
+    object-position: left;
+}
+
+.how-it-works h2{
+    font-size: 40px;
+    font-weight: bold;
+    color: #4f4f4f;
+}
+
+.how-it-works .registration-process .information{
+    width: 50%;
+}
+
+.how-it-works .registration-process .information h3{
+    font-size: 30px;
+    font-weight: bold;
+    color: #4f4f4f;
+    line-height: 36px;
+    margin-bottom: 16px;
+}
+
+.how-it-works .registration-process .information p{
+    font-size: 18px;
+    font-weight: 400;
+    color: #4f4f4f;
+    margin-bottom: 48px;
+}
+
+.how-it-works .registration-process .information a{
+    font-size: 18px;
+    font-weight: 400;
+    color: #4f4f4f;
+    text-decoration: none;
+}
+
+.how-it-works .registration-process .registration-process-box{
+    margin-bottom: 20px;
+}
+
+/* Service Provider > Become a Pro   Page end */

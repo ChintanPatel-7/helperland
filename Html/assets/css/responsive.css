@@ -4,10 +4,10 @@
         margin-bottom: 7px;
     }
 
-    .navbar-collapse{
+    /* .navbar-collapse{
         background-color: #525252;
         height: 100vh;
-    }
+    } */
 
     .navbar-collapse .navbar-nav{
         align-items: center;
@@ -37,6 +37,18 @@
     .navbar .navbar-nav .rounded-link {
         padding: 6px 13px;
     }
+
+    /* become-a-pro page */
+    .how-it-works .backgroung-img{
+        display: none;
+    }
+}
+
+@media (max-width: 1199px){
+    .navbar-collapse{
+        background-color: #525252;
+        height: 100vh;
+    }
 }
 
 @media (max-width: 991px) {
@@ -56,6 +68,10 @@
 
     .text-blog .backgroung-img{
         display: none;
+    }
+
+    .text-blog .img-box{
+        order: -1;
     }
 
     footer .footer-max-width .logo img{
@@ -112,6 +128,30 @@
     .home .home-content .payment-process .arrow .rotateImg{
         transform: rotate(265deg) scaleX(-1);
     }
+
+    /* become-a-pro Page */
+
+    .how-it-works .registration-process .registration-process-box{
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .how-it-works .registration-process :nth-child(1) img,
+    .how-it-works .registration-process :nth-child(3) img{
+        order: -1;
+    }
+
+    .how-it-works .registration-process .information{
+        width: 80%;
+    }
+
+    .how-it-works .registration-process .registration-process-box .registration-process-img{
+        margin-bottom: 15px;
+    }
+
+    .how-it-works .registration-process .information p{
+        margin-bottom: 15px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -161,5 +201,11 @@
 
     .faq .faq-questions p br{
         display: none;
+    }
+
+    /* become-a-pro */
+
+    .how-it-works .registration-process .information{
+        width: 100%;
     }
 }
