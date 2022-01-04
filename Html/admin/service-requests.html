@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service requests - Helperland adminpanel</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" href="../assets/css/admin-style.css" />
+    <link rel="stylesheet" href="../assets/css/admin-responsive.css" />
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-light fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown1" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand p-0" href="#">helperland</a>
+            <ul class="navbar-nav ms-auto flex-row">
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <img src="../assets/img/admin-panel/admin-user.png" alt="">
+                        James Smith
+                    </a>
+                </li>
+                <li class="nav-item me-2">
+                    <a class="nav-link" href="#">
+                        <img src="../assets/img/admin-panel/logout.png" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="sidebar navbar navbar-expand-xl p-0">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown1">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Service Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Role Management</a>
+                </li>
+                <li class='nav-link sub-menu'>
+                    <a href='#' class="">Coupon Code Management<span class='arrow-icon'></span></a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Service Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Role Management</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Escalation Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Service Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Service Providers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">User Management</a>
+                </li>
+                <li class='nav-link sub-menu'>
+                    <a href='#' class="">Finance Module<span class='arrow-icon'></span></a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">All Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Generate Payment</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Customer Invoices</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Zip Code Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Rating Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inquiry Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Newsletter Management</a>
+                </li>
+                <li class='nav-link sub-menu'>
+                    <a href='#' class="">Content Management<span class='arrow-icon'></span></a>
+                    <ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">FAQs</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="main-content">
+        <div class="d-flex">
+            <h2 class="page-title mt-auto mb-auto">Service Requests</h2>
+        </div>
+        <div class="user-search-box">
+
+            <input type="text" class="form-control input-element width-110" id="" placeholder="Service Id">
+
+            <select class="form-select input-element width-127" aria-label="User name">
+                <option value="" disabled selected hidden>Customer</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+            <select class="form-select input-element width-152" aria-label="User role">
+                <option value="" disabled selected hidden>Service Provider</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+            <select class="form-select input-element width-120" aria-label="User role">
+                <option value="" disabled selected hidden>Status</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+
+            <input type="date" class="form-control input-element width-135" id="">
+
+            <input type="date" class="form-control input-element width-135" id="">
+
+            <button class="btn btn-Search width-84">Search</button>
+
+            <button class="btn width-84 btn-clear">Clear</button>
+
+        </div>
+
+        <div class="data-table">
+            <table id="service-requests">
+                <thead>
+                    <tr>
+                        <th>Service ID<img class="sort-img" alt=""></th>
+                        <th>Service Date<img class="sort-img" alt=""></th>
+                        <th>Customer details<img class="sort-img" alt=""></th>
+                        <th>Service provider<img class="sort-img" alt=""></th>
+                        <th>Status<img class="sort-img" alt=""></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 1&2 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td></td>
+                        <td>
+                            <label class=" lbl-btn lbl-yellow">New</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td></td>
+                        <td>
+                            <label class=" lbl-btn lbl-yellow">New</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 3&4 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-lightBlue">Pending</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-lightBlue">Pending</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!-- 5&6 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 7&8 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-danger">Cancelled</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 9&10 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-danger">Cancelled</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 1&2 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td></td>
+                        <td>
+                            <label class=" lbl-btn lbl-yellow">New</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td></td>
+                        <td>
+                            <label class=" lbl-btn lbl-yellow">New</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 3&4 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-lightBlue">Pending</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-lightBlue">Pending</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- 5&6 -->
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>323436</td>
+                        <td>
+                            <img src="../assets/img/admin-panel/calendar2.png" alt="" class="me-1"><span>01/01/2018</span>
+                            <br>
+                            <img src="../assets/img/admin-panel/layer-14.png" alt="" class="me-1">12:00 - 18:00
+                        </td>
+                        <td>
+                            David Bough<br>
+                            <img src="../assets/img/admin-panel/layer-15.png" alt=""> Musterstrabe 5,12345
+                            Bonn
+                        </td>
+                        <td>
+                            <div>
+                                <img src="../assets/img/admin-panel/cap.png" class="cap-img float-start" alt="cap image">
+                                <div class="name-rating">
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star1.png" alt=""></span>
+                                        <span><img src="../assets/img/admin-panel/star2.png" alt=""></span>
+                                        <label class="rating-count">4</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <label class=" lbl-btn lbl-success">Completed</label>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../assets/img/admin-panel/group-38.png" alt="" class="position-relative">
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="#">Edit & Reschedule</a></li>
+                                    <li><a class="dropdown-item" href="#">Refund</a></li>
+                                    <li><a class="dropdown-item" href="#">Cancel</a></li>
+                                    <li><a class="dropdown-item" href="#">Change SP</a></li>
+                                    <li><a class="dropdown-item" href="#">Escalate</a></li>
+                                    <li><a class="dropdown-item" href="#">History Log</a></li>
+                                    <li><a class="dropdown-item" href="#">Download Invoice</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="footer pt-0">
+        ©2018 Helperland. All rights reserved.
+    </div>
+
+    <!-- JS -->
+    <script src="../assets/js/admin-main.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <!-- JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

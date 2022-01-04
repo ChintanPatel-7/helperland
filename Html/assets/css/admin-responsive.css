@@ -29,6 +29,12 @@
 }
 @media (max-width: 575px){
 
+.user-search-box input,
+.user-search-box .input-group,
+.user-search-box select{
+    width: 100%;
+}
+
 }
 @media (max-width: 440px){
     .main-content{

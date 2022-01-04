@@ -19,10 +19,26 @@ $(document).ready(function () {
         "order": []
     });
 
+    $('#service-requests').DataTable({
+        paging: true,
+        ordering: true,
+        searching: false,
+        info: false,
+        "columnDefs": [
+            { "orderable": false, "targets": 5 }
+        ],
+        "oLanguage": {
+            "sInfo": "Total Records: _TOTAL_"
+        },  
+        "dom": '<"top">rt<"bottom"lip><"clear">',
+        responsive: true,
+        "order": []
+    });
+
     $(".sub-menu ul").hide();
     $(".sub-menu a").click(function () {
         $(this).parent(".sub-menu").children("ul").slideToggle("100");
-        $(this).find(".arrow-icon").parent("a").toggleClass("open");
+        $(this).find(".arrow-icon").parent("a").parent("li").toggleClass("open");
     });
 
 });

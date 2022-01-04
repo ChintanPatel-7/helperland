@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management - Helperland</title>
+    <title>User Management - Helperland adminpanel</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
@@ -24,8 +24,9 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-xl navbar-light fixed-top">
         <div class="container-fluid">
-            <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown1"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown1" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="navbar-brand p-0" href="#">helperland</a>
@@ -57,10 +58,10 @@
                 <li class='nav-link sub-menu'>
                     <a href='#' class="">Coupon Code Management<span class='arrow-icon'></span></a>
                     <ul>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">Service Management</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">Role Management</a>
                         </li>
                     </ul>
@@ -80,13 +81,13 @@
                 <li class='nav-link sub-menu'>
                     <a href='#' class="">Finance Module<span class='arrow-icon'></span></a>
                     <ul>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">All Transactions</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">Generate Payment</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">Customer Invoices</a>
                         </li>
                     </ul>
@@ -106,10 +107,10 @@
                 <li class='nav-link sub-menu'>
                     <a href='#' class="">Content Management<span class='arrow-icon'></span></a>
                     <ul>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">Blog</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item border-0">
                             <a class="nav-link" href="#">FAQs</a>
                         </li>
                     </ul>
@@ -127,32 +128,31 @@
             </button>
         </div>
         <div class="user-search-box">
-            <select class="form-select input-element" aria-label="User name">
+            <select class="form-select input-element width-205" aria-label="User name">
                 <option disabled>User name</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
 
-            <select class="form-select input-element" aria-label="User role">
+            <select class="form-select input-element width-215" aria-label="User role">
                 <option disabled>User role</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
 
-            <div class="input-group input-element">
+            <div class="input-group input-element width-215">
                 <span class="input-group-text" id="basic-addon1">+49</span>
                 <input type="text" class="form-control" placeholder="Phone number" aria-label="Username"
                     aria-describedby="basic-addon1">
             </div>
 
-            <input type="text" class="form-control input-element" id="" placeholder="Zipcode">
+            <input type="text" class="form-control input-element width-140" id="" placeholder="Zipcode">
 
-            <div class="button-group">
-                <input type="button" value="Search" class="btn btn-Search h-100">
-                <input type="button" value="Clear" class="btn h-100 btn-clear">
-            </div>
+            <button class="btn btn-Search width-84">Search</button>
+
+            <button class="btn width-84 btn-clear">Clear</button>
 
         </div>
 
@@ -179,7 +179,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -200,7 +200,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td>10 km</td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class=" lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -222,7 +222,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -244,7 +244,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -267,7 +267,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -289,7 +289,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-danger">Inactive</label></td>
+                        <td><label class="lbl-btn lbl-danger">Inactive</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -312,7 +312,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td>20 km</td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -334,7 +334,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -357,7 +357,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -379,7 +379,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -403,7 +403,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -424,7 +424,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td>10 km</td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -446,7 +446,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -468,7 +468,7 @@
                         <td>123456</td>
                         <td>Berlin</td>
                         <td></td>
-                        <td><label class="lbl-success">Active</label></td>
+                        <td><label class="lbl-btn lbl-success">Active</label></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
