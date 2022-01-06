@@ -8,6 +8,7 @@
 
     <title>Home - Helperland</title>
 
+    <link rel="icon" type="image/x-icon" href="./assets/img/logo/favicon_img.png">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
@@ -37,7 +38,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -62,7 +63,7 @@
                     <li class="nav-item">
                         <a class="nav-link rounded-link" href="./become-a-pro.html">Become a Helper</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown d-none d-xl-block">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="./assets/img/home/country-flag/gb.svg" alt="united kingdom flag"
@@ -84,7 +85,16 @@
                         </ul>
                     </li>
                 </ul>
+                <div class="social-links d-xl-none mt-3">
+                    <a href="#" class="ms-3">
+                        <img src="./assets/img/facebook-f-brands.svg" alt="" class="fb-icon">
+                    </a>
+                    <a href="#" class="ms-2">
+                        <img src="./assets/img/instagram-brands.svg" alt="" class="insta-icon">
+                    </a>
+                </div>
             </div>
+            <div class="backblack"></div>
         </div>
     </nav>
 
@@ -207,7 +217,7 @@
                 <div class="col-md-12">
                     <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center">
                         <div class="col p-lr-22">
-                            <div class="card h-100">
+                            <div class="card h-100 card-box-shadow">
                                 <img src="./assets/img/home/group-28.png" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title mb-0">Lorem ipsum dolor sit amet</h5>
@@ -220,7 +230,7 @@
                             </div>
                         </div>
                         <div class="col p-lr-22">
-                            <div class="card h-100">
+                            <div class="card h-100 card-box-shadow">
                                 <img src="./assets/img/home/group-29.png" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title mb-0">Lorem ipsum dolor sit amet</h5>
@@ -233,7 +243,7 @@
                             </div>
                         </div>
                         <div class="col p-lr-22">
-                            <div class="card h-100">
+                            <div class="card h-100 card-box-shadow">
                                 <img src="./assets/img/home/group-30.png" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title mb-0">Lorem ipsum dolor sit amet</h5>
@@ -259,7 +269,7 @@
             </div>
             <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-4 justify-content-center mb-5">
                 <div class="col p-lr-22">
-                    <div class="card">
+                    <div class="card card-box-shadow">
                         <div class="card-body p-4">
                             <div class="d-flex mb-3">
                                 <div class="flex-shrink-0">
@@ -282,7 +292,7 @@
                     </div>
                 </div>
                 <div class="col p-lr-22">
-                    <div class="card">
+                    <div class="card card-box-shadow">
                         <div class="card-body p-4">
                             <div class="d-flex mb-3">
                                 <div class="flex-shrink-0">
@@ -305,7 +315,7 @@
                     </div>
                 </div>
                 <div class="col p-lr-22">
-                    <div class="card">
+                    <div class="card card-box-shadow">
                         <div class="card-body p-4">
                             <div class="d-flex mb-3">
                                 <div class="flex-shrink-0">
@@ -371,12 +381,16 @@
                 <a href=""><img src="./assets/img/home/instagram.svg" alt="instagram"></a>
             </div>
         </div>
-        <div class="privacy-policy d-flex align-items-center">
+        <div class="terms-condition d-flex justify-content-center me-auto ms-auto">
+            <p class="mb-0">©2018 Helperland. All rights reserved. &nbsp;&nbsp; Terms and Conditions | Privacy Policy
+            </p>
+        </div>
+        <div class="privacy-policy d-flex align-items-center" id="privacy-policy">
             <p class="mb-0 ms-auto">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi ipsa laborum excepturi maiores.
             </p>
             <span class="me-auto">Privacy Policy</span>
-            <button class="me-2">OK</button>
+            <button id="btn-privacy-policy" class="me-2">OK</button>
         </div>
     </footer>
 
