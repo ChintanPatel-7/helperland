@@ -503,6 +503,10 @@ table.dataTable tbody td {
     border-color: #8bc7d3;
 }
 
+table tr td .dropdown ul{
+    min-height: fit-content;
+}
+
 /* DataTable End */
 
 /* user management page start */
