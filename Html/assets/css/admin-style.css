@@ -161,6 +161,10 @@ html {
     background-color: #F9F9F9;
 }
 
+.sidebar .navbar-nav .sub-menu .nav-item{
+    border-bottom: 0px !important;
+}
+
 .sidebar .navbar-nav .sub-menu .arrow-icon {
     float: right;
     margin-right: 10px;
@@ -544,6 +548,28 @@ table tr td .dropdown ul{
 /* user management page end */
 
 /* service-requests Page Start */
+
+.calender-icon{
+    background: transparent url(../img/admin-panel/icon-calendar-blue.png) 9px center no-repeat!important;
+    position: relative;
+    z-index: 1;
+    padding-left: 37px;
+}
+
+input[type="date"]{
+    position: relative;
+    padding-left: 35px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../img/admin-panel/icon-calendar-blue.png) 9px center no-repeat!important;
+    left: -25px;
+    /* padding-left: 0px !important; */
+    position: absolute;
+    z-index: 999;
+}
 
 #service-requests tbody tr td span {
     font-weight: bold;

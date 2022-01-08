@@ -29,7 +29,7 @@ $(document).ready(function () {
         ],
         "oLanguage": {
             "sInfo": "Total Records: _TOTAL_"
-        },  
+        },
         "dom": '<"top">rt<"bottom"lip><"clear">',
         responsive: true,
         "order": []
@@ -39,6 +39,22 @@ $(document).ready(function () {
     $(".sub-menu a").click(function () {
         $(this).parent(".sub-menu").children("ul").slideToggle("100");
         $(this).find(".arrow-icon").parent("a").parent("li").toggleClass("open");
+    });
+
+    $("#txtFromDate").blur(function () {
+        if (!$("#txtFromDate").val()) {
+            $('#txtFromDate').attr('type', 'text');
+        } else {
+            $('#txtFromDate').attr('type', 'date');
+        }
+    });
+
+    $("#txtToDate").blur(function () {
+        if (!$("#txtToDate").val()) {
+            $('#txtToDate').attr('type', 'text');
+        } else {
+            $('#txtToDate').attr('type', 'date');
+        }
     });
 
 });
