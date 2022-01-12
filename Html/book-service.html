@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Service - Helperland</title>
+
+    <link rel="icon" type="image/x-icon" href="./assets/img/logo/favicon_img.png">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-xl navbar-light navbar-bg-color">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./home.html">
+                <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link btn-dark-slate-blue" href="#">Book now</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link" href="./prices.html">Prices & services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Warranty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link btn-dark-slate-blue" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link btn-dark-slate-blue" href="./become-a-pro.html">Become a
+                            Helper</a>
+                    </li>
+                </ul>
+                <div class="social-links d-xl-none mt-3">
+                    <a href="#" class="ms-3">
+                        <img src="./assets/img/facebook-f-brands.svg" alt="" class="fb-icon">
+                    </a>
+                    <a href="#" class="ms-2">
+                        <img src="./assets/img/instagram-brands.svg" alt="" class="insta-icon">
+                    </a>
+                </div>
+            </div>
+            <div class="backblack"></div>
+        </div>
+    </nav>
+
+    <!-- Header Image -->
+    <section class="header-img mt-37">
+        <img src="./assets/img/book-service/book-service-banner.jpg" alt="">
+    </section>
+
+    <!-- set up your cleaning services -->
+    <section class="set-up-cleaning-services" id="set-up-cleaning-services">
+        <div class="max-width-1180">
+            <div class="text-center position-relative mb-75">
+                <h2 class="star-title">Set up your cleaning service</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+
+                    <ul class="nav nav-pills nav-fill mb-4" id="pills-tab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="setup-service-tab" data-bs-toggle="pill"
+                                data-bs-target="#setup-service-tabContent" type="button" role="tab"
+                                aria-controls="setup-service-tabContent" aria-selected="true">
+                                <img src="./assets/img/book-service/setup-service.png" alt="">
+                                <label>Setup Service</label>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="Schedule-and-Plan-tab" data-bs-toggle="pill"
+                                data-bs-target="#Schedule-and-Plan-tabContent" type="button" role="tab"
+                                aria-controls="Schedule-and-Plan-tabContent" aria-selected="false">
+                                <img src="./assets/img/book-service/schedule.png" alt="">
+                                <label>Schedule & Plan</label>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="Your-Details-tab" data-bs-toggle="pill"
+                                data-bs-target="#Your-Details-tabContent" type="button" role="tab"
+                                aria-controls="Your-Details-tabContent" aria-selected="false">
+                                <img src="./assets/img/book-service/details.png" alt="">
+                                <label>Your Details</label>
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="Make-Payment-tab" data-bs-toggle="pill"
+                                data-bs-target="#Make-Payment-tabContent" type="button" role="tab"
+                                aria-controls="Make-Payment-tabContent" aria-selected="false">
+                                <img src="./assets/img/book-service/payment.png" alt="">
+                                <label>Make Payment</label>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+
+                        <!-- 1st tab content -->
+                        <div class="tab-pane fade" id="setup-service-tabContent" role="tabpanel"
+                            aria-labelledby="setup-service-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold">Enter your Postal Code</h6>
+                                    <input type="text" name="" id="" class="form-control mb-3 me-3">
+                                    <button class="button">Check Availability</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2nd tab content -->
+                        <div class="tab-pane fade show active" id="Schedule-and-Plan-tabContent" role="tabpanel"
+                            aria-labelledby="Schedule-and-Plan-tab">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold">Select number of rooms and bath</h6>
+                                    <select class="form-select width-100">
+                                        <option value="1">1 bed</option>
+                                        <option value="2">2 bed</option>
+                                    </select>
+                                    <select class="form-select width-100">
+                                        <option value="1">1 bath</option>
+                                        <option value="2">2 Bath</option>
+                                    </select>
+                                </div>
+
+                                <hr>
+
+                                <div class="col-lg-12 col-xl-5 mb-2">
+                                    <h6 class="fw-bold">When do you need the cleaner?</h6>
+                                    <input type="date" class="form-control input-element width-135" value="2018-01-01">
+                                    <select class="form-select width-120">
+                                        <option value="14">2:00 PM</option>
+                                        <option value="15">3:00 PM</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-xl-7">
+                                    <h6 class="fw-bold">How long do you need your cleaner to stay?</h6>
+                                    <select class="form-select width-100">
+                                        <option value="14">3:0 hr</option>
+                                        <option value="15">4:0 hr</option>
+                                    </select>
+                                </div>
+
+                                <hr>
+
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold mb-3">Extra Services<h5>
+
+                                            <div class="d-flex justify-content-evenly flex-wrap">
+                                                <div class="service-box">
+                                                    <input type="checkbox" name="" id="chkInsideCabinets"
+                                                        class="d-none">
+                                                    <label for="chkInsideCabinets">
+                                                        <div class="img-box">
+                                                            <img src="./assets/img/book-service/3.png" alt="">
+                                                        </div>
+                                                        <h6 class="heading mb-0">Inside cabinets</h6>
+                                                    </label>
+                                                </div>
+                                                <div class="service-box">
+                                                    <input type="checkbox" name="" id="chkInsideFridge" class="d-none">
+                                                    <label for="chkInsideFridge">
+                                                        <div class="img-box">
+                                                            <img src="./assets/img/book-service/5.png" alt="">
+                                                        </div>
+                                                        <h6 class="heading mb-0">Inside fridge</h6>
+                                                    </label>
+                                                </div>
+                                                <div class="service-box">
+                                                    <input type="checkbox" name="" id="chkInsideOven" class="d-none">
+                                                    <label for="chkInsideOven">
+                                                        <div class="img-box">
+                                                            <img src="./assets/img/book-service/4.png" alt="">
+                                                        </div>
+                                                        <h6 class="heading mb-0">Inside oven</h6>
+                                                    </label>
+                                                </div>
+                                                <div class="service-box">
+                                                    <input type="checkbox" name="" id="chkLaundryWashAndDry"
+                                                        class="d-none">
+                                                    <label for="chkLaundryWashAndDry">
+                                                        <div class="img-box">
+                                                            <img src="./assets/img/book-service/2.png" alt="">
+                                                        </div>
+                                                        <h6 class="heading mb-0">Laundry wash & dry</h6>
+                                                    </label>
+                                                </div>
+                                                <div class="service-box">
+                                                    <input type="checkbox" name="" id="chkInteriorWindows"
+                                                        class="d-none">
+                                                    <label for="chkInteriorWindows">
+                                                        <div class="img-box">
+                                                            <img src="./assets/img/book-service/1.png" alt="">
+                                                        </div>
+                                                        <h6 class="heading mb-0">Interior windows</h6>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="col-md-12">
+                                    <h6 class="fw-bold">Comments</h6>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            I have pets at home
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="col-md-12 text-end">
+                                    <button class="button">Continue</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- 3rd tab content -->
+                        <div class="tab-pane fade" id="Your-Details-tabContent" role="tabpanel"
+                            aria-labelledby="Your-Details-tab">
+                            Your-Details-tabContent
+                        </div>
+
+                        <!-- 4rth tab content -->
+                        <div class="tab-pane fade" id="Make-Payment-tabContent" role="tabpanel"
+                            aria-labelledby="Make-Payment-tab">
+                            Make-Payment-tabContent
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 d-none d-md-block">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            Payment Summary
+                        </div>
+                        <div class="card-body border-bottom">
+                            <p class="mb-1">01/01/2018 @ 4:00 PM</p>
+                            <p class="mb-4">1 bed, 1 bath</p>
+
+                            <h5>Duration</h5>
+                            <p class="mb-1">
+                                Basic
+                                <label>3 Hrs</label>
+                            </p>
+                            <p class="mb-1">
+                                Inside Cabinets (extra)
+                                <label>30 Mins</label>
+                            </p>
+                            <hr class="mt-2 mb-2">
+                            <p class="fw-bold mb-0">
+                                Total Service Time
+                                <label>3.5 Hrs</label>
+                            </p>
+                        </div>
+                        <div class="card-body border-bottom">
+                            <p class="mb-1">
+                                Per cleaning
+                                <label class="fw-bold">$87</label>
+                            </p>
+                            <p class="mb-0">
+                                Discount
+                                <label class="fw-bold">- $27</label>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="total-payment align-items-center mb-0">
+                                Total Payment
+                                <label class="fw-bold">$63</label>
+                            </p>
+                            <p class="mb-3">
+                                Effective Price
+                                <label class="fw-bold">$50.4</label>
+                            </p>
+                            <p class="justify-content-start mb-0"><span class="text-danger">*</span>You will save 20% according to §35a EStG.</p>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <p class="mb-1 mt-1 d-flex"><i class="far fa-smile"></i> See what is always included</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4 mb-3">
+                        <h5>Questions?</h5>
+                    </div>
+
+                    <div class="accordion mb-3" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Which Helperland professional will come to my place?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                    our default variables. It's also worth noting that just about any HTML can go within
+                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Which Helperland professional will come to my place?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                    It is hidden by default,
+                                    until the collapse plugin adds the appropriate classes that we use to style each
+                                    element. These classes control the overall appearance, as well as the showing and
+                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+                                    our default variables. It's also worth noting that just about any HTML can go within
+                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Which Helperland professional will come to my place?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body pt-0">
+                                    It is hidden by default,
+                                    until the collapse plugin adds the appropriate classes that we use to style each
+                                    element. These classes control the overall appearance, as well as the showing and
+                                    hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+                                    our default variables. It's also worth noting that just about any HTML can go within
+                                    the <code>.accordion-body</code>, though the transition does limit overflow.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="./faq.html" class="link-help">For more help</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- newsletter -->
+    <section class="newsletter">
+        <div class="text-center mb-4">
+            <h4>GET OUR NEWSLETTER</h4>
+        </div>
+        <div class="text-center">
+            <input type="text" name="email" placeholder="YOUR EMAIL" class="mb-3">
+            <button type="submit" class="ms-2">Submit</button>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-max-width">
+            <div class="logo">
+                <img src="./assets/img/logo/white-logo-transparent-background.png" alt="">
+            </div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="./home.html">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./about.html">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">TESTIMONIALS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./faq.html">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">INSURANCE POLICY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">IMPRESSUM</a>
+                </li>
+            </ul>
+            <div class="socil-icon d-flex flex-wrap justify-content-center">
+                <a href="#" class="mb-2"><img src="./assets/img/home/facebook.svg" alt="facebook"></a>
+                <a href=""><img src="./assets/img/home/instagram.svg" alt="instagram"></a>
+            </div>
+        </div>
+        <div class="terms-condition d-flex justify-content-center me-auto ms-auto">
+            <p class="mb-0">©2018 Helperland. All rights reserved. &nbsp;&nbsp; Terms and Conditions | Privacy Policy
+            </p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="./assets/js/main.js"></script>
+    <!-- JS Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

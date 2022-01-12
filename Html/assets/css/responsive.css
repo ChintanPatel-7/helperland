@@ -120,6 +120,18 @@
     }
 
     /* sidebar + main content end */
+
+    /* book Service page start */
+
+    .set-up-cleaning-services .nav .nav-link img{
+        margin-right: 0px;
+    }
+
+    .set-up-cleaning-services .nav .nav-link label{
+        display: block;
+    }
+
+    /* book Service page end */
 }
 
 @media (max-width: 1199px) {
@@ -185,6 +197,14 @@
         margin: 0px auto 20px auto;
     }
     /* Prices page end */
+
+    /* book Service page start */
+
+    .set-up-cleaning-services .nav .nav-link label{
+        display: none;
+    }
+
+    /* book Service page end */
 }
 
 @media (max-width: 768px) {
