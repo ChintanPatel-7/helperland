@@ -1,0 +1,245 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Helperland</title>
+
+    <!--favicon icon-->
+    <link rel="icon" type="image/x-icon" href="~/img/logo/favicon_img.png">
+
+    <!-- Bootstrap css -->
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Website Css -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+
+    <!-- JQuery -->
+    <script src="~/lib/jquery/jquery.js"></script>
+</head>
+<body>
+    <!-- Scroll btn And message btn -->
+    <div class="scroll-up-btn top-arrow">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+
+    <div class="scroll-up-btn message-box">
+        <img src="~/img/layer-598.png" alt="message" class="img-fluid">
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-expand-xl navbar-light @( ViewBag.page == "HomePage" ? "homePage" : "navbar-bg-color")">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-action="Index">
+                <img src="~/img/logo/white-logo-transparent-background.png" alt="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navLinks">
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" href="#">
+                            @if (ViewBag.page == "HomePage")
+                            {
+                                <span>Book a Cleaner</span>
+                            }
+                            else
+                            {
+                                <span>Book now</span>
+                            }
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="prices">
+                            @if (ViewBag.page == "HomePage")
+                            {
+                                <span>Prices</span>
+                            }
+                            else
+                            {
+                                <span>Prices & services</span>
+                            }
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            @if (ViewBag.page == "HomePage")
+                            {
+                                <span>Our Guarantee</span>
+                            }
+                            else
+                            {
+                                <span>Warranty</span>
+                            }
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" href="./become-a-pro.html">Become a Helper</a>
+                    </li>
+                    <li class="d-none @( ViewBag.page == "HomePage" ? "nav-item dropdown d-xl-block" : "")">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag"
+                                 class="county-flag">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="~/img/home/country-flag/in.svg" alt="united kingdom flag"
+                                         class="county-flag">
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="~/img/home/country-flag/us.svg" alt="united kingdom flag"
+                                         class="county-flag">
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="social-links d-xl-none mt-3">
+                    <a href="#" class="ms-3">
+                        <img src="~/img/facebook-f-brands.svg" alt="" class="fb-icon">
+                    </a>
+                    <a href="#" class="ms-2">
+                        <img src="~/img/instagram-brands.svg" alt="" class="insta-icon">
+                    </a>
+                </div>
+            </div>
+            <div class="backblack"></div>
+        </div>
+    </nav>
+
+    @RenderBody()
+
+    <section class="pt-0 @( ViewBag.page == "HomePage" ? "bg-color-pal-grey" : "")">
+        <div class="newsletter">
+            <div class="text-center mb-4">
+                <h4>GET OUR NEWSLETTER</h4>
+            </div>
+            <div class="text-center">
+                <input type="text" name="email" placeholder="YOUR EMAIL" class="mb-3">
+                <button type="submit" class="ms-2">Submit</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer>
+        <div class="footer-max-width">
+            <div class="logo">
+                <a asp-action="Index">
+                    <img src="~/img/logo/white-logo-transparent-background.png" alt="">
+                </a>
+            </div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="about">ABOUT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">TESTIMONIALS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="faq">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">INSURANCE POLICY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">IMPRESSUM</a>
+                </li>
+            </ul>
+            <div class="socil-icon d-flex flex-wrap justify-content-center">
+                <a href="#" class="mb-2"><img src="~/img/home/facebook.svg" alt="facebook"></a>
+                <a href=""><img src="~/img/home/instagram.svg" alt="instagram"></a>
+            </div>
+        </div>
+        <div class="terms-condition d-flex justify-content-center me-auto ms-auto">
+            <p class="mb-0">
+                ©2018 Helperland. All rights reserved. &nbsp;&nbsp; Terms and Conditions | Privacy Policy
+            </p>
+        </div>
+        <div class="privacy-policy d-flex align-items-center d-none" id="privacy-policy">
+            <p class="mb-0 ms-auto">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi ipsa laborum excepturi maiores.
+            </p>
+            <span class="me-auto">Privacy Policy</span>
+            <button id="btn-privacy-policy" class="me-2">OK</button>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3>Login to your account</h3>
+                    <form>
+                        <div class="mb-3 position-relative">
+                            <input type="text" class="form-control" placeholder="Email" />
+                            <img src="~/img/user.png" class="model-icon" />
+                        </div>
+                        <div class="mb-3 position-relative">
+                            <input type="password" class="form-control" placeholder="Password" />
+                            <img src="~/img/lock.png" class="model-icon" />
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                        </div>
+                        <button type="submit" class="model-button mb-25">Login</button>
+                        <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password?</a></div>
+                        <div class="text-center">
+                            Don't have an account? <a class="model-link">Create an account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3>Forgot password</h3>
+                    <form>
+                        <div class="mb-3 position-relative">
+                            <input type="text" class="form-control" placeholder="Email Address" />
+                        </div>
+                        <button type="submit" class="model-button mb-25">Send</button>
+                        <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/main.js"></script>
+    <!-- Bootstrap Js-->
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
