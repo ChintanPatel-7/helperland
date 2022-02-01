@@ -83,3 +83,8 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\faq.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\prices.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\contact.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_NewsLetter.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\UserRegistration.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Account\BecomeAPro.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\serviceHistory.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\UpcomingService.cshtml.g.cs

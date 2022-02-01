@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model LoginViewModel
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -29,9 +31,9 @@
     </div>
 
     <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-xl navbar-light @( ViewBag.page == "HomePage" ? "homePage" : "navbar-bg-color")">
+    <nav class="navbar fixed-top navbar-expand-xl navbar-light @( ViewBag.navbar == "transparentNavbar" ? "transparentNavbar" : "navbar-bg-color")">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-action="Index">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
                 <img src="~/img/logo/white-logo-transparent-background.png" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -42,8 +44,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navLinks">
                     <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" href="#">
-                            @if (ViewBag.page == "HomePage")
+                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" href="#">
+                            @if (ViewBag.navbar == "transparentNavbar")
                             {
                                 <span>Book a Cleaner</span>
                             }
@@ -54,8 +56,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="prices">
-                            @if (ViewBag.page == "HomePage")
+                        <a class="nav-link" asp-controller="Home" asp-action="prices">
+                            @if (ViewBag.navbar == "transparentNavbar")
                             {
                                 <span>Prices</span>
                             }
@@ -67,7 +69,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            @if (ViewBag.page == "HomePage")
+                            @if (ViewBag.navbar == "transparentNavbar")
                             {
                                 <span>Our Guarantee</span>
                             }
@@ -81,15 +83,15 @@
                         <a class="nav-link" href="#">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-action="contact">Contact</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="contact">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.page == "HomePage" ? "" : "btn-dark-slate-blue")" href="./become-a-pro.html">Become a Helper</a>
+                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Account" asp-action="BecomeAPro" >Become a Helper</a>
                     </li>
-                    <li class="d-none @( ViewBag.page == "HomePage" ? "nav-item dropdown d-xl-block" : "")">
+                    <li class="d-none @( ViewBag.navbar == "transparentNavbar" ? (ViewBag.displayFlag == true ? "nav-item dropdown d-xl-block" : "" ) : "")">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag"
@@ -126,38 +128,26 @@
 
     @RenderBody()
 
-    <section class="pt-0 @( ViewBag.page == "HomePage" ? "bg-color-pal-grey" : "")">
-        <div class="newsletter">
-            <div class="text-center mb-4">
-                <h4>GET OUR NEWSLETTER</h4>
-            </div>
-            <div class="text-center">
-                <input type="text" name="email" placeholder="YOUR EMAIL" class="mb-3">
-                <button type="submit" class="ms-2">Submit</button>
-            </div>
-        </div>
-    </section>
-
     <!-- footer -->
     <footer>
         <div class="footer-max-width">
             <div class="logo">
-                <a asp-action="Index">
+                <a asp-controller="Home" asp-action="Index">
                     <img src="~/img/logo/white-logo-transparent-background.png" alt="">
                 </a>
             </div>
             <ul class="nav justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="Index">HOME</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">HOME</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="about">ABOUT</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="about">ABOUT</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">TESTIMONIALS</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" asp-action="faq">FAQS</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="faq">FAQS</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">INSURANCE POLICY</a>
@@ -192,7 +182,8 @@
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h3>Login to your account</h3>
-                    <form>
+                    <form asp-controller="Account" >
+                        <div asp-validation-summary="All"></div>
                         <div class="mb-3 position-relative">
                             <input type="text" class="form-control" placeholder="Email" />
                             <img src="~/img/user.png" class="model-icon" />
@@ -208,7 +199,7 @@
                         <button type="submit" class="model-button mb-25">Login</button>
                         <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password?</a></div>
                         <div class="text-center">
-                            Don't have an account? <a class="model-link">Create an account</a>
+                            Don't have an account? <a class="model-link" asp-controller="Account" asp-action="UserRegistration">Create an account</a>
                         </div>
                     </form>
                 </div>
@@ -234,6 +225,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Client side validation scripts-->
+    <partial name="_ValidationScriptsPartial" />
 
     <script src="~/js/main.js"></script>
     <!-- Bootstrap Js-->

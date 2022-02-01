@@ -645,20 +645,20 @@ footer {
         text-decoration: none !important;
     }
 
-    .modal-content .model-link:hover {
-        color: #1890ca;
-    }
-
-
-
-        /* -- Login Model end */
-        /* -- Common Style end */
-        /* Home Page Start */
-        /* home Section Start */
-        .home {
-            min-height: 100vh;
-            /* height: 100vh; */
+        .modal-content .model-link:hover {
+            color: #1890ca;
         }
+
+
+
+/* -- Login Model end */
+/* -- Common Style end */
+/* Home Page Start */
+/* home Section Start */
+.home {
+    min-height: 100vh;
+    /* height: 100vh; */
+}
 
     .home .home-content {
         background: url("../img/home/group-35.png") no-repeat center;
@@ -1139,6 +1139,14 @@ footer {
     color: #a0a0a0;
 }
 
+    .contact-us-form form input:focus,
+    .contact-us-form form select:focus,
+    .contact-us-form form textarea:focus {
+        border-color: #1d798c;
+        outline: 0;
+        box-shadow: none;
+    }
+
 .contact-us-form form select {
     height: 46px;
     font-size: 16px;
@@ -1230,21 +1238,43 @@ footer {
         }
 
         .register-now .register-now-form .form-input-text {
-            height: 46px;
             margin-bottom: 15px;
         }
 
-            .register-now .register-now-form .form-input-text .input-group {
-                height: 100%;
-            }
+        .register-now .register-now-form input[type=text],
+        .register-now .register-now-form input[type=password] {
+            height: 46px;
+        }
+
+        .register-now .register-now-form .form-input-text .input-group {
+            height: 100%;
+        }
 
             .register-now .register-now-form .form-input-text input {
-                height: 100%;
                 font-size: 16px;
                 line-height: 24px;
                 /* color: #a0a0a0; -- check for placeholder color*/
                 padding: 16px;
             }
+
+
+        .register-now .register-now-form input[type=text]:focus,
+        .register-now .register-now-form input[type=password]:focus {
+            border-color: #1d798c;
+            outline: 0;
+            box-shadow: none;
+        }
+
+        .register-now .register-now-form .form-check-input:checked {
+            background-color: #1d798c;
+            border-color: #1d798c;
+        }
+
+        .register-now .register-now-form .form-check-input:focus {
+            border-color: #1d798c;
+            outline: 0;
+            box-shadow: none;
+        }
 
         .register-now .register-now-form .form-check {
             margin-bottom: 10px;
@@ -1954,3 +1984,62 @@ footer {
 
 
 /* book Service page end */
+
+/*User Registration page start*/
+
+.User-registration form {
+    max-width: 615px;
+    margin: 0px auto;
+    color: #4f4f4f;
+}
+
+    .User-registration form input[type=text],
+    .User-registration form input[type=password] {
+        height: 46px;
+    }
+
+        .User-registration form input[type=text]:focus,
+        .User-registration form input[type=password]:focus {
+            border-color: #1d798c;
+            outline: 0;
+            box-shadow: none;
+        }
+
+    .User-registration form .form-check-input:checked {
+        background-color: #1d798c;
+        border-color: #1d798c;
+    }
+
+    .User-registration form .form-check-input:focus {
+        border-color: #1d798c;
+        outline: 0;
+        box-shadow: none;
+    }
+
+    .User-registration form .register-button {
+        color: #fff;
+        font-weight: 600;
+        background: #1d7a8c;
+        border-radius: 40px;
+        outline: 0 !important;
+        border: 0px;
+        font-size: 18px;
+        line-height: 22px;
+        padding: 15px 30px;
+    }
+
+        .User-registration form .register-button:hover {
+            background: #146371 !important;
+        }
+
+    .User-registration form a {
+        color: #1d7a8c;
+        text-decoration: none !important;
+    }
+
+        .User-registration form a:hover {
+            color: #1890ca;
+        }
+
+/*User Registration page end*/
+
