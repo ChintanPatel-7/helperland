@@ -10,6 +10,10 @@
         <div class="max-width-470">
             <form class="register-now-form" asp-controller="Account" asp-action="ServiceProviderRegistration">
                 <h3>Register Now!</h3>
+                <div class="alert alert-success alert-dismissible fade @( TempData["SuccessMessage"] == null ? "d-none" : "show")" role="alert">
+                    @TempData["SuccessMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
                 <div class="form-input-text">
                     <input type="text" asp-for="FirstName" placeholder="First name" class="form-control">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -31,19 +35,19 @@
                     <span asp-validation-for="MobileNumber" class="text-danger"></span>
                 </div>
                 <div class="form-input-text">
-                    <input type="text" asp-for="Password" placeholder="Password" class="form-control">
+                    <input type="password" asp-for="Password" placeholder="Password" class="form-control">
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-input-text">
-                    <input type="text" asp-for="ConfirmPassword" placeholder="Confirm Password" class="form-control">
+                    <input type="password" asp-for="ConfirmPassword" placeholder="Confirm Password" class="form-control">
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 @*<div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="newsLetter">
-                        <label class="form-check-label" for="newsLetter">
-                            Send me newsletters from Helperland
-                        </label>
-                    </div>*@
+            <input class="form-check-input" type="checkbox" value="" id="newsLetter">
+            <label class="form-check-label" for="newsLetter">
+                Send me newsletters from Helperland
+            </label>
+        </div>*@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="termsCondition">
                     <label class="form-check-label" for="termsCondition">

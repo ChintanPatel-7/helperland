@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace Helperland.ViewModels
         [Required(ErrorMessage = "Please enter Last name")]
         public string LastName { get; set; }
 
+
+        [Remote(action: "IsEmailInUse", controller: "Account")]
         [Required(ErrorMessage = "Please enter E-mail address")]
         [EmailAddress(ErrorMessage = "Please enter Valid email Address")]
         public string Email { get; set; }

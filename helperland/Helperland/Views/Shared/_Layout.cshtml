@@ -1,4 +1,13 @@
-﻿@model LoginViewModel
+﻿
+@{
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +21,9 @@
 
     <!-- Bootstrap css -->
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- sweetalert2 -->
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
 
     <!-- Website Css -->
     <link href="~/css/style.css" rel="stylesheet" />
@@ -33,15 +45,49 @@
     <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-xl navbar-light @( ViewBag.navbar == "transparentNavbar" ? "transparentNavbar" : "navbar-bg-color")">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+            <a class="navbar-brand me-auto" asp-controller="Home" asp-action="Index">
                 <img src="~/img/logo/white-logo-transparent-background.png" alt="">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                @if (user != null)
+                {
+                <ul class="navbar-nav d-xl-none">
+                    <li class="nav-item user-name">
+                        Welcome,<br>
+                        <span>@sessionUser.UserName</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Dashboard" asp-controller="@sessionUser.UserType">Dashboard</a>
+                    </li>
+                    @if (sessionUser.UserType != UserTypeEnum.Admin.ToString())
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">New Service Requests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Upcoming Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Service Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Service History</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">My Ratings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Block Customer</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Setting</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
+                    </li>
+                </ul>
+                }
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navLinks">
                     <li class="nav-item">
                         <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" href="#">
@@ -85,13 +131,16 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="contact">Contact</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Account" asp-action="BecomeAPro" >Become a Helper</a>
-                    </li>
-                    <li class="d-none @( ViewBag.navbar == "transparentNavbar" ? (ViewBag.displayFlag == true ? "nav-item dropdown d-xl-block" : "" ) : "")">
+                    @if (user == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Home" asp-action="OpenLoginModel">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
+                        </li>
+                    }
+                    <li class="d-none @( ViewBag.navbar == "transparentNavbar" ? (ViewBag.hideFlag == true ? "" : "nav-item dropdown d-xl-block" ) : "")">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="~/img/home/country-flag/gb.svg" alt="united kingdom flag"
@@ -113,7 +162,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div class="social-links d-xl-none mt-3">
+                <div class="social-links d-xl-none mt-3 pb-4">
                     <a href="#" class="ms-3">
                         <img src="~/img/facebook-f-brands.svg" alt="" class="fb-icon">
                     </a>
@@ -123,6 +172,48 @@
                 </div>
             </div>
             <div class="backblack"></div>
+            @if (user != null)
+            {
+                <div class="notification-profile-menu">
+                    <ul class="d-flex">
+                        <li class="nav-item dropdown notification-dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/img/admin-panel/icon-notification.png" alt="">
+                                <span>2</span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Notification1</a></li>
+                                <li><a class="dropdown-item" href="#">Notification1</a></li>
+                                <li><a class="dropdown-item" href="#">Show more</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown user-detail-dropdown d-none d-xl-block">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="~/img/admin-panel/admin-user.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="user-name ps-3">
+                                    Welcome,<br>
+                                    <span>@sessionUser.UserName</span>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" asp-action="Dashboard" asp-controller="@sessionUser.UserType">My Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Settings</a></li>
+                                <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            }
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="fa fa-bars"></span>
+            </button>
         </div>
     </nav>
 
@@ -175,57 +266,6 @@
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h3>Login to your account</h3>
-                    <form asp-controller="Account" >
-                        <div asp-validation-summary="All"></div>
-                        <div class="mb-3 position-relative">
-                            <input type="text" class="form-control" placeholder="Email" />
-                            <img src="~/img/user.png" class="model-icon" />
-                        </div>
-                        <div class="mb-3 position-relative">
-                            <input type="password" class="form-control" placeholder="Password" />
-                            <img src="~/img/lock.png" class="model-icon" />
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Remember me</label>
-                        </div>
-                        <button type="submit" class="model-button mb-25">Login</button>
-                        <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password?</a></div>
-                        <div class="text-center">
-                            Don't have an account? <a class="model-link" asp-controller="Account" asp-action="UserRegistration">Create an account</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Forgot Password Modal -->
-    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <h3>Forgot password</h3>
-                    <form>
-                        <div class="mb-3 position-relative">
-                            <input type="text" class="form-control" placeholder="Email Address" />
-                        </div>
-                        <button type="submit" class="model-button mb-25">Send</button>
-                        <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Client side validation scripts-->
     <partial name="_ValidationScriptsPartial" />
 
@@ -234,6 +274,9 @@
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+    <!-- sweetalert2 -->
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

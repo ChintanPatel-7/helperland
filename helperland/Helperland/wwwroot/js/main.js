@@ -41,12 +41,6 @@ $(document).ready(function () {
         $('.backblack').removeClass("open");
     });
 
-    //prevent ouside click of model
-    $('#loginModal').modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-
     //on model open   close sidebar(navbar) for smaller devices
     $(".modal").on('show.bs.modal', function () {
         $(".navbar .navbar-collapse").removeClass("show");

@@ -203,6 +203,10 @@ section {
     box-shadow: 0 0 30px 0 #e4ebf0;
 }
 
+.min-height-64vh{
+    min-height : 64.5vh !important;
+}
+
 /* Navbar start*/
 
 .navbar {
@@ -577,7 +581,7 @@ footer {
         padding: 25px;
     }
 
-    .modal-content .btn-close {
+    .modal-content .model-btn-close {
         position: absolute;
         top: 0;
         right: 0;
@@ -586,12 +590,16 @@ footer {
         z-index: 5;
     }
 
-    .modal-content h3 {
-        font-size: 24px;
-        margin-bottom: 30px;
-        color: #646464;
-        font-weight: 600;
-    }
+        .modal-content .btn-close:focus{
+            box-shadow: none;
+        }
+
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #646464;
+            font-weight: 600;
+        }
 
     .modal-content .model-icon {
         position: absolute;
@@ -1987,36 +1995,37 @@ footer {
 
 /*User Registration page start*/
 
-.User-registration form {
+.Registration-Reset form {
     max-width: 615px;
     margin: 0px auto;
     color: #4f4f4f;
 }
 
-    .User-registration form input[type=text],
-    .User-registration form input[type=password] {
+    .Registration-Reset form input[type=text],
+    .Registration-Reset form input[type=password] {
         height: 46px;
     }
 
-        .User-registration form input[type=text]:focus,
-        .User-registration form input[type=password]:focus {
+        .Registration-Reset form input[type=text]:focus,
+        .Registration-Reset form input[type=password]:focus {
             border-color: #1d798c;
             outline: 0;
             box-shadow: none;
         }
 
-    .User-registration form .form-check-input:checked {
+    .Registration-Reset form .form-check-input:checked {
         background-color: #1d798c;
         border-color: #1d798c;
     }
 
-    .User-registration form .form-check-input:focus {
+    .Registration-Reset form .form-check-input:focus {
         border-color: #1d798c;
         outline: 0;
         box-shadow: none;
     }
 
-    .User-registration form .register-button {
+    .Registration-Reset form .register-button,
+    .Registration-Reset .resetPage-button {
         color: #fff;
         font-weight: 600;
         background: #1d7a8c;
@@ -2028,16 +2037,17 @@ footer {
         padding: 15px 30px;
     }
 
-        .User-registration form .register-button:hover {
+        .Registration-Reset form .register-button:hover,
+        .Registration-Reset .resetPage-button:hover {
             background: #146371 !important;
         }
 
-    .User-registration form a {
+    .Registration-Reset form a {
         color: #1d7a8c;
         text-decoration: none !important;
     }
 
-        .User-registration form a:hover {
+        .Registration-Reset form a:hover {
             color: #1890ca;
         }
 
