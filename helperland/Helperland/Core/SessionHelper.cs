@@ -22,7 +22,7 @@ namespace Helperland.Core
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var user = filterContext.HttpContext.Session.GetString("User");
-
+            filterContext.HttpContext.Request.Path.ToString();
             if (user == null)
             {
                 filterContext.Result = new RedirectToRouteResult(new { action = "Index", controller = "Home"});

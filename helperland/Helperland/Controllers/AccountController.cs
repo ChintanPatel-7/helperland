@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
+    [CookieHelper]
     public class AccountController : Controller
     {
         private readonly HelperlandContext _helperlandContext;
@@ -54,6 +55,13 @@ namespace Helperland.Controllers
 
                     HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
 
+                    if (model.Login.RememberMe == true)
+                    {
+                        CookieOptions cookieOptions = new CookieOptions();
+                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                        HttpContext.Response.Cookies.Append("UserEmail", model.Login.Email, cookieOptions);
+                    }
+
                     if (_user.UserTypeId == (int)UserTypeEnum.Admin)
                     {
                         return RedirectToAction("UserManagement", "Admin");
@@ -87,6 +95,10 @@ namespace Helperland.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+            if (Request.Cookies["UserEmail"] != null)
+            {
+                Response.Cookies.Delete("UserEmail");
+            }
             return RedirectToAction("Index", "Home");
         }
 

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     var user = Context.Session.GetString("User");
     SessionUser sessionUser = new SessionUser();
 
@@ -21,6 +20,9 @@
 
     <!-- Bootstrap css -->
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- DataTable -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
 
     <!-- sweetalert2 -->
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
@@ -51,56 +53,49 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 @if (user != null)
                 {
-                <ul class="navbar-nav d-xl-none">
-                    <li class="nav-item user-name">
-                        Welcome,<br>
-                        <span>@sessionUser.UserName</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Dashboard" asp-controller="@sessionUser.UserType">Dashboard</a>
-                    </li>
-                    @if (sessionUser.UserType != UserTypeEnum.Admin.ToString())
-                    {
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">New Service Requests</a>
+                    <ul class="navbar-nav d-xl-none">
+                        <li class="nav-item user-name">
+                            Welcome,<br>
+                            <span>@sessionUser.UserName</span>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Upcoming Services</a>
+                            <a class="nav-link" asp-action="Dashboard" asp-controller="@sessionUser.UserType">Dashboard</a>
+                        </li>
+                        @if (sessionUser.UserType != UserTypeEnum.Admin.ToString())
+                        {
+                            @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                            {
+                                <partial name="_UserLayoutCustomerSideBar" />
+                            }
+                            else if (sessionUser.UserType == UserTypeEnum.ServiceProvider.ToString())
+                            {
+                                <partial name="_UserLayoutServiceProviderSideBar" />
+                            }
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Setting</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Service Schedule</a>
+                            <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Service History</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">My Ratings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Block Customer</a>
-                        </li>
-                    }
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Setting</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
-                    </li>
-                </ul>
+                    </ul>
                 }
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0" id="navLinks">
-                    <li class="nav-item">
-                        <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" href="#">
-                            @if (ViewBag.navbar == "transparentNavbar")
-                            {
-                                <span>Book a Cleaner</span>
-                            }
-                            else
-                            {
-                                <span>Book now</span>
-                            }
-                        </a>
-                    </li>
+                    @if (user == null || sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-action="BookService" asp-controller="Home">
+                                @if (ViewBag.navbar == "transparentNavbar")
+                                {
+                                    <span>Book a Cleaner</span>
+                                }
+                                else
+                                {
+                                    <span>Book now</span>
+                                }
+                            </a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Home" asp-action="prices">
                             @if (ViewBag.navbar == "transparentNavbar")
@@ -266,6 +261,14 @@
         </div>
     </footer>
 
+    <!-- Login and Forgot Password Bootstrap Model -->
+    @if (ViewBag.OpenModel != null)
+    {
+        <partial name="_LoginForgotPasswordPartial.cshtml" />
+    }
+
+
+
     <!-- Client side validation scripts-->
     <partial name="_ValidationScriptsPartial" />
 
@@ -276,6 +279,11 @@
     <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
     <!-- sweetalert2 -->
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+
+    <!-- DataTable -->
+    @*<script src="~/lib/datatables/js/jquery.dataTables.js"></script>*@
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

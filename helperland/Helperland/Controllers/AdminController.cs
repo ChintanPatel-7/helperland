@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
+    [CookieHelper]
+    [SessionHelper(userType: UserTypeEnum.Admin)]
     public class AdminController : Controller
     {
         public IActionResult Index()
@@ -15,7 +17,6 @@ namespace Helperland.Controllers
             return View();
         }
 
-        [SessionHelper(userType: UserTypeEnum.Admin)]
         public IActionResult UserManagement()
         {
             return View();

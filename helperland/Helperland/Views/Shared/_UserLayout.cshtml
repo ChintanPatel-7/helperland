@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var user = Context.Session.GetString("User");
+    SessionUser sessionUser = new SessionUser();
+
+    if (user != null)
+    {
+        sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+    }
+}
+
+<!-- Welcome-text -->
+<section class="welcome-text text-center" id="welcome-text">
+    <h1>Welcome, <span>@sessionUser.UserName</span></h1>
+</section>
+
+<!-- SideBar + Service-history List -->
+<section class="main-body" id="main-body">
+    <div class="max-width-1180">
+
+        <div class="d-flex">
+            <!-- side Bar -->
+            <div class="side-bar">
+                <ul class="side-bar-menu h-100">
+                    <li class="nav-item"><a asp-controller="@sessionUser.UserType" asp-action="" class="nav-link">Dashboard</a></li>
+
+                    @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                    {
+                        <partial name="_UserLayoutCustomerSideBar" />
+                    }
+                    else if (sessionUser.UserType == UserTypeEnum.ServiceProvider.ToString())
+                    {
+                        <partial name="_UserLayoutServiceProviderSideBar" />
+                    }
+
+                </ul>
+            </div>
+
+            @RenderBody()
+
+        </div>
+
+    </div>
+</section>
+
+@section Scripts{
+
+    @RenderSection("UserLayoutScripts", required: false)
+}

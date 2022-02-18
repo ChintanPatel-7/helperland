@@ -203,8 +203,8 @@ section {
     box-shadow: 0 0 30px 0 #e4ebf0;
 }
 
-.min-height-64vh{
-    min-height : 64.5vh !important;
+.min-height-64vh {
+    min-height: 64.5vh !important;
 }
 
 /* Navbar start*/
@@ -590,16 +590,16 @@ footer {
         z-index: 5;
     }
 
-        .modal-content .btn-close:focus{
-            box-shadow: none;
-        }
+    .modal-content .btn-close:focus {
+        box-shadow: none;
+    }
 
-        .modal-content h3 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            color: #646464;
-            font-weight: 600;
-        }
+    .modal-content h3 {
+        font-size: 24px;
+        margin-bottom: 30px;
+        color: #646464;
+        font-weight: 600;
+    }
 
     .modal-content .model-icon {
         position: absolute;
@@ -1258,12 +1258,12 @@ footer {
             height: 100%;
         }
 
-            .register-now .register-now-form .form-input-text input {
-                font-size: 16px;
-                line-height: 24px;
-                /* color: #a0a0a0; -- check for placeholder color*/
-                padding: 16px;
-            }
+        .register-now .register-now-form .form-input-text input {
+            font-size: 16px;
+            line-height: 24px;
+            /* color: #a0a0a0; -- check for placeholder color*/
+            padding: 16px;
+        }
 
 
         .register-now .register-now-form input[type=text]:focus,
@@ -1429,7 +1429,7 @@ footer {
     background-color: #f9f9f9;
     padding-top: 44px;
     padding-bottom: 46px;
-    margin-top: 64px;
+    margin-top: 80px;
 }
 
     .welcome-text h1 {
@@ -1458,7 +1458,7 @@ footer {
         background-color: #1d7a8c;
     }
 
-        .side-bar .side-bar-menu .side-menu-link {
+        .side-bar .side-bar-menu .nav-item {
             min-width: 262px;
             font-size: 18px;
             line-height: 55px;
@@ -1467,18 +1467,18 @@ footer {
             padding-left: 15px;
         }
 
-            .side-bar .side-bar-menu .side-menu-link:hover {
-                background-color: #146371;
-            }
+        .side-bar .side-bar-menu .nav-link:hover {
+            background-color: #146371;
+        }
 
-            .side-bar .side-bar-menu .side-menu-link.active {
-                background-color: #146371;
-            }
+        .side-bar .side-bar-menu .nav-link.active {
+            background-color: #146371;
+        }
 
-            .side-bar .side-bar-menu .side-menu-link a {
-                color: #fff;
-                text-decoration: none;
-            }
+        .side-bar .side-bar-menu .nav-link {
+            color: #fff;
+            text-decoration: none;
+        }
 
 .main-content {
     width: 845px;
@@ -1729,6 +1729,7 @@ footer {
     padding: 13px 15px 10px;
     background-color: #f3f3f3;
     color: #838383;
+    border: 1px solid #dcdcdc;
 }
 
     .set-up-cleaning-services .nav .nav-link img {
@@ -1739,6 +1740,11 @@ footer {
     .set-up-cleaning-services .nav .nav-link.fill {
         background-color: #1d7a8c;
         color: #fff;
+        cursor: default;
+        border-left: 1px solid transparent !important;
+        border-top: 1px solid transparent !important;
+        border-bottom: 1px solid transparent !important;
+        border-right: 1px solid #fff !important;
     }
 
         .set-up-cleaning-services .nav .nav-link.active::after {
@@ -1846,10 +1852,23 @@ footer {
     color: #fff;
     background-color: #1d7a8c;
     border: 0px;
-    border-radius: 20px;
+    border-radius: 25px;
     font-size: 18px;
     padding: 7px 25px;
+    border: 1px solid #1d7a8c;
 }
+
+.set-up-cleaning-services .button-outline {
+    color: #1d7a8c;
+    background-color: #fff;
+    border: 2px solid #1d7a8c;
+    padding: 7px 20px;
+}
+
+    .set-up-cleaning-services .button-outline:hover {
+        color: #fff;
+        background-color: #1d7a8c;
+    }
 
 .set-up-cleaning-services input[type="date"] {
     display: inline-block;
@@ -1858,15 +1877,154 @@ footer {
     margin-right: 10px;
 }
 
-    .set-up-cleaning-services input[type="date"]::-webkit-inner-spin-button,
-    .set-up-cleaning-services input[type="date"]::-webkit-calendar-picker-indicator {
-        font-size: 30px;
-        background: transparent url(../img/book-service/calendar-book-service.png) 9px center no-repeat !important;
-        left: -25px;
-        /* padding-left: 0px !important; */
-        position: absolute;
-        z-index: 999;
+.set-up-cleaning-services input[type=text],
+.set-up-cleaning-services input[type=date],
+.set-up-cleaning-services select {
+    height: 46px;
+}
+
+    .set-up-cleaning-services input[type=text]:focus,
+    .set-up-cleaning-services input[type=checkbox]:focus,
+    .set-up-cleaning-services input[type=date]:focus,
+    .set-up-cleaning-services select:focus,
+    .set-up-cleaning-services textarea:focus {
+        border-color: #1d798c;
+        outline: 0;
+        box-shadow: none;
     }
+
+.set-up-cleaning-services input[type=checkbox]:checked {
+    background-color: #1d798c !important;
+}
+
+.set-up-cleaning-services input[name="UserAddressListYourDetailTab"]{
+    position:relative;
+}
+
+    .set-up-cleaning-services input[name="UserAddressListYourDetailTab"]:checked {
+        border: 1px solid #1d7a8c;
+        background-color: transparent !important;
+    }
+
+    .set-up-cleaning-services input[name="UserAddressListYourDetailTab"]:checked::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 2.1px;
+        left: 2.1px;
+        width: 10px;
+        height: 10px;
+        background-color: #1d7a8c;
+        border-radius: 12px;
+    }
+
+/*.set-up-cleaning-services .form-check-input:checked[type=radio] {
+    background-image: none !important;
+}
+
+.set-up-cleaning-services .form-check .form-check-input:checked {
+    background-color: #1d7a8c;
+}*/
+.set-up-cleaning-services .form-check-input:focus {
+    border-color: #1d798c;
+    outline: 0;
+    box-shadow: none;
+}
+
+.set-up-cleaning-services input[type="date"]::-webkit-inner-spin-button,
+.set-up-cleaning-services input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../img/book-service/calendar-book-service.png) 9px center no-repeat !important;
+    left: -25px;
+    /* padding-left: 0px !important; */
+    position: absolute;
+    z-index: 999;
+}
+
+.set-up-cleaning-services .address-box {
+    padding: 0px;
+}
+
+    .set-up-cleaning-services .address-box .address {
+        list-style: none;
+        position: relative;
+        font-size: 16px;
+        color: #4f4f4f;
+        font-weight: 400;
+        border: 1px solid #c8c8c8;
+        display: block;
+        border-radius: 3px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+
+        .set-up-cleaning-services .address-box .address .address-radioBtn {
+            margin-right: 10px;
+        }
+
+        .set-up-cleaning-services .address-box .address label {
+            padding: 13px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .set-up-cleaning-services .address-box .address span {
+            display: inline-block;
+        }
+
+.set-up-cleaning-services .Add-newAddress-box {
+    display: none;
+    padding: 15px;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+    margin: 15px 0 20px;
+    background: #f8f8f8;
+}
+
+.set-up-cleaning-services .form-check a {
+    color: #1d7a8c;
+    text-decoration: none !important;
+}
+
+    .set-up-cleaning-services .form-check a:hover {
+        color: #1890ca;
+    }
+
+.set-up-cleaning-services .card-number {
+    padding-left: 50px;
+}
+
+.set-up-cleaning-services .img-card-inputTag {
+    position: absolute;
+    width: 25px;
+    top: 11px;
+    left: 25px;
+}
+
+.set-up-cleaning-services .expiry-date {
+    position: absolute;
+    top: 1px;
+    right: 70px;
+    width: 90px;
+    border: 0px;
+    height: 44px !important;
+}
+
+.set-up-cleaning-services .cvc {
+    position: absolute;
+    top: 1px;
+    right: 14px;
+    width: 65px;
+    border: 0px;
+    height: 44px !important;
+}
+
+.set-up-cleaning-services #Make-Payment-tabContent small{
+    font-size: 12px;
+    float: right;
+}
+
+
 
 .set-up-cleaning-services .card {
     box-shadow: 0 0 10px rgb(0 0 0 / 30%);

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Helperland.Controllers
 {
+    [CookieHelper]
     public class ServiceProviderController : Controller
     {
         [SessionHelper(userType: UserTypeEnum.ServiceProvider)]

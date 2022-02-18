@@ -60,6 +60,10 @@
         padding: 0px 20px !important;
     }
 
+    .navbar .navbar-nav li a:hover {
+        border: 0px;
+    }
+
     .navbar .navbar-nav .user-name {
         padding: 10px 20px 5px;
         font-size: 18px;
@@ -127,7 +131,7 @@
         margin-right: 0px;
     }
 
-    .set-up-cleaning-services .nav .nav-link label{
+    .set-up-cleaning-services .nav .nav-link span{
         display: block;
     }
 
@@ -200,7 +204,7 @@
 
     /* book Service page start */
 
-    .set-up-cleaning-services .nav .nav-link label{
+    .set-up-cleaning-services .nav .nav-link span{
         display: none;
     }
 
@@ -387,6 +391,31 @@
 
     .faq .faq-questions .question-tab .nav-item {
         display: contents;
+    }
+
+    /* Book Service */
+
+    .set-up-cleaning-services .card-number {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .set-up-cleaning-services .img-card-inputTag{
+        display: none;
+    }
+
+    .set-up-cleaning-services .expiry-date {
+        right: 50px;
+        width: 80px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .set-up-cleaning-services .cvc {
+        right: 13px;
+        width: 50px;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 }
 

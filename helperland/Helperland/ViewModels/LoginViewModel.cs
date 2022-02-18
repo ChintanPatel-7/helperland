@@ -11,6 +11,7 @@ namespace Helperland.ViewModels
         [Required(ErrorMessage = "Please enter an email")]
         public string Email { get; set; }
 
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Please enter a password")]
         public string Password { get; set; }
 
