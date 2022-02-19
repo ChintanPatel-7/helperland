@@ -265,7 +265,9 @@
                                 <img src="~/img/book-service/credit-card-inputTagImg.png" class="img-card-inputTag" />
                                 <input type="text" id="CardExpiryDate" name="CardExpiryDate" class="form-control expiry-date" placeholder="MM / YY" />
                                 <input type="text" id="CardCVC" name="CardCVC" class="form-control cvc" placeholder="CVC" />
-
+                                <span id="ErrorMessageCardNumber" class="text-danger"></span>
+                                <span id="ErrorMessageCardExpiryDate" class="text-danger"></span>
+                                <span id="ErrorMessageCardCVC" class="text-danger"></span>
                             </div>
 
                             <div class="col-md-12">
@@ -280,9 +282,10 @@
                             <div class="col-md-12">
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="TermsAndCondition">
-                                    <label class="form-check-label" for="terms&Condition">
+                                    <label class="form-check-label" for="TermsAndCondition">
                                         I accepted <a href="#">terms and conditions</a>, the <a href="#">cancellation policy</a> and the <a href="#">privacy policy</a>. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
                                     </label>
+                                    <span id="ErrorMessageTermsAndCondition" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -411,6 +414,29 @@
                 </div>
 
                 <button type="button" class="model-button mb-2" onclick="ConfirmServiceTime()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Book Service Model-->
+<div class="modal" id="BookServiceMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body p-4 text-center">
+                <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CancelConfirmServiceTime()"></button>
+                
+                <span class="imgCircle mt-4 mb-4">
+                    <img src="~/img/book-service/correct-white-medium.png" />
+                </span>
+                
+                <h3>Booking has been successfully submited</h3>
+
+                <div class="mb-4">
+                    Service Request Id : <label id="lblServiceRequestId"></label>
+                </div>
+
+                <button type="button" class="model-button mb-2 w-auto">Ok</button>
             </div>
         </div>
     </div>

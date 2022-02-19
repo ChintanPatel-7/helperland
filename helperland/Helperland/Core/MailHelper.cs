@@ -110,5 +110,40 @@ namespace Helperland.Core
                 return false;
             }
         }
+
+        public bool SendServiceRequestToServiceProvider(EmailModel model)
+        {
+            try
+            {
+                var host = _configuration["Gmail:Host"];
+                var port = int.Parse(_configuration["Gmail:Port"]);
+                var username = _configuration["Gmail:Username"];
+                var password = _configuration["Gmail:Password"];
+                var enable = bool.Parse(_configuration["Gmail:SMTP:starttls:enable"]);
+
+                model.From = _configuration["Gmail:Username"];
+                model.To = model.To;
+
+                var smtpClient = new SmtpClient
+                {
+                    Host = host,
+                    Port = port,
+                    EnableSsl = enable,
+                    Credentials = new NetworkCredential(username, password)
+                };
+
+                var mailMessage = new MailMessage(model.From, model.To, model.Subject, model.Body);
+
+                mailMessage.IsBodyHtml = true;
+
+                smtpClient.Send(mailMessage);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

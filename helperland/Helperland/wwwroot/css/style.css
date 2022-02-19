@@ -707,7 +707,7 @@ footer {
                         padding-right: 12px;
                     }
 
-        .home .home-content .button button {
+        .home .home-content .button a {
             border: 1px solid white;
             background-color: #00607287;
             color: white;
@@ -715,10 +715,10 @@ footer {
             font-size: 18px;
             line-height: 24px;
             padding: 18px 32px;
-            margin-bottom: 60px;
+            text-decoration: none;
         }
 
-            .home .home-content .button button:hover {
+            .home .home-content .button a:hover {
                 background-color: white;
                 color: #006072;
             }
@@ -2148,11 +2148,15 @@ footer {
     background-color: #afacac;
 }
 
-
+#BookServiceMessageModal .imgCircle {
+    display: inline-block;
+    background: #67b644;
+    padding: 25px;
+    border-radius: 50px;
+}
+/*model*/
 /* book Service page end */
-
 /*User Registration page start*/
-
 .Registration-Reset form {
     max-width: 615px;
     margin: 0px auto;

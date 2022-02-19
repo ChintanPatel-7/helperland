@@ -125,7 +125,6 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.GeneratedMSBuildEditorConfig.editorconfig
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.AssemblyInfoInputs.cache
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.AssemblyInfo.cs
@@ -171,3 +170,4 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.dll
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.pdb
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.genruntimeconfig.cache
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache

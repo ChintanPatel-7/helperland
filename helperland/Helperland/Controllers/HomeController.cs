@@ -31,10 +31,14 @@ namespace Helperland.Controllers
         private readonly IUserAddressRepository _userAddressRepository;
         private readonly ICityRepository _cityRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IServiceRequestRepository _serviceRequestRepository;
+        private readonly IServiceRequestAddressRepository _serviceRequestAddressRepository;
+        private readonly IServiceRequestExtraRepository _serviceRequestExtraRepository;
 
         public HomeController(ILogger<HomeController> logger, HelperlandContext helperlandContext,
             IHostingEnvironment hostingEnvironment, IConfiguration configuration, IUserAddressRepository userAddressRepository,
-            ICityRepository cityRepository, IUserRepository userRepository)
+            ICityRepository cityRepository, IUserRepository userRepository, IServiceRequestRepository serviceRequestRepository, 
+            IServiceRequestAddressRepository serviceRequestAddressRepository, IServiceRequestExtraRepository serviceRequestExtraRepository)
         {
             _logger = logger;
             this._helperlandContext = helperlandContext;
@@ -43,6 +47,9 @@ namespace Helperland.Controllers
             this._userAddressRepository = userAddressRepository;
             this._cityRepository = cityRepository;
             this._userRepository = userRepository;
+            this._serviceRequestRepository = serviceRequestRepository;
+            this._serviceRequestAddressRepository = serviceRequestAddressRepository;
+            this._serviceRequestExtraRepository = serviceRequestExtraRepository;
         }
 
         public IActionResult Index()
@@ -118,7 +125,6 @@ namespace Helperland.Controllers
                 };
 
                 MailHelper mailHelper = new MailHelper(_configuration);
-
                 mailHelper.SendContactUsDetail(emailModel);
 
                 ModelState.Clear();
@@ -165,6 +171,7 @@ namespace Helperland.Controllers
             return View("BookServiceCustomerAddressList", userAddresseList);
         }
 
+        [HttpPost]
         public JsonResult GetCitiesByPostalCode(string postalCode)
         {
             List<City> cities = _cityRepository.GetCitiesByPostalCode(postalCode);
@@ -192,6 +199,65 @@ namespace Helperland.Controllers
             };
             userAddress = _userAddressRepository.AddUserAddress(userAddress);
             return Json(userAddress);
+        }
+
+        [HttpPost]
+        public JsonResult BookCustomerServiceRequest([FromBody] ServiceRequestViewModel model)
+        {
+            ServiceRequest serviceRequest = new ServiceRequest
+            {
+                UserId = model.UserId,
+                ServiceId = 0,
+                ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate + " " + model.ServiceStartTime),
+                ZipCode = model.ZipCode,
+                ServiceHourlyRate = model.ServiceHourlyRate,
+                ServiceHours = model.ServiceHours,
+                ExtraHours = model.ExtraHours,
+                SubTotal = Convert.ToDecimal(model.SubTotal),
+                Discount = 0,
+                TotalCost = Convert.ToDecimal(model.TotalCost),
+                Comments = model.Comments,
+                PaymentDue = false,
+                HasPets = model.HasPets,
+                CreatedDate = DateTime.Now,
+                ModifiedDate = DateTime.Now,
+                Distance = 0,
+                RecordVersion = Guid.NewGuid()
+            };
+
+            _serviceRequestRepository.Add(serviceRequest);
+
+            model.ServiceRequestId = serviceRequest.ServiceRequestId;
+
+            UserAddress userAddress = _userAddressRepository.SelectByPK(Convert.ToInt32(model.UserAddressId));
+
+            ServiceRequestAddress serviceRequestAddress = new ServiceRequestAddress
+            {
+                ServiceRequestId = serviceRequest.ServiceRequestId,
+                AddressLine1 = userAddress.AddressLine1,
+                AddressLine2 = userAddress.AddressLine2,
+                City = userAddress.City,
+                State = userAddress.State,
+                PostalCode = userAddress.PostalCode,
+                Mobile = userAddress.Mobile,
+                Email = userAddress.Email
+            };
+
+            _serviceRequestAddressRepository.Add(serviceRequestAddress);
+
+            ServiceRequestExtra serviceRequestExtra = new ServiceRequestExtra
+            {
+                ServiceRequestId = serviceRequest.ServiceRequestId
+            };
+
+            foreach (string extraService in model.ExtraServicesName)
+            {
+                serviceRequestExtra.ServiceRequestExtraId = 0;
+                serviceRequestExtra.ServiceExtraId = Convert.ToInt32((ExtraServiceEnum)System.Enum.Parse(typeof(ExtraServiceEnum), extraService));
+                _serviceRequestExtraRepository.Add(serviceRequestExtra);
+            }
+
+            return Json(model);
         }
 
         public IActionResult Privacy()

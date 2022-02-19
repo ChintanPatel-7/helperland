@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Helperland.Repository
 {
-    public class ServiceRequestRepository : IServiceRequestRepository
+    public class ServiceRequestExtraRepository : IServiceRequestExtraRepository
     {
         private readonly HelperlandContext _helperlandContext;
 
-        public ServiceRequestRepository(HelperlandContext helperlandContext)
+        public ServiceRequestExtraRepository(HelperlandContext helperlandContext)
         {
             this._helperlandContext = helperlandContext;
         }
 
-        public ServiceRequest Add(ServiceRequest serviceRequest)
+        public ServiceRequestExtra Add(ServiceRequestExtra serviceRequestExtra)
         {
-            _helperlandContext.ServiceRequests.Add(serviceRequest);
+            _helperlandContext.ServiceRequestExtras.Add(serviceRequestExtra);
             _helperlandContext.SaveChanges();
-            return serviceRequest;
+            return serviceRequestExtra;
         }
     }
 }

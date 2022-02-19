@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Helperland.Repository
 {
-    public interface IServiceRequestAddressRepository
+    public interface IServiceRequestExtraRepository
     {
-        ServiceRequestAddress Add(ServiceRequestAddress serviceRequestAddress);
+        ServiceRequestExtra Add(ServiceRequestExtra serviceRequestExtra);
     }
 }

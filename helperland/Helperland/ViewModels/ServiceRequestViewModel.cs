@@ -1,37 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Helperland.ViewModels
 {
     public class ServiceRequestViewModel
     {
+        [JsonPropertyName("serviceRequestId")]
         public int ServiceRequestId { get; set; }
+
+        [JsonPropertyName("userId")]
         public int UserId { get; set; }
-        public int ServiceId { get; set; }
-        public DateTime ServiceStartDate { get; set; }
+
+        [JsonPropertyName("postalCode")]
         public string ZipCode { get; set; }
-        public decimal? ServiceHourlyRate { get; set; }
-        public double ServiceHours { get; set; }
-        public double? ExtraHours { get; set; }
-        public decimal SubTotal { get; set; }
-        public decimal? Discount { get; set; }
-        public decimal TotalCost { get; set; }
+
+        [JsonPropertyName("serviceDate")]
+        public string ServiceStartDate { get; set; }
+
+        [JsonPropertyName("serviceTime")]
+        public string ServiceStartTime { get; set; }
+
+        [JsonPropertyName("serviceHourlyRate")]
+        public int ServiceHourlyRate { get; set; }
+
+        [JsonPropertyName("serviceHours")]
+        public float ServiceHours { get; set; }
+
+        [JsonPropertyName("extraHours")]
+        public float ExtraHours { get; set; }
+
+        [JsonPropertyName("extraServicesName")]
+        public string[] ExtraServicesName { get; set; }
+
+        [JsonPropertyName("subTotal")]
+        public float SubTotal { get; set; }
+
+        [JsonPropertyName("totalCost")]
+        public float TotalCost { get; set; }
+
+        [JsonPropertyName("comments")]
         public string Comments { get; set; }
-        public string PaymentTransactionRefNo { get; set; }
-        public bool PaymentDue { get; set; }
-        public int? ServiceProviderId { get; set; }
-        public DateTime? SpacceptedDate { get; set; }
+
+        [JsonPropertyName("hasPets")]
         public bool HasPets { get; set; }
-        public int? Status { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
-        public int? ModifiedBy { get; set; }
-        public decimal? RefundedAmount { get; set; }
-        public decimal Distance { get; set; }
-        public bool? HasIssue { get; set; }
-        public bool? PaymentDone { get; set; }
-        public Guid? RecordVersion { get; set; }
+
+        //[JsonPropertyName("streetName")]
+        //public string Distance { get; set; }
+
+        [JsonPropertyName("userAddressId")]
+        public string UserAddressId { get; set; }
+
+        [JsonPropertyName("paymentDone")]
+        public bool PaymentDone { get; set; }
     }
 }

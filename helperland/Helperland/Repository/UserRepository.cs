@@ -18,7 +18,7 @@ namespace Helperland.Repository
 
         public List<User> GetUserByPostalCode(string postalCode)
         {
-            return _helperlandContext.Users.Where(x => x.ZipCode == postalCode).ToList();
+            return _helperlandContext.Users.Where(x => x.ZipCode == postalCode && x.IsApproved == true).ToList();
         }
     }
 }

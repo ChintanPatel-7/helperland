@@ -217,7 +217,6 @@ function ConfirmServiceTime() {
     if (_basicServiceHour < 3 && $('#ServiceHours').val() == 3) {
         
         _basicServiceHour = 3;
-
         ResetExtraServicesScheduleAndPlanTab();
     }
     else {
@@ -231,6 +230,9 @@ function ConfirmServiceTime() {
 
 function CancelConfirmServiceTime() {
     $('#ServiceHours').val(_oldServiceHour);
+    _basicServiceHour = _oldServiceHour - (_extraServiceCount * 0.5);
+    $('#lblBasicServiceHours').html(_basicServiceHour + " Hrs");
+    TotalPayment();
 }
 //Second Tab - Schedule & plan -- end
 
@@ -346,40 +348,96 @@ function SelectCustomerAddress(isAddrssListAvailable) {
 
 //4th Tab - Make Payment -- Start
 
-////function CompleteBooking() {
+function CompleteBooking() {
 
-////    var ServiceRequest = {};
+    if ($("#CardNumber").val() == "") {
+        $('#ErrorMessageCardNumber').html("Please Enter Card Number.<br/>");
+    }
+    else {
+        $('#ErrorMessageCardNumber').html("");
+    }
+    if ($("#CardExpiryDate").val() == "") {
+        $('#ErrorMessageCardExpiryDate').html("Please Enter Card Expiry Date.<br/>");
+    }
+    else {
+        $('#ErrorMessageCardExpiryDate').html("");
+    }
+    if ($("#CardCVC").val() == "") {
+        $('#ErrorMessageCardCVC').html("Please Enter Card CVC.<br/>");
+    }
+    else {
+        $('#ErrorMessageCardCVC').html("");
+    }
 
-////    //Tab - 1
-////    ServiceRequest.postalCode = $("#PostalCode").val();
+    if ($('#TermsAndCondition').prop('checked') == false) {
+        $('#ErrorMessageTermsAndCondition').html("Please Accept terms and condition.");
+    }
+    else {
+        $('#ErrorMessageTermsAndCondition').html("");
+    }
 
-////    //Tab - 2
-////    ServiceRequest.serviceDate = $("#ServiceDate").val();
-////    ServiceRequest.serviceTime = $("#ServiceTime").val();
-////    ServiceRequest.serviceHours = $("#ServiceHours").val() - (parseFloat($('#hiddenExtraServiceCount').val()) * 0.5);
-////    ServiceRequest.extraHours = parseFloat($('#hiddenExtraServiceCount').val()) * 0.5;
+    if ($('#ErrorMessageCardNumber').text() != "" || $("#ErrorMessageCardExpiryDate").text() != "" || $("#ErrorMessageCardCVC").text() != "" || $('#ErrorMessageTermsAndCondition').text() != "") {
+        return;
+    }
 
-////    //Tab - 3
+    var ServiceRequest = {};
 
+    ServiceRequest.userId = _logInUserId;
 
-////    //$.ajax({
-////    //    url: '/Home/AddCustomerAddress',
-////    //    type: 'post',
-////    //    dataType: 'json',
-////    //    contentType: 'application/json',
-////    //    data: JSON.stringify(ServiceRequest),
-////    //    success: function (resp) {
-////    //        console.log(resp)
-////    //    },
-////    //    error: function (err) {
-////    //        console.log(err);
-////    //    }
-////    //});
-////}
+    //Tab - 1
+    ServiceRequest.postalCode = $("#PostalCode").val();
+
+    //Tab - 2
+    ServiceRequest.serviceDate = $("#ServiceDate").val();
+    ServiceRequest.serviceTime = $("#ServiceTime option:selected").text(); //text value
+    ServiceRequest.serviceHourlyRate = _serviceHourlyRate;
+    ServiceRequest.serviceHours = _basicServiceHour + (_extraServiceCount * 0.5);
+    ServiceRequest.extraHours = _extraServiceCount * 0.5;
+
+    ServiceRequest.extraServicesName = [];
+
+    $('input[name="ExtraServices"]').each(function () {
+        if (this.checked) {
+            ServiceRequest.extraServicesName.push(this.value);
+        }
+    });
+
+    totalAmount = (_basicServiceHour + (_extraServiceCount * 0.5)) * _serviceHourlyRate;
+
+    ServiceRequest.subTotal = totalAmount;
+    ServiceRequest.totalCost = totalAmount;
+    ServiceRequest.comments = $("#txtComment").val();
+    ServiceRequest.hasPets = $('#chkHasPet').prop('checked');
+
+    //Tab - 3
+
+    ServiceRequest.userAddressId = $('input[name=UserAddressListYourDetailTab]:checked').attr("id");
+
+    //Tab - 4
+
+    ServiceRequest.paymentDone = true;
+    
+    $.ajax({
+        url: '/Home/BookCustomerServiceRequest',
+        type: 'post',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(ServiceRequest),
+        success: function (resp) {
+            console.log(resp);
+            $("#lblServiceRequestId").html(resp.serviceRequestId);
+            $('#BookServiceMessageModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            $('#BookServiceMessageModal').modal('show');
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
 //4th Tab - Make Payment -- end
-
-//get id of selected address radio btn
-//$('input[name=UserAddressListYourDetailTab]:checked').attr("id")
 
 //Fill Payment Summary
 $('#ServiceDate').change(function () {

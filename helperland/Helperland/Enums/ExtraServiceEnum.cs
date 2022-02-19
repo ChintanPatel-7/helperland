@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Helperland.Enums
 {
-    public enum ExtraService
+    public enum ExtraServiceEnum
     {
         InsideCabinets = 1,
         InsideFridge = 2,

@@ -29,10 +29,11 @@ namespace Helperland.Repository
             return userAddress;
         }
 
-        //public List<UserAddress> getUserAddressByPostalCode(string postalCode)
-        //{
-        //    List<UserAddress> userAddressList = _helperlandContext.User.Where(x => x.ZipCode == postalCode).ToList();
-        //    return userAddressList;
-        //}
+        public UserAddress SelectByPK(int addressId)
+        {
+            UserAddress userAddress = _helperlandContext.UserAddresses.Where(x => x.AddressId == addressId).FirstOrDefault();
+            _helperlandContext.SaveChanges();
+            return userAddress;
+        }
     }
 }
