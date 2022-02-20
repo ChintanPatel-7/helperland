@@ -34,11 +34,13 @@ namespace Helperland.Controllers
         private readonly IServiceRequestRepository _serviceRequestRepository;
         private readonly IServiceRequestAddressRepository _serviceRequestAddressRepository;
         private readonly IServiceRequestExtraRepository _serviceRequestExtraRepository;
+        private readonly IStateRepository _stateRepository;
 
         public HomeController(ILogger<HomeController> logger, HelperlandContext helperlandContext,
             IHostingEnvironment hostingEnvironment, IConfiguration configuration, IUserAddressRepository userAddressRepository,
             ICityRepository cityRepository, IUserRepository userRepository, IServiceRequestRepository serviceRequestRepository, 
-            IServiceRequestAddressRepository serviceRequestAddressRepository, IServiceRequestExtraRepository serviceRequestExtraRepository)
+            IServiceRequestAddressRepository serviceRequestAddressRepository, IServiceRequestExtraRepository serviceRequestExtraRepository,
+            IStateRepository stateRepository)
         {
             _logger = logger;
             this._helperlandContext = helperlandContext;
@@ -50,6 +52,7 @@ namespace Helperland.Controllers
             this._serviceRequestRepository = serviceRequestRepository;
             this._serviceRequestAddressRepository = serviceRequestAddressRepository;
             this._serviceRequestExtraRepository = serviceRequestExtraRepository;
+            this._stateRepository = stateRepository;
         }
 
         public IActionResult Index()
@@ -188,12 +191,15 @@ namespace Helperland.Controllers
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
 
+            State state = _stateRepository.GetStateByCityName(userAddressViewModel.City.ToString().Trim());
+
             UserAddress userAddress = new UserAddress
             {
-                AddressLine1 = userAddressViewModel.StreetName,
-                AddressLine2 = userAddressViewModel.HouseNumber,
+                AddressLine1 = userAddressViewModel.StreetName.ToString().Trim(),
+                AddressLine2 = userAddressViewModel.HouseNumber.ToString().Trim(),
                 PostalCode = userAddressViewModel.PostalCode,
-                City = userAddressViewModel.City,
+                City = userAddressViewModel.City.ToString().Trim(),
+                State = state.StateName,
                 Mobile = userAddressViewModel.PhoneNumber,
                 UserId = Convert.ToInt32(sessionUser.UserID)
             };
@@ -208,15 +214,15 @@ namespace Helperland.Controllers
             {
                 UserId = model.UserId,
                 ServiceId = 0,
-                ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate + " " + model.ServiceStartTime),
-                ZipCode = model.ZipCode,
+                ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate.ToString().Trim() + " " + model.ServiceStartTime.ToString().Trim()),
+                ZipCode = model.ZipCode.ToString().Trim(),
                 ServiceHourlyRate = model.ServiceHourlyRate,
                 ServiceHours = model.ServiceHours,
                 ExtraHours = model.ExtraHours,
                 SubTotal = Convert.ToDecimal(model.SubTotal),
                 Discount = 0,
                 TotalCost = Convert.ToDecimal(model.TotalCost),
-                Comments = model.Comments,
+                Comments = model.Comments.ToString().Trim(),
                 PaymentDue = false,
                 HasPets = model.HasPets,
                 CreatedDate = DateTime.Now,

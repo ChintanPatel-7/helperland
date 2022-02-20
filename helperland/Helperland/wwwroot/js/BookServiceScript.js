@@ -215,7 +215,7 @@ function ScheduleAndPlanCompeleted(userId) {
 function ConfirmServiceTime() {
 
     if (_basicServiceHour < 3 && $('#ServiceHours').val() == 3) {
-        
+
         _basicServiceHour = 3;
         ResetExtraServicesScheduleAndPlanTab();
     }
@@ -284,7 +284,7 @@ function AddNewCustomerAddress() {
     }
 
     if ($('#UserPhoneNumber').val() != "") {
-        if (regularExpressionPhoneNumber.test($('#UserPhoneNumber'))) {
+        if (!regularExpressionPhoneNumber.test($('#UserPhoneNumber').val())) {
             $('#ErrorMessageUserPhoneNumber').html("Please Enter Valid Phone number.");
         }
         else {
@@ -295,10 +295,9 @@ function AddNewCustomerAddress() {
         $('#ErrorMessageUserPhoneNumber').html("");
     }
 
-    if ($('#ErrorMessageUserStreetName').val() != "" || $('#ErrorMessageUserPhoneNumber').val() != "") {
+    if ($('#ErrorMessageUserStreetName').text() != "" || $('#ErrorMessageUserPhoneNumber').text() != "") {
         return;
     }
-
     var userAddress = {};
 
     userAddress.streetName = $("#UserStreetName").val();
@@ -350,27 +349,38 @@ function SelectCustomerAddress(isAddrssListAvailable) {
 
 function CompleteBooking() {
 
+    var cardNumberRegularExpressionPattern = new RegExp("^[0-9]{16}$");
+    var cardCVCRegularExpressionPattern = new RegExp("^[0-9]{3}$");
+
     if ($("#CardNumber").val() == "") {
         $('#ErrorMessageCardNumber').html("Please Enter Card Number.<br/>");
+    }
+    else if (!cardNumberRegularExpressionPattern.test($("#CardNumber").val())) {
+        $('#ErrorMessageCardNumber').html("Please Enter Valid 16 digit Card Number.<br/>");
     }
     else {
         $('#ErrorMessageCardNumber').html("");
     }
+
     if ($("#CardExpiryDate").val() == "") {
         $('#ErrorMessageCardExpiryDate').html("Please Enter Card Expiry Date.<br/>");
     }
     else {
         $('#ErrorMessageCardExpiryDate').html("");
     }
+
     if ($("#CardCVC").val() == "") {
         $('#ErrorMessageCardCVC').html("Please Enter Card CVC.<br/>");
+    }
+    else if (!cardCVCRegularExpressionPattern.test($("#CardCVC").val())) {
+        $('#ErrorMessageCardCVC').html("Please Enter Valid 3 digit Card CVC.<br/>");
     }
     else {
         $('#ErrorMessageCardCVC').html("");
     }
 
     if ($('#TermsAndCondition').prop('checked') == false) {
-        $('#ErrorMessageTermsAndCondition').html("Please Accept terms and condition.");
+        $('#ErrorMessageTermsAndCondition').html("(* Required field)");
     }
     else {
         $('#ErrorMessageTermsAndCondition').html("");
@@ -416,7 +426,7 @@ function CompleteBooking() {
     //Tab - 4
 
     ServiceRequest.paymentDone = true;
-    
+
     $.ajax({
         url: '/Home/BookCustomerServiceRequest',
         type: 'post',
@@ -424,7 +434,6 @@ function CompleteBooking() {
         contentType: 'application/json',
         data: JSON.stringify(ServiceRequest),
         success: function (resp) {
-            console.log(resp);
             $("#lblServiceRequestId").html(resp.serviceRequestId);
             $('#BookServiceMessageModal').modal({
                 backdrop: 'static',

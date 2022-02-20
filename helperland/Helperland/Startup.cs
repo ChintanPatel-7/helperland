@@ -33,6 +33,7 @@ namespace Helperland
             services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
             services.AddScoped<IServiceRequestAddressRepository, ServiceRequestAddressRepository>();
             services.AddScoped<IServiceRequestExtraRepository, ServiceRequestExtraRepository>();
+            services.AddScoped<IStateRepository, StateRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
