@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Helperland.ViewModels
 {
     public class ForgotPasswordViewModel
     {
-        [Required(ErrorMessage = "Please enter E-mail address")]
-        [EmailAddress(ErrorMessage = "Please enter Valid email Address")]
+        [JsonPropertyName("email")]
         public string Email { get; set; }
     }
 }

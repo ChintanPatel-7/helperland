@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "rJ74eQnovYDrPyqIqxOSDio5Bt6byrQCLRKVnhrvLJhFu3QT96h2UBw53ORvTRtCpGvv1z6OEvj3rp6CS1C2WQ==",
+  "dgSpecHash": "K6hbn9UQeRzwlWtzGLn4YsYxRJny+JmwfNsP9+4xpRH6l3Ke3HuE6DT6lubxrGCjhHkOccgGrllqUUxSCxio1Q==",
   "success": true,
   "projectFilePath": "D:\\Company\\Training\\PSD to HTML\\website\\helperland\\Helperland\\Helperland.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\cp095\\.nuget\\packages\\bcrypt.net-next\\4.0.2\\bcrypt.net-next.4.0.2.nupkg.sha512",
     "C:\\Users\\cp095\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\cp095\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "C:\\Users\\cp095\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",

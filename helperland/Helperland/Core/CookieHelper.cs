@@ -40,21 +40,27 @@ namespace Helperland.Core
 
                     filterContext.HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
 
-                    if (sessionUser.UserType == UserTypeEnum.Admin.ToString())
-                    {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "UserManagement", controller = "Admin" });
-                        return;
-                    }
-                    else if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
-                    {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "BookService", controller = "Home" });
-                        return;
-                    }
-                    else if (sessionUser.UserType == UserTypeEnum.ServiceProvider.ToString())
-                    {
-                        filterContext.Result = new RedirectToRouteResult(new { action = "UpcomingService", controller = "ServiceProvider" });
-                        return;
-                    }
+                    var actionName = filterContext.RouteData.Values["action"] as string;
+                    var controllerName = filterContext.RouteData.Values["controller"] as string;
+
+                    filterContext.Result = new RedirectToRouteResult(new { action = actionName, controller = controllerName });
+                    return;
+
+                    //if (sessionUser.UserType == UserTypeEnum.Admin.ToString())
+                    //{
+                    //    filterContext.Result = new RedirectToRouteResult(new { action = "UserManagement", controller = "Admin" });
+                    //    return;
+                    //}
+                    //else if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+                    //{
+                    //    filterContext.Result = new RedirectToRouteResult(new { action = "ServiceHistory", controller = "Customer" });
+                    //    return;
+                    //}
+                    //else if (sessionUser.UserType == UserTypeEnum.ServiceProvider.ToString())
+                    //{
+                    //    filterContext.Result = new RedirectToRouteResult(new { action = "UpcomingService", controller = "ServiceProvider" });
+                    //    return;
+                    //}
                 }
             }
         }

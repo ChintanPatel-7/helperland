@@ -25,7 +25,10 @@ namespace Helperland.Core
             filterContext.HttpContext.Request.Path.ToString();
             if (user == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new { action = "Index", controller = "Home"});
+                var actionName = filterContext.RouteData.Values["action"] as string;
+                var controllerName = filterContext.RouteData.Values["controller"] as string;
+
+                filterContext.Result = new RedirectToActionResult("Index", "Home", new { returnUrl = controllerName + "/" + actionName });
                 return;
             }
             else

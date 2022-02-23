@@ -25,7 +25,6 @@ namespace Helperland.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly HelperlandContext _helperlandContext;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
         private readonly IUserAddressRepository _userAddressRepository;
@@ -35,15 +34,15 @@ namespace Helperland.Controllers
         private readonly IServiceRequestAddressRepository _serviceRequestAddressRepository;
         private readonly IServiceRequestExtraRepository _serviceRequestExtraRepository;
         private readonly IStateRepository _stateRepository;
+        private readonly IContactUsRepository _contactUsRepository;
 
-        public HomeController(ILogger<HomeController> logger, HelperlandContext helperlandContext,
+        public HomeController(ILogger<HomeController> logger,
             IHostingEnvironment hostingEnvironment, IConfiguration configuration, IUserAddressRepository userAddressRepository,
-            ICityRepository cityRepository, IUserRepository userRepository, IServiceRequestRepository serviceRequestRepository, 
+            ICityRepository cityRepository, IUserRepository userRepository, IServiceRequestRepository serviceRequestRepository,
             IServiceRequestAddressRepository serviceRequestAddressRepository, IServiceRequestExtraRepository serviceRequestExtraRepository,
-            IStateRepository stateRepository)
+            IStateRepository stateRepository, IContactUsRepository contactUsRepository)
         {
             _logger = logger;
-            this._helperlandContext = helperlandContext;
             this._hostingEnvironment = hostingEnvironment;
             this._configuration = configuration;
             this._userAddressRepository = userAddressRepository;
@@ -53,11 +52,12 @@ namespace Helperland.Controllers
             this._serviceRequestAddressRepository = serviceRequestAddressRepository;
             this._serviceRequestExtraRepository = serviceRequestExtraRepository;
             this._stateRepository = stateRepository;
+            this._contactUsRepository = contactUsRepository;
         }
 
         public IActionResult Index()
         {
-            if(TempData["OpenModel"] != null)
+            if (TempData["OpenModel"] != null)
             {
                 @ViewBag.OpenModel = TempData["OpenModel"].ToString();
             }
@@ -88,7 +88,7 @@ namespace Helperland.Controllers
         [HttpPost]
         public IActionResult contact(ContactViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 ContactU contactU = new ContactU
                 {
@@ -115,15 +115,14 @@ namespace Helperland.Controllers
                     contactU.UploadFileName = uniqueAttachmentName;
                 }
 
-                _helperlandContext.ContactUs.Add(contactU);
-                _helperlandContext.SaveChanges();
+                _contactUsRepository.Add(contactU);
 
                 //Send email to admin
 
                 EmailModel emailModel = new EmailModel
                 {
                     Subject = contactU.Subject,
-                    Body = contactU.Message,
+                    Body = "You have new Query.<br>Name : " + contactU.Name + "<br>Mobile number : " + contactU.PhoneNumber + "<br>Email : " + contactU.Email + "<br>Subject : " + contactU.Subject + "<br>Message : " + contactU.Message,
                     Attachment = attachmentFilePath
                 };
 
@@ -161,7 +160,7 @@ namespace Helperland.Controllers
         {
             List<User> user = _userRepository.GetUserByPostalCode(postalCode);
             bool IsServiceProviderAvailable = false;
-            if(user.Any())
+            if (user.Any())
             {
                 IsServiceProviderAvailable = true;
             }
@@ -261,6 +260,32 @@ namespace Helperland.Controllers
                 serviceRequestExtra.ServiceRequestExtraId = 0;
                 serviceRequestExtra.ServiceExtraId = Convert.ToInt32((ExtraServiceEnum)System.Enum.Parse(typeof(ExtraServiceEnum), extraService));
                 _serviceRequestExtraRepository.Add(serviceRequestExtra);
+            }
+
+            List<User> serviceProviders = _userRepository.GetUserByPostalCode(model.ZipCode.ToString().Trim());
+
+            if (serviceProviders.Any())
+            {
+                MailHelper mailHelper = new MailHelper(_configuration);
+                EmailModel emailModel = new EmailModel();
+
+                emailModel.Subject = "Customer Service Request";
+                emailModel.Body = "Hi {{DisplayName}},<br> There is new Service Request in your area.<br> " +
+                    "Service Request Id :"+ serviceRequest.ServiceRequestId + "<br> " +
+                    "Address : " + serviceRequestAddress.AddressLine1 + " " + serviceRequestAddress.AddressLine2 + ", " + serviceRequestAddress.City + ", " + serviceRequestAddress.State + " <br> " +
+                    "Postal Code:" + serviceRequestAddress.PostalCode + " <br> " +
+                    "Click on Link to accept request : <a href=\"http://" + this.Request.Host.ToString() + "/ServiceProvider/NewServiceRequest\">Accept Now</a>";
+
+                foreach (User user in serviceProviders)
+                {
+                    if (model.HasPets == true && user.WorksWithPets == false)
+                    {
+                        continue;
+                    }
+                    emailModel.To = user.Email;
+                    emailModel.Body = emailModel.Body.Replace("{{DisplayName}}", user.FirstName.ToString() + " " + user.LastName.ToString());
+                    mailHelper.SendServiceRequestToServiceProvider(emailModel);
+                }
             }
 
             return Json(model);

@@ -427,6 +427,8 @@ function CompleteBooking() {
 
     ServiceRequest.paymentDone = true;
 
+    $('#preloader').removeClass("d-none");
+
     $.ajax({
         url: '/Home/BookCustomerServiceRequest',
         type: 'post',
@@ -434,12 +436,16 @@ function CompleteBooking() {
         contentType: 'application/json',
         data: JSON.stringify(ServiceRequest),
         success: function (resp) {
+
+            $('#preloader').addClass("d-none");
+
             $("#lblServiceRequestId").html(resp.serviceRequestId);
             $('#BookServiceMessageModal').modal({
                 backdrop: 'static',
                 keyboard: false
             });
             $('#BookServiceMessageModal').modal('show');
+
         },
         error: function (err) {
             console.log(err);
@@ -526,11 +532,4 @@ function TotalPayment() {
     $('#lblTotalServiceTime').html(tatalHour + " Hrs");
     $('#lblPerCleaning').html("$ " + totalPayment);
     $('#lblTotalPayment').html("$ " + totalPayment);
-}
-
-//Bootstrap alert
-function BootstrapAlert(id, message, type) {
-    var wrapper = document.createElement('div')
-    wrapper.innerHTML = '<div class="alert alert-' + type + ' alert-dismissible" role="alert">' + message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>'
-    $('#' + id).html(wrapper);
 }

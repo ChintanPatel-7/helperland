@@ -15,6 +15,7 @@ namespace Helperland.ViewModels
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Please enter a mobile number")]
+        [RegularExpression(@"[0-9]{10}$", ErrorMessage = "Enter 10 digit valid phone number.")]
         public string MobileNumber { get; set; }
 
         [Required(ErrorMessage = "Please enter an email address")]

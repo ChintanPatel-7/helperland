@@ -155,7 +155,6 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
-D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginForgotPasswordPartial.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_NewsLetter.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UserLayout.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_UserLayoutCustomerSideBar.cshtml.g.cs
@@ -170,4 +169,5 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.dll
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.pdb
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.genruntimeconfig.cache
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache

@@ -2,6 +2,7 @@
 using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
+using Helperland.Repository;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -23,235 +24,118 @@ namespace Helperland.Controllers
         private readonly HelperlandContext _helperlandContext;
         private readonly IConfiguration _configuration;
         private readonly IDataProtectionProvider _dataProtectionProvider;
+        private readonly IUserRepository _userRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly string _Key = "MSIHELPERLAND";
         private User _user;
 
-        public AccountController(HelperlandContext helperlandContext, IConfiguration configuration, IHostingEnvironment hostingEnvironment, IDataProtectionProvider dataProtectionProvider)
+        public AccountController(HelperlandContext helperlandContext, IConfiguration configuration, IHostingEnvironment hostingEnvironment,
+            IDataProtectionProvider dataProtectionProvider, IUserRepository userRepository)
         {
             this._helperlandContext = helperlandContext;
             this._configuration = configuration;
             this._hostingEnvironment = hostingEnvironment;
             this._dataProtectionProvider = dataProtectionProvider;
+            this._userRepository = userRepository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> LoginModal(LoginAndForgotPasswordViewModel model)
+        public JsonResult Login([FromBody] LoginViewModel model)
         {
-            if(ModelState.IsValid)
+            _user = _userRepository.GetUserByEmailAndPassword(model.Email.ToString().Trim(), model.Password.ToString().Trim());
+
+            if (_user != null && _user.IsApproved == true)
             {
-                _user = await _helperlandContext.Users.FirstOrDefaultAsync(l => l.Email == model.Login.Email && l.Password == model.Login.Password);
+                int userTypeId = Convert.ToInt32(_user.UserTypeId);
 
-                if (_user != null && _user.IsApproved == true)
+                SessionUser sessionUser = new SessionUser
                 {
-                    int userTypeId = Convert.ToInt32(_user.UserTypeId);
-
-                    SessionUser sessionUser = new SessionUser
-                    {
-                        UserID = _user.UserId.ToString(),
-                        UserName = _user.FirstName + " " + _user.LastName,
-                        UserType = ((UserTypeEnum)userTypeId).ToString()
-                    };
-
-                    HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
-
-                    if (model.Login.RememberMe == true)
-                    {
-                        CookieOptions cookieOptions = new CookieOptions();
-                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
-                        HttpContext.Response.Cookies.Append("UserEmail", model.Login.Email, cookieOptions);
-                    }
-
-                    if (_user.UserTypeId == (int)UserTypeEnum.Admin)
-                    {
-                        return RedirectToAction("UserManagement", "Admin");
-                    }
-                    else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
-                    {
-                        return RedirectToAction("UpcomingService", "ServiceProvider");
-                    }
-                    else if (_user.UserTypeId == (int)UserTypeEnum.Customer)
-                    {
-                        return RedirectToAction("ServiceHistory", "Customer");
-                    }
-                }
-                else if(_user != null && _user.IsApproved == false)
-                {
-                    TempData["ErrorMessage"] = "You have not yet approved by Admin";
-                }
-                else
-                {
-                    TempData["ErrorMessage"] = "Username or password is invalid";
-                }
-            }
-
-            //for home page & open Login Model to show errors
-            ViewBag.navbar = "transparentNavbar";
-            ViewBag.OpenModel = "Login";
-
-            return View("~/Views/home/index.cshtml", model);
-        }
-
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            if (Request.Cookies["UserEmail"] != null)
-            {
-                Response.Cookies.Delete("UserEmail");
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult UserRegistration()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult UserRegistration(UserRegistrationViewModel model)
-        {
-            if(ModelState.IsValid)
-            {
-                _user = new User
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Mobile = model.MobileNumber,
-                    UserTypeId = (int)UserTypeEnum.Customer,
-                    CreatedDate = DateTime.Now,
-                    IsApproved = true
+                    UserID = _user.UserId.ToString(),
+                    UserName = _user.FirstName + " " + _user.LastName,
+                    UserType = ((UserTypeEnum)userTypeId).ToString()
                 };
 
-                _helperlandContext.Users.Add(_user);
-                _helperlandContext.SaveChanges();
+                HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
 
-                TempData["SuccessMessage"] = "Register Successfully.";
-
-                return RedirectToAction();
-            }
-
-            return View("Index",model);
-        }
-
-        public IActionResult BecomeAPro()
-        {
-            ViewBag.navbar = "transparentNavbar";
-            ViewBag.hideFlag = true;
-            return View();
-        }
-
-        //BecomeAPro post method
-        [HttpPost]
-        public IActionResult ServiceProviderRegistration(UserRegistrationViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                _user = new User
+                if (model.RememberMe == true)
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Mobile = model.MobileNumber,
-                    UserTypeId = (int)UserTypeEnum.ServiceProvider,
-                    CreatedDate = DateTime.Now,
-                    IsApproved = false
-                };
-                
-                _helperlandContext.Users.Add(_user);
-                _helperlandContext.SaveChanges();
+                    CookieOptions cookieOptions = new CookieOptions();
+                    cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                    HttpContext.Response.Cookies.Append("UserEmail", model.Email, cookieOptions);
+                }
 
-                TempData["SuccessMessage"] = "Register Successfully. You can login after admin can approved your request.";
-
-                return RedirectToAction("BecomeAPro");
+                if (_user.UserTypeId == (int)UserTypeEnum.Admin)
+                {
+                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Admin/UserManagement" });
+                    //return RedirectToAction("UserManagement", "Admin");
+                }
+                else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
+                {
+                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "ServiceProvider/UpcomingService" });
+                    //return RedirectToAction("UpcomingService", "ServiceProvider");
+                }
+                else if (_user.UserTypeId == (int)UserTypeEnum.Customer)
+                {
+                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Customer/ServiceHistory" });
+                    //return RedirectToAction("ServiceHistory", "Customer");
+                }
             }
-
-            return View("BecomeAPro", model);
-        }
-
-        //For Create new account,    check email is already present in database or noe
-        [HttpPost]
-        [HttpGet]
-        public async Task<IActionResult> IsEmailInUse(string email)
-        {
-            var user = await _helperlandContext.Users.FirstOrDefaultAsync(e => e.Email == email);
-
-            if (user == null)
+            else if (_user != null && _user.IsApproved == false)
             {
-                return Json(true);
+                return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You have not yet approved by Admin" });
+                //TempData["ErrorMessage"] = "You have not yet approved by Admin";
             }
             else
             {
-                return Json($"Email '{email}' is already in use. Please use another email.");
+                return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Username or password is invalid" });
+                //TempData["ErrorMessage"] = "Username or password is invalid";
             }
+
+            return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
-        //For forgotPassword, check 
-        //[HttpPost]
-        //[HttpGet]
-        //public async Task<IActionResult> IsEmailValid(string email)
-        //{
-        //    var user = await _helperlandContext.Users.FirstOrDefaultAsync(e => e.Email == email);
-
-        //    if (user == null)
-        //    {
-        //        return Json($"You are not register user. Please enter register email address.");
-        //    }
-        //    else
-        //    {
-        //        return Json(true);
-        //    }
-        //}
-
         [HttpPost]
-        public IActionResult ForgotPassword(LoginAndForgotPasswordViewModel model)
+        public JsonResult ForgotPassword([FromBody] ForgotPasswordViewModel model)
         {
-            ViewBag.navbar = "transparentNavbar";
+            _user = _userRepository.GetUserByEmail(model.Email.ToString().Trim());
 
-            if (ModelState.IsValid)
+            if (_user != null)
             {
-                _user = _helperlandContext.Users.Where(c => c.Email == model.ForgotPassword.Email).FirstOrDefault();
+                //Convert password to base64string
+                //var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(_user.Password);
+                //var oldPassword = System.Convert.ToBase64String(plainTextBytes);
+                var oldPassword = BCrypt.Net.BCrypt.HashPassword(_user.Password);
 
-                if(_user != null)
+                //create token
+                string inputToken = model.Email + "_$_" + DateTime.Now.ToString() + "_$_" + oldPassword;
+
+                //encrypt token
+                var protector = _dataProtectionProvider.CreateProtector(_Key);
+                string encryptToken = protector.Protect(inputToken);
+
+                EmailModel emailModel = new EmailModel
                 {
-                    //Convert password to base64string
-                    var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(_user.Password);
-                    var oldPassword = System.Convert.ToBase64String(plainTextBytes);
+                    DisplayName = _user.FirstName + " " + _user.LastName,
+                    To = model.Email,
+                    Subject = "Helperland Reset Password Link.",
+                    Body = "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encryptToken
+                };
 
-                    //create token
-                    string inputToken = model.ForgotPassword.Email + "_$_" + DateTime.Now.ToString() + "_$_" + oldPassword;
+                MailHelper mailHelper = new MailHelper(_configuration, _hostingEnvironment);
 
-                    //encrypt token
-                    var protector = _dataProtectionProvider.CreateProtector(_Key);
-                    string encryptToken = protector.Protect(inputToken);
-
-                    EmailModel emailModel = new EmailModel
-                    {
-                        DisplayName = _user.FirstName + " " + _user.LastName,
-                        To = model.ForgotPassword.Email,
-                        Subject = "Helperland Reset Password Link.",
-                        Body = "http://" + this.Request.Host.ToString() + "/Account/ResetPassword?token=" + encryptToken
-                    };
-
-                    MailHelper mailHelper = new MailHelper(_configuration, _hostingEnvironment);
-
-                    mailHelper.SendResetPasswordLink(emailModel);
-                }
-
-                ViewBag.OpenModel = "ForgotPasswordLinkSend";
-                return View("~/Views/home/index.cshtml");
+                mailHelper.SendResetPasswordLink(emailModel);
             }
-
-            ViewBag.OpenModel = "ForgotPassword";
-
-            return View("~/Views/home/index.cshtml", model);
+            else
+            {
+                return Json(new SingeEntity<ForgotPasswordViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter Register email Address" });
+            }
+            return Json(new SingeEntity<ForgotPasswordViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            //return View("~/Views/home/index.cshtml", model);
         }
 
         public IActionResult ResetPassword(string token)
         {
-            if(token == null)
+            if (token == null)
             {
                 ViewBag.Messsage = "Password reset link is invalid.";
                 return View();
@@ -280,16 +164,16 @@ namespace Helperland.Controllers
 
             string[] resetPasswordToken = decrypt.Split("_$_");
 
-            _user = _helperlandContext.Users.Where(c => c.Email == resetPasswordToken[0]).FirstOrDefault();
+            _user = _userRepository.GetUserByEmail(resetPasswordToken[0].ToString().Trim());
 
             DateTime tokenDate = Convert.ToDateTime(resetPasswordToken[1]).AddMinutes(30);
             DateTime currentDateTime = DateTime.Now;
 
-            var base64EncodedBytes = System.Convert.FromBase64String(resetPasswordToken[2]);
-            var oldPassword = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            //var base64EncodedBytes = System.Convert.FromBase64String(resetPasswordToken[2]);
+            //var oldPassword = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            var oldPassword = resetPasswordToken[2];
 
-
-            if (tokenDate < currentDateTime || oldPassword != _user.Password)
+            if (tokenDate < currentDateTime || !BCrypt.Net.BCrypt.Verify(_user.Password, oldPassword))
             {
                 ViewBag.Messsage = "Link is expired";
                 return false;
@@ -301,14 +185,14 @@ namespace Helperland.Controllers
         [HttpPost]
         public IActionResult ResetPassword(ResetPasswordViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (!checkResetPasswordToken(model.Token))
                 {
                     return View();
                 }
 
-                if(_user.Password == model.NewPassword)
+                if (_user.Password == model.NewPassword)
                 {
                     TempData["Message"] = "You used this password recently. Please choose a different one.";
                     return View(model);
@@ -318,8 +202,7 @@ namespace Helperland.Controllers
                 _user.ModifiedBy = _user.UserId;
                 _user.ModifiedDate = DateTime.Now;
 
-                _helperlandContext.Users.Update(_user);
-                _helperlandContext.SaveChanges();
+                _userRepository.Update(_user);
 
                 ViewBag.Messsage = "Success";
 
@@ -327,5 +210,100 @@ namespace Helperland.Controllers
             }
             return View(model);
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            if (Request.Cookies["UserEmail"] != null)
+            {
+                Response.Cookies.Delete("UserEmail");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult UserRegistration()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UserRegistration(UserRegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _user = new User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Password = model.Password,
+                    Mobile = model.MobileNumber,
+                    UserTypeId = (int)UserTypeEnum.Customer,
+                    CreatedDate = DateTime.Now,
+                    IsApproved = true
+                };
+
+                _userRepository.Add(_user);
+
+                TempData["SuccessMessage"] = "Register Successfully.";
+
+                return RedirectToAction();
+            }
+
+            return View("Index", model);
+        }
+
+        public IActionResult BecomeAPro()
+        {
+            ViewBag.navbar = "transparentNavbar";
+            ViewBag.hideFlag = true;
+            return View();
+        }
+
+        //BecomeAPro post method
+        [HttpPost]
+        public IActionResult ServiceProviderRegistration(UserRegistrationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _user = new User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Password = model.Password,
+                    Mobile = model.MobileNumber,
+                    UserTypeId = (int)UserTypeEnum.ServiceProvider,
+                    CreatedDate = DateTime.Now,
+                    IsApproved = false
+                };
+
+                _userRepository.Add(_user);
+
+                TempData["SuccessMessage"] = "Register Successfully. You can login after admin can approved your request.";
+
+                return RedirectToAction("BecomeAPro");
+            }
+
+            return View("BecomeAPro", model);
+        }
+
+        //For Create new account,    check email is already present in database or not
+        [HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await _helperlandContext.Users.FirstOrDefaultAsync(e => e.Email == email);
+
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email '{email}' is already in use. Please use another email.");
+            }
+        }
+
     }
 }

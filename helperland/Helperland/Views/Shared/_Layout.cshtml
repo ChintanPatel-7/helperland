@@ -35,6 +35,11 @@
     <script src="~/lib/jquery/jquery.js"></script>
 </head>
 <body>
+    <!-- Preloader -->
+    <div id="preloader" class="d-none">
+        <div id="loader"></div>
+    </div>
+
     <!-- Scroll btn And message btn -->
     <div class="scroll-up-btn top-arrow">
         <i class="fas fa-chevron-up"></i>
@@ -129,7 +134,7 @@
                     @if (user == null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Home" asp-action="OpenLoginModel">Login</a>
+                            <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link rounded-link @( ViewBag.navbar == "transparentNavbar" ? "" : "btn-dark-slate-blue")" asp-controller="Account" asp-action="BecomeAPro">Become a Helper</a>
@@ -262,12 +267,58 @@
     </footer>
 
     <!-- Login and Forgot Password Bootstrap Model -->
-    @if (ViewBag.OpenModel != null)
-    {
-        <partial name="_LoginForgotPasswordPartial.cshtml" />
-    }
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3>Login to your account</h3>
+                    <div class="col-md-12 m-0" id="divLoginErrorMessage">
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" id="loginEmail" name="loginEmail" class="form-control" placeholder="Email" />
+                        <img src="~/img/user.png" class="model-icon" />
+                        <span class="text-danger" id="loginEmailErrorMessage"></span>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="password" id="loginPassword" name="loginPassword" class="form-control" placeholder="Password" />
+                        <img src="~/img/lock.png" class="model-icon" />
+                        <span class="text-danger" id="loginPasswordErrorMessage"></span>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="LoginRememberMe" name="LoginRememberMe">
+                        <label class="form-check-label" for="LoginRememberMe">Remember me</label>
+                    </div>
+                    <button type="button" class="model-button mb-25" onclick="Login()">Login</button>
+                    <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">Forgot password?</a></div>
+                    <div class="text-center">
+                        Don't have an account? <a class="model-link" asp-controller="Account" asp-action="UserRegistration">Create an account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered ">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h3>Forgot password</h3>
+                    <div id="divForgotPasswordErrorMessage"></div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" id="ForgotPasswordEmail" name="ForgotPasswordEmail" class="form-control" placeholder="Email Address" />
+                        <span class="text-danger" id="ForgotPasswordEmailErrorMessage"></span>
+                    </div>
+                    <button type="button" class="model-button mb-25" onclick="ForgotPassword()">Send</button>
 
+                    <div class="text-center"><a class="model-link mb-2" data-bs-toggle="modal" data-bs-target="#loginModal">Login now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Client side validation scripts-->
     <partial name="_ValidationScriptsPartial" />
@@ -280,10 +331,6 @@
     <!-- sweetalert2 -->
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
 
-    <!-- DataTable -->
-    @*<script src="~/lib/datatables/js/jquery.dataTables.js"></script>*@
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>
