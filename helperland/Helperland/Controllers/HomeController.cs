@@ -27,32 +27,15 @@ namespace Helperland.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IConfiguration _configuration;
-        private readonly IUserAddressRepository _userAddressRepository;
-        private readonly ICityRepository _cityRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IServiceRequestRepository _serviceRequestRepository;
-        private readonly IServiceRequestAddressRepository _serviceRequestAddressRepository;
-        private readonly IServiceRequestExtraRepository _serviceRequestExtraRepository;
-        private readonly IStateRepository _stateRepository;
-        private readonly IContactUsRepository _contactUsRepository;
+        private readonly IHomeControllerRepository _homeControllerRepository;
 
-        public HomeController(ILogger<HomeController> logger,
-            IHostingEnvironment hostingEnvironment, IConfiguration configuration, IUserAddressRepository userAddressRepository,
-            ICityRepository cityRepository, IUserRepository userRepository, IServiceRequestRepository serviceRequestRepository,
-            IServiceRequestAddressRepository serviceRequestAddressRepository, IServiceRequestExtraRepository serviceRequestExtraRepository,
-            IStateRepository stateRepository, IContactUsRepository contactUsRepository)
+        public HomeController(ILogger<HomeController> logger, IHostingEnvironment hostingEnvironment, IConfiguration configuration,
+            IHomeControllerRepository homeControllerRepository)
         {
             _logger = logger;
             this._hostingEnvironment = hostingEnvironment;
             this._configuration = configuration;
-            this._userAddressRepository = userAddressRepository;
-            this._cityRepository = cityRepository;
-            this._userRepository = userRepository;
-            this._serviceRequestRepository = serviceRequestRepository;
-            this._serviceRequestAddressRepository = serviceRequestAddressRepository;
-            this._serviceRequestExtraRepository = serviceRequestExtraRepository;
-            this._stateRepository = stateRepository;
-            this._contactUsRepository = contactUsRepository;
+            this._homeControllerRepository = homeControllerRepository;
         }
 
         public IActionResult Index()
@@ -115,7 +98,7 @@ namespace Helperland.Controllers
                     contactU.UploadFileName = uniqueAttachmentName;
                 }
 
-                _contactUsRepository.Add(contactU);
+                _homeControllerRepository.AddContactUs(contactU);
 
                 //Send email to admin
 
@@ -137,18 +120,6 @@ namespace Helperland.Controllers
             return View(model);
         }
 
-        public IActionResult OpenLoginModel()
-        {
-            TempData["OpenModel"] = "Login";
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult OpenForgotPasswordModel()
-        {
-            TempData["OpenModel"] = "ForgotPassword";
-            return RedirectToAction("Index", "Home");
-        }
-
         [SessionHelper(userType: UserTypeEnum.Customer)]
         public IActionResult BookService()
         {
@@ -158,7 +129,7 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult CheckPostalCode(string postalCode)
         {
-            List<User> user = _userRepository.GetUserByPostalCode(postalCode);
+            List<User> user = _homeControllerRepository.GetUserByPostalCode(postalCode);
             bool IsServiceProviderAvailable = false;
             if (user.Any())
             {
@@ -169,14 +140,14 @@ namespace Helperland.Controllers
 
         public IActionResult GetCustomerAddressList(int userId)
         {
-            List<UserAddress> userAddresseList = _userAddressRepository.GetUserAddress(userId);
+            List<UserAddress> userAddresseList = _homeControllerRepository.GetUserAddress(userId);
             return View("BookServiceCustomerAddressList", userAddresseList);
         }
 
         [HttpPost]
         public JsonResult GetCitiesByPostalCode(string postalCode)
         {
-            List<City> cities = _cityRepository.GetCitiesByPostalCode(postalCode);
+            List<City> cities = _homeControllerRepository.GetCitiesByPostalCode(postalCode);
             return Json(cities);
         }
 
@@ -190,7 +161,7 @@ namespace Helperland.Controllers
                 sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
             }
 
-            State state = _stateRepository.GetStateByCityName(userAddressViewModel.City.ToString().Trim());
+            State state = _homeControllerRepository.GetStateByCityName(userAddressViewModel.City.ToString().Trim());
 
             UserAddress userAddress = new UserAddress
             {
@@ -202,7 +173,7 @@ namespace Helperland.Controllers
                 Mobile = userAddressViewModel.PhoneNumber,
                 UserId = Convert.ToInt32(sessionUser.UserID)
             };
-            userAddress = _userAddressRepository.AddUserAddress(userAddress);
+            userAddress = _homeControllerRepository.AddUserAddress(userAddress);
             return Json(userAddress);
         }
 
@@ -214,7 +185,7 @@ namespace Helperland.Controllers
                 UserId = model.UserId,
                 ServiceId = 0,
                 ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate.ToString().Trim() + " " + model.ServiceStartTime.ToString().Trim()),
-                ZipCode = model.ZipCode.ToString().Trim(),
+                ZipCode = model.PostalCode.ToString().Trim(),
                 ServiceHourlyRate = model.ServiceHourlyRate,
                 ServiceHours = model.ServiceHours,
                 ExtraHours = model.ExtraHours,
@@ -227,14 +198,15 @@ namespace Helperland.Controllers
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
                 Distance = 0,
+                Status = (int)ServiceRequestStatusEnum.New,
                 RecordVersion = Guid.NewGuid()
             };
 
-            _serviceRequestRepository.Add(serviceRequest);
+            _homeControllerRepository.AddServiceRequest(serviceRequest);
 
             model.ServiceRequestId = serviceRequest.ServiceRequestId;
 
-            UserAddress userAddress = _userAddressRepository.SelectByPK(Convert.ToInt32(model.UserAddressId));
+            UserAddress userAddress = _homeControllerRepository.SelectUserAddressByPK(Convert.ToInt32(model.UserAddressId));
 
             ServiceRequestAddress serviceRequestAddress = new ServiceRequestAddress
             {
@@ -248,7 +220,7 @@ namespace Helperland.Controllers
                 Email = userAddress.Email
             };
 
-            _serviceRequestAddressRepository.Add(serviceRequestAddress);
+            _homeControllerRepository.AddServiceRequestAddress(serviceRequestAddress);
 
             ServiceRequestExtra serviceRequestExtra = new ServiceRequestExtra
             {
@@ -259,10 +231,10 @@ namespace Helperland.Controllers
             {
                 serviceRequestExtra.ServiceRequestExtraId = 0;
                 serviceRequestExtra.ServiceExtraId = Convert.ToInt32((ExtraServiceEnum)System.Enum.Parse(typeof(ExtraServiceEnum), extraService));
-                _serviceRequestExtraRepository.Add(serviceRequestExtra);
+                _homeControllerRepository.AddServiceRequestExtra(serviceRequestExtra);
             }
 
-            List<User> serviceProviders = _userRepository.GetUserByPostalCode(model.ZipCode.ToString().Trim());
+            List<User> serviceProviders = _homeControllerRepository.GetUserByPostalCode(model.PostalCode.ToString().Trim());
 
             if (serviceProviders.Any())
             {
@@ -271,7 +243,7 @@ namespace Helperland.Controllers
 
                 emailModel.Subject = "Customer Service Request";
                 emailModel.Body = "Hi {{DisplayName}},<br> There is new Service Request in your area.<br> " +
-                    "Service Request Id :"+ serviceRequest.ServiceRequestId + "<br> " +
+                    "Service Request Id :" + serviceRequest.ServiceRequestId + "<br> " +
                     "Address : " + serviceRequestAddress.AddressLine1 + " " + serviceRequestAddress.AddressLine2 + ", " + serviceRequestAddress.City + ", " + serviceRequestAddress.State + " <br> " +
                     "Postal Code:" + serviceRequestAddress.PostalCode + " <br> " +
                     "Click on Link to accept request : <a href=\"http://" + this.Request.Host.ToString() + "/ServiceProvider/NewServiceRequest\">Accept Now</a>";

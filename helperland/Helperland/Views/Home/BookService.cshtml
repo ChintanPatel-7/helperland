@@ -404,7 +404,7 @@
 <!--Confirm Service Time-->
 <div class="modal" id="ConfirmServiceTimeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content modal-max-width-360px">
             <div class="modal-body p-4">
                 <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CancelConfirmServiceTime()"></button>
                 <h3>Confirm Service Time</h3>
@@ -422,9 +422,9 @@
 <!--Book Service Model-->
 <div class="modal" id="BookServiceMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content modal-max-width-360px">
             <div class="modal-body p-4 text-center">
-                <a class="btn-close model-btn-close text-decoration-none" asp-action="ServiceHistory" asp-controller="Customer"></a>
+                <a class="btn-close model-btn-close text-decoration-none" asp-action="Dashboard" asp-controller="Customer"></a>
                 
                 <span class="imgCircle mt-4 mb-4">
                     <img src="~/img/book-service/correct-white-medium.png" />
@@ -437,7 +437,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <a class="model-button mb-2 w-auto text-decoration-none" asp-action="ServiceHistory" asp-controller="Customer">Ok</a>
+                    <a class="model-button mb-2 w-auto text-decoration-none" asp-action="Dashboard" asp-controller="Customer">Ok</a>
                 </div>
             </div>
         </div>

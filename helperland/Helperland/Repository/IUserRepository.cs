@@ -8,7 +8,7 @@ namespace Helperland.Repository
 {
     public interface IUserRepository
     {
-        List<User> GetUserByPostalCode(string postalCode);
+        
 
         User GetUserByEmailAndPassword(string email, string password);
 

@@ -23,7 +23,7 @@
             <!-- side Bar -->
             <div class="side-bar">
                 <ul class="side-bar-menu h-100">
-                    <li class="nav-item"><a asp-controller="@sessionUser.UserType" asp-action="" class="nav-link">Dashboard</a></li>
+                    <li class="nav-item"><a asp-controller="@sessionUser.UserType" asp-action="Dashboard" class="nav-link">Dashboard</a></li>
 
                     @if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
                     {
@@ -37,8 +37,10 @@
                 </ul>
             </div>
 
-            @RenderBody()
 
+            <div class="main-content">
+                @RenderBody()
+            </div>
         </div>
 
     </div>
@@ -49,5 +51,8 @@
     @*<script src="~/lib/datatables/js/jquery.dataTables.js"></script>*@
     <script type="text/javascript" charset="utf8"
             src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+    <!-- User Ajax Call script -->
+    <script src="~/js/UserScript.js"></script>
     @RenderSection("UserLayoutScripts", required: false)
 }

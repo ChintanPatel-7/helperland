@@ -27,6 +27,13 @@
     <!-- sweetalert2 -->
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
 
+    <!-- Fontawsome 6 -->
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+    <!--Star Rating Css-->
+    <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
+
     <!-- Website Css -->
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
@@ -202,7 +209,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item" asp-action="Dashboard" asp-controller="@sessionUser.UserType">My Dashboard</a></li>
-                                <li><a class="dropdown-item" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Settings</a></li>
+                                <li><a class="dropdown-item" asp-action="MyAccount" asp-controller="@sessionUser.UserType">My Settings</a></li>
                                 <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
                             </ul>
                         </li>
@@ -212,7 +219,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
-                <span class="fa fa-bars"></span>
+                <i class="fa-solid fa-bars"></i>
             </button>
         </div>
     </nav>
@@ -270,7 +277,7 @@
     <!-- Login Modal -->
     <div class="modal" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
+            <div class="modal-content modal-max-width-360px">
                 <div class="modal-body">
                     <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h3>Login to your account</h3>
@@ -303,7 +310,7 @@
     <!-- Forgot Password Modal -->
     <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content">
+            <div class="modal-content modal-max-width-360px">
                 <div class="modal-body">
                     <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <h3>Forgot password</h3>
@@ -326,11 +333,11 @@
     <script src="~/js/main.js"></script>
     <!-- Bootstrap Js-->
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
-    <!-- fontawesome -->
-    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
     <!-- sweetalert2 -->
     <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
-
+    <!-- Rating -->
+    <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
+    <script src="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.js"></script>
     @RenderSection("Scripts", required: false)
 
 </body>

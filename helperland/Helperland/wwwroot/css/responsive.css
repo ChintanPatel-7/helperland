@@ -442,4 +442,13 @@
     .how-it-works .registration-process .information {
         width: 100%;
     }
+
+    /*Customer Dashboard*/
+    #ServiceDetailModel .button-group .btn.rounded-pill > span {
+        display: none;
+    }
+
+    #ServiceDetailModel .button-group{
+        text-align: center;
+    }
 }

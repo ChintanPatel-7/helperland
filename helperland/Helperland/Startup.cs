@@ -27,14 +27,18 @@ namespace Helperland
             services.AddControllersWithViews();
             services.AddDbContext<HelperlandContext>();
             services.AddSession();
-            services.AddScoped<IUserAddressRepository, UserAddressRepository>();
-            services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
-            services.AddScoped<IServiceRequestAddressRepository, ServiceRequestAddressRepository>();
-            services.AddScoped<IServiceRequestExtraRepository, ServiceRequestExtraRepository>();
-            services.AddScoped<IStateRepository, StateRepository>();
-            services.AddScoped<IContactUsRepository, ContactUsRepository>();
+
+            services.AddScoped<IHomeControllerRepository, HomeControllerRepository>();
+            services.AddScoped<ICustomerControllerRepository, CustomerControllerRepository>();
+
+            //services.AddMvc().AddNewtonsoftJson(options =>
+            //{
+            //    options.SerializerSettings.MaxDepth = 64;
+            //});
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

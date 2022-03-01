@@ -23,6 +23,10 @@ body {
     padding: 0px 46px;
 }
 
+.max-width-none {
+    max-width: none !important;
+}
+
 .max-width {
     max-width: 1300px;
     margin: auto;
@@ -114,6 +118,10 @@ section {
     background-color: #f6f6f6;
 }
 
+.primary {
+    color: #1d7a8c;
+}
+
 .mt-17 {
     margin-top: 17px;
 }
@@ -187,6 +195,18 @@ section {
     color: #4f4f4f !important;
 }
 
+.fs-14 {
+    font-size: 14px !important;
+}
+
+.fs-16 {
+    font-size: 16px !important;
+}
+
+.fs-20 {
+    font-size: 20px !important;
+}
+
 .right-0 {
     right: 0;
 }
@@ -206,6 +226,57 @@ section {
 .min-height-64vh {
     min-height: 64.5vh !important;
 }
+
+/*Input element Start*/
+
+input[type="date"] {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-right: 10px;
+}
+
+input[type=text],
+input[type=date],
+input[type=password],
+select {
+    height: 46px;
+}
+
+
+.form-check-input:checked {
+    background-color: #1d798c;
+    border-color: #1d798c;
+}
+
+input[type=text]:focus,
+input[type=checkbox]:focus,
+input[type=date]:focus,
+input[type=password]:focus,
+.form-check-input:focus,
+select:focus,
+textarea:focus {
+    border-color: #1d798c !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+button {
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../img/book-service/calendar-book-service.png) 9px center no-repeat !important;
+    left: -25px;
+    /* padding-left: 0px !important; */
+    position: absolute;
+    z-index: 999;
+}
+
+/*Input element End*/
 
 /*Preloader Start*/
 #preloader {
@@ -337,7 +408,7 @@ section {
     border: 0px;
 }
 
-    .navbar .navbar-toggler span {
+    .navbar .navbar-toggler i {
         color: white;
         font-size: 30px;
     }
@@ -654,11 +725,14 @@ footer {
 /* -- Login Model start */
 
 .modal-content {
-    max-width: 360px;
     margin: auto;
     box-shadow: 0 5px 15px rgb(0 0 0 / 50%);
     color: #646464;
 }
+
+    .modal-content.modal-max-width-360px {
+        max-width: 360px;
+    }
 
     .modal-content .modal-body {
         padding: 25px;
@@ -690,7 +764,7 @@ footer {
         right: 12px;
     }
 
-    .modal-content input[type=text],
+    /*.modal-content input[type=text],
     .modal-content input[type=password] {
         height: 46px;
         padding-right: 40px;
@@ -701,9 +775,9 @@ footer {
             border-color: #1d798c;
             outline: 0;
             box-shadow: none;
-        }
+        }*/
 
-    .modal-content .form-check-input:checked {
+    /*.modal-content .form-check-input:checked {
         background-color: #1d798c;
         border-color: #1d798c;
     }
@@ -712,7 +786,7 @@ footer {
         border-color: #1d798c;
         outline: 0;
         box-shadow: none;
-    }
+    }*/
 
     .modal-content .model-button {
         color: #fff;
@@ -1224,7 +1298,7 @@ footer {
     font-weight: bold;
 }
 
-.contact-us-form form input {
+/*.contact-us-form form input {
     height: 46px;
     font-size: 16px;
     color: #a0a0a0;
@@ -1236,7 +1310,7 @@ footer {
         border-color: #1d798c;
         outline: 0;
         box-shadow: none;
-    }
+    }*/
 
 .contact-us-form form select {
     height: 46px;
@@ -1332,31 +1406,31 @@ footer {
             margin-bottom: 15px;
         }
 
-        .register-now .register-now-form input[type=text],
+            /*.register-now .register-now-form input[type=text],
         .register-now .register-now-form input[type=password] {
             height: 46px;
-        }
+        }*/
 
-        .register-now .register-now-form .form-input-text .input-group {
-            height: 100%;
-        }
+            .register-now .register-now-form .form-input-text .input-group {
+                height: 100%;
+            }
 
-        .register-now .register-now-form .form-input-text input {
-            font-size: 16px;
-            line-height: 24px;
-            /* color: #a0a0a0; -- check for placeholder color*/
-            padding: 16px;
-        }
+            .register-now .register-now-form .form-input-text input {
+                font-size: 16px;
+                line-height: 24px;
+                /* color: #a0a0a0; -- check for placeholder color*/
+                padding: 16px;
+            }
 
 
-        .register-now .register-now-form input[type=text]:focus,
+        /*.register-now .register-now-form input[type=text]:focus,
         .register-now .register-now-form input[type=password]:focus {
             border-color: #1d798c;
             outline: 0;
             box-shadow: none;
-        }
+        }*/
 
-        .register-now .register-now-form .form-check-input:checked {
+        /*.register-now .register-now-form .form-check-input:checked {
             background-color: #1d798c;
             border-color: #1d798c;
         }
@@ -1365,7 +1439,7 @@ footer {
             border-color: #1d798c;
             outline: 0;
             box-shadow: none;
-        }
+        }*/
 
         .register-now .register-now-form .form-check {
             margin-bottom: 10px;
@@ -1611,10 +1685,21 @@ footer {
         }
 
         .main-content table tbody tr td {
+            position: relative;
             font-size: 16px;
             color: #646464;
-            line-height: 26px;
         }
+
+            .main-content table tbody tr td .clickableBox {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                text-decoration: none;
+                color: #646464 !important;
+                padding: 3px;
+            }
 
             .main-content table tbody tr td span {
                 font-weight: bold;
@@ -1623,6 +1708,11 @@ footer {
         .main-content table tr {
             vertical-align: middle;
         }
+
+
+.dataTables_wrapper .dataTables_processing {
+    background: none !important;
+}
 
 .dataTables_wrapper .dataTables_info {
     margin-left: 15px;
@@ -1701,95 +1791,11 @@ footer {
         border-color: #8bc7d3;
     }
 
+.dataTables_wrapper .dataTables_length select {
+    height: auto !important;
+}
+
 /* DataTable End */
-
-/* Service Provider - Upcoming Service Page Start */
-
-.main-content #tbl-upcoming-service tr td:nth-child(4),
-.main-content #tbl-upcoming-service tr td:nth-child(5) {
-    text-align: center;
-}
-
-.main-content #tbl-upcoming-service tr td:nth-child(3) img {
-    margin-bottom: 5px;
-}
-
-.main-content #tbl-upcoming-service tbody tr td .cancel-btn {
-    font-size: 16px;
-    color: white;
-    background-color: #ff6b6b;
-    border-radius: 45px;
-    border: 0px;
-    padding: 8px 16px;
-}
-
-    .main-content #tbl-upcoming-service tbody tr td .cancel-btn:hover {
-        background-color: #cf2525;
-    }
-
-#tbl-service-history tbody tr td:nth-child(2) {
-    min-width: 200px !important;
-}
-
-/* Service Provider - Upcoming Service Page End */
-
-/* Customer - Service-history Page Start */
-
-.main-body .main-content .title {
-    font-size: 22px;
-    color: #646464;
-    margin-bottom: 6px;
-}
-
-.main-body .main-content .export-btn {
-    font-size: 14px;
-    background-color: #146371;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 25px;
-    border: 0px;
-    margin-bottom: 6px;
-}
-
-.main-content #tbl-service-history tr td:nth-child(3) {
-    text-align: center;
-}
-
-#tbl-service-history tr td .cap-img {
-    padding: 12px 7px;
-    border: 1px solid #aaaaaa;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-
-#tbl-service-history tr td .money {
-    font-size: 20px;
-    color: #1d7a8c;
-}
-
-#tbl-service-history tr td .compeleted-btn {
-    font-size: 13px;
-    color: #fff;
-    padding: 5px 10px;
-    background-color: #67b644;
-}
-
-#tbl-service-history tr td .Cancelled-btn {
-    font-size: 13px;
-    color: #fff;
-    padding: 5px 10px;
-    background-color: #ff6b6b;
-}
-
-#tbl-service-history tr td .rate-btn {
-    font-size: 14px;
-    color: #fff;
-    padding: 8px 13px;
-    background-color: #6da9b5;
-    border: 0px;
-    border-radius: 30px;
-}
-/* Customer - Service-history Page End */
 
 /* book Service page start */
 
@@ -1952,7 +1958,7 @@ footer {
         background-color: #1d7a8c;
     }
 
-.set-up-cleaning-services input[type="date"] {
+/*.set-up-cleaning-services input[type="date"] {
     display: inline-block;
     position: relative;
     padding-left: 35px;
@@ -1973,14 +1979,14 @@ footer {
         border-color: #1d798c;
         outline: 0;
         box-shadow: none;
-    }
+    }*/
 
 .set-up-cleaning-services input[type=checkbox]:checked {
     background-color: #1d798c !important;
 }
 
-.set-up-cleaning-services input[name="UserAddressListYourDetailTab"]{
-    position:relative;
+.set-up-cleaning-services input[name="UserAddressListYourDetailTab"] {
+    position: relative;
 }
 
     .set-up-cleaning-services input[name="UserAddressListYourDetailTab"]:checked {
@@ -1988,17 +1994,17 @@ footer {
         background-color: transparent !important;
     }
 
-    .set-up-cleaning-services input[name="UserAddressListYourDetailTab"]:checked::after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 2.1px;
-        left: 2.1px;
-        width: 10px;
-        height: 10px;
-        background-color: #1d7a8c;
-        border-radius: 12px;
-    }
+        .set-up-cleaning-services input[name="UserAddressListYourDetailTab"]:checked::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 2.1px;
+            left: 2.1px;
+            width: 10px;
+            height: 10px;
+            background-color: #1d7a8c;
+            border-radius: 12px;
+        }
 
 /*.set-up-cleaning-services .form-check-input:checked[type=radio] {
     background-image: none !important;
@@ -2007,21 +2013,21 @@ footer {
 .set-up-cleaning-services .form-check .form-check-input:checked {
     background-color: #1d7a8c;
 }*/
-.set-up-cleaning-services .form-check-input:focus {
+/*.set-up-cleaning-services .form-check-input:focus {
     border-color: #1d798c;
     outline: 0;
     box-shadow: none;
-}
+}*/
 
-.set-up-cleaning-services input[type="date"]::-webkit-inner-spin-button,
+/*.set-up-cleaning-services input[type="date"]::-webkit-inner-spin-button,
 .set-up-cleaning-services input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 30px;
     background: transparent url(../img/book-service/calendar-book-service.png) 9px center no-repeat !important;
-    left: -25px;
-    /* padding-left: 0px !important; */
-    position: absolute;
+    left: -25px;*/
+/* padding-left: 0px !important; */
+/*position: absolute;
     z-index: 999;
-}
+}*/
 
 .set-up-cleaning-services .address-box {
     padding: 0px;
@@ -2101,7 +2107,7 @@ footer {
     height: 44px !important;
 }
 
-.set-up-cleaning-services #Make-Payment-tabContent small{
+.set-up-cleaning-services #Make-Payment-tabContent small {
     font-size: 12px;
     float: right;
 }
@@ -2245,7 +2251,7 @@ footer {
     color: #4f4f4f;
 }
 
-    .Registration-Reset form input[type=text],
+    /*.Registration-Reset form input[type=text],
     .Registration-Reset form input[type=password] {
         height: 46px;
     }
@@ -2266,7 +2272,7 @@ footer {
         border-color: #1d798c;
         outline: 0;
         box-shadow: none;
-    }
+    }*/
 
     .Registration-Reset form .register-button,
     .Registration-Reset .resetPage-button {
@@ -2297,3 +2303,266 @@ footer {
 
 /*User Registration page end*/
 
+
+/*btn color*/
+
+.button-primary {
+    background-color: #1d7a8c;
+    color: #fff;
+    padding: 10px 25px;
+}
+
+    .button-primary:hover {
+        background-color: #146371 !important;
+        color: #fff;
+    }
+
+.button-danger {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 10px 25px;
+}
+
+    .button-danger:hover {
+        background-color: #cc5656 !important;
+        color: #fff;
+    }
+
+/*btn color*/
+
+
+/* Customer - Dashboard Page Start */
+
+.main-body .main-content .title {
+    font-size: 22px;
+    color: #646464;
+    margin-bottom: 6px;
+}
+
+.main-content .export-btn {
+    font-size: 14px;
+    background-color: #146371;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 25px;
+    border: 0px;
+    margin-bottom: 6px;
+}
+
+.main-content #tbl-service-history tr td:nth-child(3) {
+    text-align: center;
+}
+
+.main-content .cap-img {
+    padding: 12px 7px;
+    border: 1px solid #aaaaaa;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.main-content .modal .cap-img {
+    padding: 22px 17px !important;
+}
+
+.main-content .money {
+    font-size: 24px;
+    color: #1d7a8c;
+}
+
+.main-content .compeleted-btn {
+    font-size: 13px;
+    color: #fff;
+    padding: 5px 10px;
+    background-color: #67b644;
+}
+
+.main-content .Cancelled-btn {
+    font-size: 13px;
+    color: #fff;
+    padding: 5px 10px;
+    background-color: #ff6b6b;
+}
+
+.main-content .rate-btn {
+    font-size: 14px;
+    color: #fff;
+    padding: 8px 13px;
+    background-color: #6da9b5;
+    border: 0px;
+    border-radius: 30px;
+}
+
+#ServiceDetailModel .text {
+    display: block;
+    font-size: 16px;
+    line-height: 20px;
+    color: #4f4f4f;
+    margin-bottom: 8px;
+}
+
+#ServiceDetailModel .service-date {
+    font-size: 22px;
+}
+
+#tblCurrentServiceRequest tr td:nth-child(1),
+#tblCurrentServiceRequest tr td:nth-child(4) {
+    text-align: center;
+}
+
+#tblCurrentServiceRequest tr td:nth-child(3) {
+    min-width: 195px;
+}
+
+#tblCurrentServiceRequest tr td:nth-child(5) {
+    min-width: 125px;
+}
+
+/* Customer - Dashboard Page End */
+
+/*My Account Page Start*/
+
+.my-account {
+    width: 100%;
+}
+
+    .my-account .nav-link {
+        font-weight: 700;
+        background-color: #fff;
+        color: #646464;
+        border-bottom: 4px solid #e1e1e1;
+        border-radius: 0px !important;
+    }
+
+    .my-account .nav-pills .nav-link.active,
+    .my-account .nav-pills .nav-link:hover {
+        background-color: #fff;
+        color: #1d7a8c;
+        border-bottom: 4px solid #1d7a8c !important;
+        border-radius: 0px !important;
+    }
+
+    .my-account .small-select-tag {
+        padding: 10px 23px 10px 6px !important;
+        background-position: right 6px center !important;
+    }
+
+
+    .my-account .tab-icon {
+        margin: auto;
+        height: 26px;
+        width: 24px;
+        background-repeat: no-repeat;
+        background-size: 24px;
+        background-position: 0 0;
+    }
+
+    .my-account .my-detail-tabIcon {
+        background-image: url(../img/admin-panel/my-account-details.png);
+    }
+
+    .my-account .my-addresses-tabIcon {
+        background-image: url(../img/admin-panel/my-account-address.png);
+    }
+
+    .my-account .my-change-password-tabIcon {
+        background-image: url(../img/admin-panel/my-account-password.png);
+    }
+
+    .my-account .nav-link.active .my-detail-tabIcon {
+        background-image: url(../img/admin-panel/my-account-details.png);
+        background-position: 0 -26px;
+    }
+
+    .my-account .nav-link.active .my-addresses-tabIcon {
+        background-image: url(../img/admin-panel/my-account-address.png);
+        background-position: 0 -26px;
+    }
+
+    .my-account .nav-link.active .my-change-password-tabIcon {
+        background-image: url(../img/admin-panel/my-account-password.png);
+        background-position: 0 -26px;
+    }
+
+#my-addresses table thead {
+    color: #646464;
+    background: #f3f3f3;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+#my-addresses table th,
+#my-addresses table td {
+    padding-left: 15px;
+}
+
+#my-addresses tbody {
+    border-top: 0px !important;
+}
+
+#my-addresses .actionIcon {
+    color: transparent;
+    border-radius: 25px;
+}
+
+    #my-addresses .actionIcon.editIcon {
+        padding: 10px 5px 10px 10px;
+    }
+
+    #my-addresses .actionIcon.deleteIcon {
+        padding: 10px 9px;
+    }
+
+    #my-addresses .actionIcon:hover {
+        background-color: #f3f3f3;
+    }
+
+/*My Account Page End*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Service Provider - Upcoming Service Page Start */
+.main-content #tbl-upcoming-service tr td:nth-child(4),
+.main-content #tbl-upcoming-service tr td:nth-child(5) {
+    text-align: center;
+}
+
+.main-content #tbl-upcoming-service tr td:nth-child(3) img {
+    margin-bottom: 5px;
+}
+
+.main-content #tbl-upcoming-service tbody tr td .cancel-btn {
+    font-size: 16px;
+    color: white;
+    background-color: #ff6b6b;
+    border-radius: 45px;
+    border: 0px;
+    padding: 8px 16px;
+}
+
+    .main-content #tbl-upcoming-service tbody tr td .cancel-btn:hover {
+        background-color: #cf2525;
+    }
+
+#tbl-service-history tbody tr td:nth-child(2) {
+    min-width: 200px !important;
+}
+
+/* Service Provider - Upcoming Service Page End */

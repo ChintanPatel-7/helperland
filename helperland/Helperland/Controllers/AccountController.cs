@@ -76,7 +76,7 @@ namespace Helperland.Controllers
                 }
                 else if (_user.UserTypeId == (int)UserTypeEnum.Customer)
                 {
-                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Customer/ServiceHistory" });
+                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Customer/Dashboard" });
                     //return RedirectToAction("ServiceHistory", "Customer");
                 }
             }

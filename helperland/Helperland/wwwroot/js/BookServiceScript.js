@@ -244,12 +244,17 @@ function FillCustomerAddressList() {
 
 function FillCityDropDown() {
     var postalCode = $('#PostalCode').val();
+
+    $('#preloader').removeClass("d-none");
+
     $.ajax({
         url: '/Home/GetCitiesByPostalCode',
         type: 'post',
         dataType: 'json',
         data: { "postalCode": postalCode },
         success: function (resp) {
+
+            $('#preloader').addClass("d-none");
 
             $('#UserCity').empty();
             resp.forEach((city) => {
@@ -306,6 +311,8 @@ function AddNewCustomerAddress() {
     userAddress.city = $("#UserCity").val();
     userAddress.phoneNumber = $("#UserPhoneNumber").val();
 
+    $('#preloader').removeClass("d-none");
+
     $.ajax({
         url: '/Home/AddCustomerAddress',
         type: 'post',
@@ -313,6 +320,9 @@ function AddNewCustomerAddress() {
         contentType: 'application/json',
         data: JSON.stringify(userAddress),
         success: function (resp) {
+
+            $('#preloader').addClass("d-none");
+
             ResetAddressBoxYourDetailsTab();
             AddressBox(false);
             FillCustomerAddressList();
@@ -389,7 +399,7 @@ function CompleteBooking() {
     if ($('#ErrorMessageCardNumber').text() != "" || $("#ErrorMessageCardExpiryDate").text() != "" || $("#ErrorMessageCardCVC").text() != "" || $('#ErrorMessageTermsAndCondition').text() != "") {
         return;
     }
-
+    
     var ServiceRequest = {};
 
     ServiceRequest.userId = _logInUserId;
@@ -398,8 +408,8 @@ function CompleteBooking() {
     ServiceRequest.postalCode = $("#PostalCode").val();
 
     //Tab - 2
-    ServiceRequest.serviceDate = $("#ServiceDate").val();
-    ServiceRequest.serviceTime = $("#ServiceTime option:selected").text(); //text value
+    ServiceRequest.serviceStartDate = $("#ServiceDate").val();
+    ServiceRequest.serviceStartTime = $("#ServiceTime option:selected").text(); //text value
     ServiceRequest.serviceHourlyRate = _serviceHourlyRate;
     ServiceRequest.serviceHours = _basicServiceHour + (_extraServiceCount * 0.5);
     ServiceRequest.extraHours = _extraServiceCount * 0.5;

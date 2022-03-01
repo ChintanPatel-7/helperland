@@ -170,4 +170,9 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.pdb
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.genruntimeconfig.cache
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\Dashboard.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\MyAccount.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
