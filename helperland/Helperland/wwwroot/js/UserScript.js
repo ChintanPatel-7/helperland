@@ -1,37 +1,30 @@
 ﻿$(document).ready(function () {
-
-    //Customer --Service History Start
-
-    $('#ServiceProviderRatingModel').modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-    $('#ServiceProviderRatingModel').modal('show');
-
-    $("#DisplayRatingServiceProviderInModel").val(3.3);
-
-    $("#DisplayRatingServiceProviderInModel").rating({
-        min: 0,
-        max: 5,
-        step: 0.1,
-        size: "xs",
-        stars: "5",
-        showClear: false,
-        showCaption: false,
-        readonly: true
-    });
-
-    $(".rating-serviceProvider").rating({
-        min: 0,
-        max: 5,
-        step: 0.5,
-        size: "sm",
-        stars: "5",
-        showClear: false,
-        showCaption: false
+    // this will get the full URL at the address bar
+    var url = window.location.href;
+    // hightlight active link
+    $(".side-bar-menu li a").each(function () {
+        // checks if its the same on the address bar
+        if (url == (this.href)) {
+            $(this).addClass("active");
+        }
     });
 });
 
-//Customer -- Current Service Requests -- Dashboard Start
+function ServiceStartDate(inputDate) {
+    const date = new Date(inputDate);
+    return AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + date.getFullYear().toString();
+}
 
-//Customer -- Current Service Requests -- Dashboard End
+function ServiceTime(inputDate, totalHour) {
+    const date = new Date(inputDate);
+    date.setMinutes(date.getMinutes() + (totalHour * 60));
+    return AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString());
+}
+
+//appent 0 to single digit number for month and date
+function AppendZero(input) {
+    if (input.length == 1) {
+        return '0' + input;
+    }
+    return input;
+}

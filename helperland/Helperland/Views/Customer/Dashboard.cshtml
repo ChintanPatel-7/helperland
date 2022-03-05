@@ -130,7 +130,7 @@
                 });
             });
 
-            $('#tblCurrentServiceRequest').DataTable({
+            var table = $('#tblCurrentServiceRequest').DataTable({
                 paging: true,
                 pagingType: "full_numbers",
                 processing: true,
@@ -154,21 +154,17 @@
                 ],
                 columns: [
                     {
+                        data: 'serviceRequestId',
                         name: 'ServiceRequestId',
-                        render: function (data, type, row) {
-                            return "<a class='align-items-center clickableBox d-flex justify-content-center' onclick='OpenServiceDetailModel(" + row.serviceRequestId + ")'>" +
-                                row.serviceRequestId + "</a>";
-                        }
                     },
                     {
                         name: 'ServiceDateTime',
                         render: function (data, type, row) {
-                            return "<a class='clickableBox' onclick='OpenServiceDetailModel(" + row.serviceRequestId + ")'>" +
-                                "<img src='../img/admin-panel/calendar2.png' class='me-1' alt='calenderIcon'><span> " +
+                            return "<img src='../img/admin-panel/calendar2.png' class='me-1' alt='calenderIcon'><span> " +
                                 ServiceStartDate(row.serviceStartDate) + "</span ><br> " +
                                 "<img src='../img/admin-panel/layer-14.png' class='me-1' alt='clockIcon'>" +
                                 ServiceTime(row.serviceStartDate, 0) + " - " +
-                                ServiceTime(row.serviceStartDate, row.serviceHours) + "</a>";
+                                ServiceTime(row.serviceStartDate, row.serviceHours);
                         }
                     },
                     {
@@ -222,86 +218,66 @@
                 responsive: true,
                 order: [[0, "desc"]]
             });
-
+            
             //click on row column
-            //$("#tblCurrentServiceRequest tbody").on('click', 'tr', function () {
+            $('#tblCurrentServiceRequest tbody').on('click', 'td', function () {
+                
+                if ($(this).index() == 4) { // prevent click on 4th column
+                    return;
+                }
 
-            //    if ($(this).index() == 4) { // prevent click on 4th column
-            //        return;
-            //    }
+                var rowData = table.row(this).data();
+                
+                $('#preloader').removeClass("d-none");
 
-            //    console.log($(this).closest("td"));
+                $.ajax({
+                    url: '/Customer/GetServiceRequest',
+                    type: 'post',
+                    dataType: 'json',
+                    data: { "serviceRequestId": rowData.serviceRequestId },
+                    success: function (resp) {
 
-            //    $('#ServiceDetailModel').modal({
-            //        backdrop: 'static',
-            //        keyboard: false
-            //    });
-            //    $('#ServiceDetailModel').modal('show');
-            //});
+                        $('#preloader').addClass("d-none");
+
+                        $("#lblServiceRequestDateTime").html("<b>" + ServiceStartDate(resp.data.serviceStartDate) + "</b> " +
+                            "<b>" + ServiceTime(resp.data.serviceStartDate, 0) + "-" +
+                            ServiceTime(resp.data.serviceStartDate, resp.data.serviceHours) + "</b>");
+                        $("#lblDuration").text(resp.data.serviceHours);
+                        $("#lblServiceRequestId").text(resp.data.serviceRequestId);
+                        $("#lblExtraServices").text(resp.extraServiceRequest);
+                        $("#lblTotalAmount").html("<b>" + resp.data.totalCost + " $</b>");
+
+                        var serviceAddress = resp.data.serviceRequestAddresses[0];
+
+                        $("#lblServiceAddress").text(serviceAddress.addressLine1 + serviceAddress.addressLine2 + ", " + serviceAddress.postalCode + serviceAddress.city)
+                        $("#lblPhone").text(serviceAddress.mobile);   // User Or ServiceAddress
+                        $("#lblEmail").text(resp.data.user.email);
+
+                        $("#lblComments").text(resp.data.comments);
+
+                        if (resp.data.hasPets == false) {
+                            $("#lblHasPet").html("<img src='../img/admin-panel/not-included.png'/> I don't have pets at home");
+                        }
+                        else {
+                            $("#lblHasPet").html("<img src='../img/admin-panel/included.png'/> I have pets at home");
+                        }
+
+                        $('#btnModalRescheduleServiceRequest').attr('onClick', 'OpenRescheduleServiceRequestModel(' + resp.data.serviceRequestId + ', true);');
+                        $('#btnModalCancelServiceRequest').attr('onClick', 'OpenCancelServiceRequestModel(' + resp.data.serviceRequestId + ', true);');
+
+                        $('#ServiceDetailModel').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                        $('#ServiceDetailModel').modal('show');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
 
         });
-
-        function ServiceStartDate(inputDate) {
-            const date = new Date(inputDate);
-            return AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + date.getFullYear().toString();
-        }
-
-        function ServiceTime(inputDate, totalHour) {
-            const date = new Date(inputDate);
-            date.setMinutes(date.getMinutes() + (totalHour * 60));
-            return AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString());
-        }
-
-        function OpenServiceDetailModel(serviceRequestId) {
-
-            $('#preloader').removeClass("d-none");
-
-            $.ajax({
-                url: '/Customer/GetServiceRequest',
-                type: 'post',
-                dataType: 'json',
-                data: { "serviceRequestId": serviceRequestId },
-                success: function (resp) {
-                    
-                    $('#preloader').addClass("d-none");
-
-                    $("#lblServiceRequestDateTime").html("<b>" + ServiceStartDate(resp.data.serviceStartDate) + "</b> " +
-                        "<b>" + ServiceTime(resp.data.serviceStartDate, 0) + "-" +
-                        ServiceTime(resp.data.serviceStartDate, resp.data.serviceHours) + "</b>");
-                    $("#lblDuration").text(resp.data.serviceHours);
-                    $("#lblServiceRequestId").text(resp.data.serviceRequestId);
-                    $("#lblExtraServices").text(resp.extraServiceRequest);
-                    $("#lblTotalAmount").html("<b>" + resp.data.totalCost + " $</b>");
-
-                    var serviceAddress = resp.data.serviceRequestAddresses[0];
-
-                    $("#lblServiceAddress").text(serviceAddress.addressLine1 + serviceAddress.addressLine2 + ", " + serviceAddress.postalCode + serviceAddress.city)
-                    $("#lblPhone").text(serviceAddress.mobile);   // User Or ServiceAddress
-                    $("#lblEmail").text(resp.data.user.email);
-
-                    $("#lblComments").text(resp.data.comments);
-
-                    if (resp.data.hasPets == false) {
-                        $("#lblHasPet").html("<img src='../img/admin-panel/not-included.png'/> I don't have pets at home");
-                    }
-                    else {
-                        $("#lblHasPet").html("<img src='../img/admin-panel/included.png'/> I have pets at home");
-                    }
-
-                    $('#btnModalRescheduleServiceRequest').attr('onClick', 'OpenRescheduleServiceRequestModel(' + serviceRequestId + ', true);');
-                    $('#btnModalCancelServiceRequest').attr('onClick', 'OpenCancelServiceRequestModel(' + serviceRequestId + ', true);');
-
-                    $('#ServiceDetailModel').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    $('#ServiceDetailModel').modal('show');
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
 
         function OpenRescheduleServiceRequestModel(serviceRequestId, closeServiceDetailModel) {
 
@@ -440,15 +416,6 @@
                     console.log(err);
                 }
             });
-        }
-
-
-        //appent 0 to single digit number for month and date
-        function AppendZero(input) {
-            if (input.length == 1) {
-                return '0' + input;
-            }
-            return input;
         }
 
     </script>

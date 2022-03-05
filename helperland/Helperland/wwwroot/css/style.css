@@ -1637,13 +1637,18 @@ footer {
         }
 
 .main-content {
-    width: 845px;
+    /*width: 845px;*/
+    width: 100%;
     margin-left: 30px;
 }
 
     /* Side Bar END */
 
     /* DataTable Start */
+
+    .table{
+        width: 100% !important;
+    }
 
     .main-content table.dataTable thead .sorting .sort-img {
         content: url(../img/admin-panel/sort.png);
@@ -1685,21 +1690,9 @@ footer {
         }
 
         .main-content table tbody tr td {
-            position: relative;
             font-size: 16px;
             color: #646464;
         }
-
-            .main-content table tbody tr td .clickableBox {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                text-decoration: none;
-                color: #646464 !important;
-                padding: 3px;
-            }
 
             .main-content table tbody tr td span {
                 font-weight: bold;
@@ -2317,11 +2310,16 @@ footer {
         color: #fff;
     }
 
-.button-danger {
-    background-color: #ff6b6b;
-    color: #fff;
-    padding: 10px 25px;
-}
+    .button-primary:disabled {
+        background-color: #1d7a8c !important;
+        cursor: not-allowed !important;
+    }
+
+    .button-danger {
+        background-color: #ff6b6b;
+        color: #fff;
+        padding: 10px 25px;
+    }
 
     .button-danger:hover {
         background-color: #cc5656 !important;
@@ -2331,7 +2329,7 @@ footer {
 /*btn color*/
 
 
-/* Customer - Dashboard Page Start */
+/*User Admin Panel Common start*/
 
 .main-body .main-content .title {
     font-size: 22px;
@@ -2347,10 +2345,6 @@ footer {
     border-radius: 25px;
     border: 0px;
     margin-bottom: 6px;
-}
-
-.main-content #tbl-service-history tr td:nth-child(3) {
-    text-align: center;
 }
 
 .main-content .cap-img {
@@ -2376,12 +2370,25 @@ footer {
     background-color: #67b644;
 }
 
-.main-content .Cancelled-btn {
+.main-content .cancelled-btn {
     font-size: 13px;
     color: #fff;
     padding: 5px 10px;
     background-color: #ff6b6b;
 }
+
+.main-content .cancel-btn {
+    font-size: 16px;
+    color: white;
+    background-color: #ff6b6b;
+    border-radius: 45px;
+    border: 0px;
+    padding: 8px 16px;
+}
+
+    .main-content .cancel-btn:hover {
+        background-color: #cf2525;
+    }
 
 .main-content .rate-btn {
     font-size: 14px;
@@ -2392,7 +2399,7 @@ footer {
     border-radius: 30px;
 }
 
-#ServiceDetailModel .text {
+.modal .text {
     display: block;
     font-size: 16px;
     line-height: 20px;
@@ -2400,8 +2407,18 @@ footer {
     margin-bottom: 8px;
 }
 
-#ServiceDetailModel .service-date {
+.modal .service-date {
     font-size: 22px;
+}
+
+
+/*User Admin Panel Common end*/
+
+/* Customer - Dashboard Page Start */
+
+
+.main-content #tbl-service-history tr td:nth-child(3) {
+    text-align: center;
 }
 
 #tblCurrentServiceRequest tr td:nth-child(1),
@@ -2424,6 +2441,21 @@ footer {
 .my-account {
     width: 100%;
 }
+
+    .my-account .my-setting-title {
+        color: #646464;
+        font-size: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #dcdcdc;
+        font-weight: 700;
+        margin: 0 0 15px;
+    }
+
+    .my-account .my-detail-avatar-img{
+        height: 70px;
+        width: 70px;
+        background: #fff;
+    }
 
     .my-account .nav-link {
         font-weight: 700;
@@ -2504,7 +2536,7 @@ footer {
 }
 
     #my-addresses .actionIcon.editIcon {
-        padding: 10px 5px 10px 10px;
+        padding: 10px 8px 10px 10px;
     }
 
     #my-addresses .actionIcon.deleteIcon {
@@ -2539,30 +2571,27 @@ footer {
 
 
 /* Service Provider - Upcoming Service Page Start */
-.main-content #tbl-upcoming-service tr td:nth-child(4),
-.main-content #tbl-upcoming-service tr td:nth-child(5) {
+.main-content #tblServiceHistory tr td:nth-child(1),
+.main-content #tblServiceHistory tr td:nth-child(4),
+.main-content #tblServiceHistory tr td:nth-child(5) {
     text-align: center;
 }
 
-.main-content #tbl-upcoming-service tr td:nth-child(3) img {
+.main-content #tblServiceHistory tr td:nth-child(3) img {
     margin-bottom: 5px;
 }
 
-.main-content #tbl-upcoming-service tbody tr td .cancel-btn {
-    font-size: 16px;
-    color: white;
-    background-color: #ff6b6b;
-    border-radius: 45px;
-    border: 0px;
-    padding: 8px 16px;
+
+#tblServiceHistory tbody tr td:nth-child(1) {
+    min-width: 110px !important;
 }
 
-    .main-content #tbl-upcoming-service tbody tr td .cancel-btn:hover {
-        background-color: #cf2525;
-    }
+#tblServiceHistory tbody tr td:nth-child(2) {
+    min-width: 140px !important;
+}
 
-#tbl-service-history tbody tr td:nth-child(2) {
-    min-width: 200px !important;
+#tblServiceHistory tbody tr td:nth-child(3) {
+    min-width: 195px !important;
 }
 
 /* Service Provider - Upcoming Service Page End */

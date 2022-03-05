@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewData["Title"] = "MyAccount";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="my-account">
+    <ul class="nav nav-pills mb-3 nav-fill" id="CustomerMySettingTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="my-detail-tab" data-bs-toggle="pill" data-bs-target="#my-detail" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                <span class="tab-icon my-detail-tabIcon d-block d-sm-none"></span>
+                <span class="d-none d-sm-block">My Details</span>
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="change-password-tab" data-bs-toggle="pill" data-bs-target="#change-password" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">
+                <span class="tab-icon my-change-password-tabIcon d-block d-sm-none"></span>
+                <span class="d-none d-sm-block">Change Password</span>
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="my-detail" role="tabpanel" aria-labelledby="my-detail-tab">
+            <div id="divMyDetailTabBootstrapAlert">
+            </div>
+            <div>
+                <img src="~/img/admin-panel/sp-avtar/avatar-car.png" class="my-detail-avatar-img float-end" />
+                <h3 class="my-setting-title pt-4">Basic details</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <label for="FirstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="FirstName" placeholder="First Name">
+                    <span id="ErrorMessageFirstName" class="text-danger"></span>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <label for="LastName" class="form-label">LastName</label>
+                    <input type="text" class="form-control" id="LastName" placeholder="Last Name">
+                    <span id="ErrorMessageLastName" class="text-danger"></span>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <label for="Email" class="form-label">E-mail address</label>
+                    <input type="text" class="form-control" id="Email" placeholder="E-mail Address" disabled>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <label for="MobileNumber" class="form-label">Mobile number</label>
+                    <input type="text" class="form-control" id="MobileNumber" placeholder="Mobile Number">
+                    <span id="ErrorMessageMobileNumber" class="text-danger"></span>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <label for="MobileNumber" class="form-label">Date of Birth</label>
+                    <div class="row">
+                        <div class="col-3 pe-1">
+                            <select class="form-select small-select-tag" id="DayDOB">
+                                <option value="">Day</option>
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    <option value=@i>@i</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-5 pe-1 ps-1">
+                            <select class="form-select" id="MonthDOB">
+                                <option value="">Month</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="col-4 ps-1">
+                            <select class="form-select small-select-tag" id="YearDOB">
+                                <option value="">Year</option>
+                                @for (int i = (DateTime.Now.Year - 10); i > (DateTime.Now.Year - 117); i--)
+                                {
+                                    <option value=@i>@i</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <span id="ErrorMessageDateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <hr />
+            <div class="mb-3">
+                <label for="MobileNumber" class="form-label">My Preferred Language</label>
+                <select class="width-120 form-select" id="Language">
+                    <option value="1">English</option>
+                    <option value="2">German</option>
+                </select>
+            </div>
+            <button class="btn rounded-pill button-primary" onclick="UpdateCustomerProfile()">Save</button>
+        </div>
+        <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
+            <div id="divChangePasswordTabBootstrapAlert">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="CustomerCurrentPassword" class="form-label">Old Password</label>
+                    <input type="password" class="form-control" id="CustomerCurrentPassword" placeholder="Current Password">
+                    <span id="ErrorMessageCustomerCurrentPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="CustomerNewPassword" class="form-label">New Password</label>
+                    <input type="password" class="form-control" id="CustomerNewPassword" placeholder="Password">
+                    <span id="ErrorMessageCustomerNewPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label for="CustomerConfirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="CustomerConfirmPassword" placeholder="Confirm Password">
+                    <span id="ErrorMessageCustomerConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div>
+                <button class="btn rounded-pill button-primary" onclick="UpdateCustomerPassword()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section UserLayoutScripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            
+        });
+    </script>
+}

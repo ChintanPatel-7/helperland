@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 namespace Helperland.Controllers
 {
     [CookieHelper]
+    [SessionHelper(userType: UserTypeEnum.ServiceProvider)]
     public class ServiceProviderController : Controller
     {
-        [SessionHelper(userType: UserTypeEnum.ServiceProvider)]
         public IActionResult UpcomingService()
+        {
+            return View();
+        }
+
+        public IActionResult MyAccount()
         {
             return View();
         }
