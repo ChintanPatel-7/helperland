@@ -9,10 +9,10 @@ namespace Helperland.Repository
     public interface IHomeControllerRepository
     {
         // User Table
-        List<User> GetUserByPostalCode(string postalCode);
+        List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId);
 
         // UserAddress Table
-        public List<UserAddress> GetUserAddress(int userId);
+        public List<UserAddress> GetUserAddress(int userId, string postalCode);
 
         public UserAddress AddUserAddress(UserAddress userAddress);
 

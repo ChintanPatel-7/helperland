@@ -35,7 +35,8 @@ namespace Helperland.Core
                     {
                         UserID = _user.UserId.ToString(),
                         UserName = _user.FirstName + " " + _user.LastName,
-                        UserType = ((UserTypeEnum)userTypeId).ToString()
+                        UserType = ((UserTypeEnum)userTypeId).ToString(),
+                        Email = _user.Email.ToString()
                     };
 
                     filterContext.HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));

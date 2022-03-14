@@ -6,6 +6,16 @@
     {
         sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
     }
+
+    string path = "";
+    if (sessionUser.UserType == UserTypeEnum.Customer.ToString())
+    {
+        path = "Dashboard";
+    }
+    else if(sessionUser.UserType == UserTypeEnum.ServiceProvider.ToString())
+    {
+        path = "NewServiceRequests";
+    }
 }
 
 <!DOCTYPE html>
@@ -34,12 +44,13 @@
     <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
 
+    <!-- JQuery -->
+    <script src="~/lib/jquery/jquery.js"></script>
+
     <!-- Website Css -->
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/responsive.css" rel="stylesheet" />
 
-    <!-- JQuery -->
-    <script src="~/lib/jquery/jquery.js"></script>
 </head>
 <body>
     <!-- Preloader -->
@@ -71,7 +82,7 @@
                             <span>@sessionUser.UserName</span>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Dashboard" asp-controller="@sessionUser.UserType">Dashboard</a>
+                            <a class="nav-link" asp-action="@path" asp-controller="@sessionUser.UserType">Dashboard</a>
                         </li>
                         @if (sessionUser.UserType != UserTypeEnum.Admin.ToString())
                         {
@@ -85,7 +96,7 @@
                             }
                         }
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="MySetting" asp-controller="@sessionUser.UserType">My Setting</a>
+                            <a class="nav-link" asp-action="MyAccount" asp-controller="@sessionUser.UserType">My Setting</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Logout" asp-controller="Account">Logout</a>
@@ -208,7 +219,7 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" asp-action="Dashboard" asp-controller="@sessionUser.UserType">My Dashboard</a></li>
+                                <li><a class="dropdown-item" asp-action="@path" asp-controller="@sessionUser.UserType">My Dashboard</a></li>
                                 <li><a class="dropdown-item" asp-action="MyAccount" asp-controller="@sessionUser.UserType">My Settings</a></li>
                                 <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a></li>
                             </ul>

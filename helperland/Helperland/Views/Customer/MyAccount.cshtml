@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "MyAccount";
+    ViewData["Title"] = "My Account";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
@@ -106,7 +106,7 @@
             <div id="divMyAddressTabBootstrapAlert">
             </div>
 
-            <table class="table" id="tblCustomerAddressList">
+            <table class="table card-view-small-screen" id="tblCustomerAddressList">
                 <thead>
                     <tr>
                         <th>Addresses</th>
@@ -351,6 +351,7 @@
                     var htmlContent = "";
 
                     resp.result.forEach(function (element) {
+                        
                         htmlContent = htmlContent + "<tr><td><b>Address:</b> " + element.addressLine1 + " " + element.addressLine2 + ", " +
                             element.postalCode + " " + element.city + "<br />" + "<b>Phone number:</b> " + element.mobile + "</td>" +
                             "<td><a class='actionIcon editIcon' onclick='OpenEditCustomerAddressModal(" + element.addressId + ")' ><img src='../img/admin-panel/edit-icon.png' /></a> " +
@@ -605,7 +606,7 @@
                 $("#ErrorMessageCustomerConfirmPassword").html("");
             }
 
-            if ($("#ErrorMessageCustomerCurrentPassword").html() != "" || $("#ErrorMessageCustomerNewPassword").html() != "" || $("#ErrorMessageCustomerConfirmPassword").html() != "" || $("#ErrorMessageUserPhoneNumber").html() != "") {
+            if ($("#ErrorMessageCustomerCurrentPassword").html() != "" || $("#ErrorMessageCustomerNewPassword").html() != "" || $("#ErrorMessageCustomerConfirmPassword").html() != "") {
                 return;
             }
 
@@ -640,14 +641,6 @@
                     console.log(err);
                 }
             });
-        }
-
-        function isValidDate(year, month, day) {
-            var d = new Date(year + "-" + AppendZero(month) + "-" + AppendZero(day));
-            if (d.getFullYear().toString() == year && (d.getMonth() + 1).toString() == month && d.getDate().toString() == day) {
-                return true;
-            }
-            return false;
         }
     </script>
 }

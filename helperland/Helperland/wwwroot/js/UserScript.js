@@ -28,3 +28,13 @@ function AppendZero(input) {
     }
     return input;
 }
+
+
+//check valid date from seperate day, month & year
+function isValidDate(year, month, day) {
+    var d = new Date(year + "-" + AppendZero(month) + "-" + AppendZero(day));
+    if (d.getFullYear().toString() == year && (d.getMonth() + 1).toString() == month && d.getDate().toString() == day) {
+        return true;
+    }
+    return false;
+}

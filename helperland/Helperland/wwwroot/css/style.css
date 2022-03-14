@@ -33,6 +33,12 @@ body {
     padding: 0px 46px;
 }
 
+.max-width-1400 {
+    max-width: 1400px;
+    margin: auto;
+    padding: 0px 46px;
+}
+
 .max-width-654 {
     max-width: 654px;
     margin: auto;
@@ -1642,65 +1648,72 @@ footer {
     margin-left: 30px;
 }
 
-    /* Side Bar END */
+/* Side Bar END */
 
-    /* DataTable Start */
+/* DataTable Start */
 
-    .table{
-        width: 100% !important;
+.table {
+    width: 100% !important;
+}
+
+.main-content table.dataTable thead .sorting .sort-img {
+    content: url(../img/admin-panel/sort.png);
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+}
+
+.main-content table.dataTable thead .sorting_asc .sort-img {
+    content: url(../img/admin-panel/icons8-up-arrow-30.png);
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+}
+
+.main-content table.dataTable thead .sorting_desc .sort-img {
+    content: url(../img/admin-panel/icons8-down-arrow-30.png);
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+}
+
+.main-content table.dataTable thead .sorting {
+    background-image: none !important;
+    background-size: 12px;
+}
+
+.main-content table {
+    border: 1px solid #e1e1e1;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 0px !important;
+}
+
+.main-content table tr {
+    border: 1px solid #e1e1e1 !important;
+}
+
+.main-content table thead tr td {
+    font-size: 16px;
+    color: #646464;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.main-content table tbody tr td {
+    font-size: 16px;
+    color: #646464;
+}
+
+    .main-content table tbody tr td span {
+        font-weight: bold;
     }
 
-    .main-content table.dataTable thead .sorting .sort-img {
-        content: url(../img/admin-panel/sort.png);
-        width: 14px;
-        height: 14px;
-        margin-left: 5px;
-    }
-
-    .main-content table.dataTable thead .sorting_asc .sort-img {
-        content: url(../img/admin-panel/icons8-up-arrow-30.png);
-        width: 14px;
-        height: 14px;
-        margin-left: 5px;
-    }
-
-    .main-content table.dataTable thead .sorting_desc .sort-img {
-        content: url(../img/admin-panel/icons8-down-arrow-30.png);
-        width: 14px;
-        height: 14px;
-        margin-left: 5px;
-    }
-
-    .main-content table.dataTable thead .sorting {
-        background-image: none !important;
-        background-size: 12px;
-    }
-
-    .main-content table,
-    .main-content table tr {
-        border: 1px solid #e1e1e1 !important;
-    }
-
-        .main-content table thead tr td {
-            font-size: 16px;
-            color: #646464;
-            background-color: #f9f9f9;
-            font-weight: bold;
-            border-bottom: 1px solid #e1e1e1;
-        }
-
-        .main-content table tbody tr td {
-            font-size: 16px;
-            color: #646464;
-        }
-
-            .main-content table tbody tr td span {
-                font-weight: bold;
-            }
-
-        .main-content table tr {
-            vertical-align: middle;
-        }
+.main-content table tr {
+    vertical-align: middle;
+}
 
 
 .dataTables_wrapper .dataTables_processing {
@@ -2300,8 +2313,8 @@ footer {
 /*btn color*/
 
 .button-primary {
-    background-color: #1d7a8c;
-    color: #fff;
+    background-color: #1d7a8c !important;
+    color: #fff !important;
     padding: 10px 25px;
 }
 
@@ -2310,16 +2323,27 @@ footer {
         color: #fff;
     }
 
-    .button-primary:disabled {
-        background-color: #1d7a8c !important;
-        cursor: not-allowed !important;
+.button-secondary {
+    background-color: #67b644;
+    color: #fff;
+    padding: 10px 25px;
+}
+
+    .button-secondary:hover {
+        background-color: #569839 !important;
+        color: #fff;
     }
 
-    .button-danger {
-        background-color: #ff6b6b;
-        color: #fff;
-        padding: 10px 25px;
-    }
+.button-primary:disabled {
+    background-color: #1d7a8c !important;
+    cursor: not-allowed !important;
+}
+
+.button-danger {
+    background-color: #ff6b6b;
+    color: #fff;
+    padding: 10px 25px;
+}
 
     .button-danger:hover {
         background-color: #cc5656 !important;
@@ -2348,14 +2372,10 @@ footer {
 }
 
 .main-content .cap-img {
-    padding: 12px 7px;
     border: 1px solid #aaaaaa;
     border-radius: 50%;
     margin-right: 5px;
-}
-
-.main-content .modal .cap-img {
-    padding: 22px 17px !important;
+    height: 49px;
 }
 
 .main-content .money {
@@ -2377,7 +2397,7 @@ footer {
     background-color: #ff6b6b;
 }
 
-.main-content .cancel-btn {
+.cancel-btn {
     font-size: 16px;
     color: white;
     background-color: #ff6b6b;
@@ -2386,7 +2406,7 @@ footer {
     padding: 8px 16px;
 }
 
-    .main-content .cancel-btn:hover {
+    .cancel-btn:hover {
         background-color: #cf2525;
     }
 
@@ -2422,7 +2442,8 @@ footer {
 }
 
 #tblCurrentServiceRequest tr td:nth-child(1),
-#tblCurrentServiceRequest tr td:nth-child(4) {
+#tblCurrentServiceRequest tr td:nth-child(4),
+#tblCurrentServiceRequest tr td:nth-child(5) {
     text-align: center;
 }
 
@@ -2441,21 +2462,6 @@ footer {
 .my-account {
     width: 100%;
 }
-
-    .my-account .my-setting-title {
-        color: #646464;
-        font-size: 18px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #dcdcdc;
-        font-weight: 700;
-        margin: 0 0 15px;
-    }
-
-    .my-account .my-detail-avatar-img{
-        height: 70px;
-        width: 70px;
-        background: #fff;
-    }
 
     .my-account .nav-link {
         font-weight: 700;
@@ -2549,35 +2555,58 @@ footer {
 
 /*My Account Page End*/
 
+/*My account page -- Service Provider Start*/
+
+.my-account .my-setting-title {
+    color: #646464;
+    font-size: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #dcdcdc;
+    font-weight: 700;
+    margin: 0 0 15px;
+}
+
+.my-account .my-detail-avatar-img {
+    height: 70px;
+    width: 70px;
+    background: #fff;
+}
+
+.my-account .form-check-inline {
+    margin-right: 5px;
+}
+
+.my-account .select-avatar-img {
+    height: 85px;
+    margin: 5px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+}
+
+.my-account input[name="sp-avatar"]:checked ~ label .select-avatar-img {
+    border: 3px solid #1D7A8c;
+}
+
+/*My account page -- Service Provider end*/
 
 
+/* Service Provider - New Service Request Page Start */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Service Provider - Upcoming Service Page Start */
-.main-content #tblServiceHistory tr td:nth-child(1),
-.main-content #tblServiceHistory tr td:nth-child(4),
-.main-content #tblServiceHistory tr td:nth-child(5) {
+.main-content #tblUpcomingServices tr td:nth-child(1),
+.main-content #tblUpcomingServices tr td:nth-child(4),
+.main-content #tblUpcomingServices tr td:nth-child(5) {
     text-align: center;
 }
 
-.main-content #tblServiceHistory tr td:nth-child(3) img {
+/* Service Provider - New Service Request Page End */
+
+/* Service Provider - Upcoming Service Page Start */
+.main-content #tblNewServiceRequests tr td:nth-child(1),
+.main-content #tblNewServiceRequests tr td:nth-child(4) {
+    text-align: center;
+}
+
+.main-content #tblUpcomingServices tr td:nth-child(3) img {
     margin-bottom: 5px;
 }
 
@@ -2595,3 +2624,121 @@ footer {
 }
 
 /* Service Provider - Upcoming Service Page End */
+
+/*Service provider - ServiceHistory Start*/
+
+.main-content #tblServiceHistory tr td:nth-child(1) {
+    text-align: center;
+}
+
+/*Service provider - ServiceHistory End*/
+
+/*Rating Page -- Service provide  Start*/
+
+.rating-table {
+    border-spacing: 0px 15px !important;
+    border: 0px !important
+}
+
+    .rating-table thead {
+        display: none;
+    }
+
+    .rating-table tbody tr {
+        border: 1px solid #e1e1e1 !important
+    }
+
+        .rating-table tbody tr td {
+            padding: 0px;
+            border: 0px !important;
+        }
+
+        .rating-table tbody tr .content-box {
+            padding: 12px;
+            border: 1px solid #ececec;
+        }
+
+        .rating-table tbody tr .minWidth-25 {
+            min-width: 25%;
+        }
+
+        .rating-table tbody tr .minWidth-50 {
+            min-width: 50%;
+        }
+
+    .rating-table .dataTables_empty {
+        border: 1px solid #e4e2e2 !important;
+        padding: 5px;
+        border-radius: 3px;
+    }
+/*Rating Page -- Service provide  end*/
+/*Block Customer - Service Provier Start*/
+.block-customer-table {
+    border: 0px !important
+}
+
+    .block-customer-table thead {
+        display: none;
+    }
+
+    .block-customer-table tbody tr {
+        border: 1px solid #e1e1e1 !important;
+        display: inline-block;
+        min-width: 30%;
+        margin: 0px 15px 20px;
+    }
+
+        .block-customer-table tbody tr td {
+            display: flex;
+            padding: 0px;
+            border: 0px !important;
+        }
+
+        .block-customer-table tbody tr .content-box {
+            padding: 30px 5px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+            .block-customer-table tbody tr .content-box .img-avtar {
+                height: 100px;
+                margin: 30px auto 20px;
+            }
+
+            .block-customer-table tbody tr .content-box .user-name {
+                color: #4f4f4f;
+                font-size: 18px;
+                line-height: 22px;
+                font-weight: 700;
+                margin: auto;
+                margin-bottom: 15px;
+            }
+
+            .block-customer-table tbody tr .content-box .button-blocUnblock {
+                width: 80px;
+                font-size: 14px;
+                padding: 5px;
+                border: none !important;
+                color: #fff !important;
+                margin: auto;
+                border-radius: 30px;
+            }
+
+            .block-customer-table tbody tr .content-box .button-block {
+                background: #ff6b6b;
+            }
+
+                .block-customer-table tbody tr .content-box .button-block:hover {
+                    background: #cc5656 !important;
+                }
+
+            .block-customer-table tbody tr .content-box .button-unblock {
+                background: #1d7a8c !important
+            }
+
+                .block-customer-table tbody tr .content-box .button-unblock:hover {
+                    background-color: #146371 !important;
+                }
+
+/*Block Customer - Service Provier End*/

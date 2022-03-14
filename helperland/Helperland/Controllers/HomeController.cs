@@ -129,18 +129,26 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult CheckPostalCode(string postalCode)
         {
-            List<User> user = _homeControllerRepository.GetUserByPostalCode(postalCode);
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            List<User> serviceProvider = _homeControllerRepository.GetUserByPostalCodeAndCustomerId(postalCode, Convert.ToInt32(sessionUser.UserID));
             bool IsServiceProviderAvailable = false;
-            if (user.Any())
+            if (serviceProvider.Any())
             {
                 IsServiceProviderAvailable = true;
             }
             return Json(IsServiceProviderAvailable);
         }
 
-        public IActionResult GetCustomerAddressList(int userId)
+        public IActionResult GetCustomerAddressList(int userId, string postalCode)
         {
-            List<UserAddress> userAddresseList = _homeControllerRepository.GetUserAddress(userId);
+            List<UserAddress> userAddresseList = _homeControllerRepository.GetUserAddress(userId, postalCode);
             return View("BookServiceCustomerAddressList", userAddresseList);
         }
 
@@ -171,7 +179,8 @@ namespace Helperland.Controllers
                 City = userAddressViewModel.City.ToString().Trim(),
                 State = state.StateName,
                 Mobile = userAddressViewModel.PhoneNumber,
-                UserId = Convert.ToInt32(sessionUser.UserID)
+                UserId = Convert.ToInt32(sessionUser.UserID),
+                Email = sessionUser.Email.ToString().Trim()
             };
             userAddress = _homeControllerRepository.AddUserAddress(userAddress);
             return Json(userAddress);
@@ -234,7 +243,7 @@ namespace Helperland.Controllers
                 _homeControllerRepository.AddServiceRequestExtra(serviceRequestExtra);
             }
 
-            List<User> serviceProviders = _homeControllerRepository.GetUserByPostalCode(model.PostalCode.ToString().Trim());
+            List<User> serviceProviders = _homeControllerRepository.GetUserByPostalCodeAndCustomerId(model.PostalCode.ToString().Trim(), Convert.ToInt32(serviceRequest.UserId));
 
             if (serviceProviders.Any())
             {

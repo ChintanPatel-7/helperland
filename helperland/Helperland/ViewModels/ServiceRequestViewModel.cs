@@ -55,5 +55,8 @@ namespace Helperland.ViewModels
 
         [JsonPropertyName("paymentDone")]
         public bool PaymentDone { get; set; }
+
+        [JsonPropertyName("recordVersion")]
+        public string RecordVersion { get; set; }
     }
 }

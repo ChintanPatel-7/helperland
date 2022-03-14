@@ -190,6 +190,8 @@ function ForgotPassword() {
                     icon: 'success',
                     title: 'Forgot Password',
                     text: 'You will receive an email with further instructions on how to reset your password.',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
                 })
             }
             else if (resp.status == "Error") {

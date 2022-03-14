@@ -7,9 +7,9 @@
         margin: 7px;
     }
 
-    .navbar-collapse ul li a {
-        display: inline-block;
-    }
+        .navbar-collapse ul li a {
+            display: inline-block;
+        }
 
     .scroll-up-btn.top-arrow {
         left: 10px;
@@ -43,22 +43,22 @@
         right: 0px !important;
     }
 
-    .show .navbar-nav {
-        align-items: flex-start !important;
-        border-bottom: 1px solid #e1e1e1;
-        transition: all 1s ease;
-    }
+        .show .navbar-nav {
+            align-items: flex-start !important;
+            border-bottom: 1px solid #e1e1e1;
+            transition: all 1s ease;
+        }
 
-    .show .nav-item .nav-link {
-        font-size: 16px;
-        line-height: 24px;
-        border: none;
-        background-color: white;
-        padding: 0px;
-        margin: 0px;
-        color: #646464 !important;
-        padding: 0px 20px !important;
-    }
+        .show .nav-item .nav-link {
+            font-size: 16px;
+            line-height: 24px;
+            border: none;
+            background-color: white;
+            padding: 0px;
+            margin: 0px;
+            color: #646464 !important;
+            padding: 0px 20px !important;
+        }
 
     .navbar .navbar-nav li a:hover {
         border: 0px;
@@ -72,9 +72,9 @@
         border-bottom: 1px solid #e1e1e1;
     }
 
-    .navbar .navbar-nav .user-name span {
-        font-weight: 500;
-    }
+        .navbar .navbar-nav .user-name span {
+            font-weight: 500;
+        }
 
     .navbar .navbar-toggler {
         margin-left: 15px;
@@ -95,13 +95,13 @@
         width: 100% !important;
     }
 
-    .main-content table {
-        width: 100% !important;
-    }
+        .main-content table {
+            width: 100% !important;
+        }
 
-    .main-content table thead tr td {
-        padding: 10px 10px !important;
-    }
+            .main-content table thead tr td {
+                padding: 10px 10px !important;
+            }
 
     .div-table > div {
         overflow-x: auto !important;
@@ -127,11 +127,11 @@
 
     /* book Service page start */
 
-    .set-up-cleaning-services .nav .nav-link img{
+    .set-up-cleaning-services .nav .nav-link img {
         margin-right: 0px;
     }
 
-    .set-up-cleaning-services .nav .nav-link span{
+    .set-up-cleaning-services .nav .nav-link span {
         display: block;
     }
 
@@ -177,9 +177,9 @@
         justify-content: center;
     }
 
-    footer .footer-max-width .nav {
-        margin-bottom: 25px;
-    }
+        footer .footer-max-width .nav {
+            margin-bottom: 25px;
+        }
 
     /* Prices page Start */
 
@@ -192,23 +192,31 @@
         width: auto;
     }
 
-    .prices-why-helperland .card .card-title {
-        text-align: center;
-    }
+        .prices-why-helperland .card .card-title {
+            text-align: center;
+        }
 
-    .prices-why-helperland .card .card-text {
-        text-align: center;
-        margin: 0px auto 20px auto;
-    }
+        .prices-why-helperland .card .card-text {
+            text-align: center;
+            margin: 0px auto 20px auto;
+        }
     /* Prices page end */
 
     /* book Service page start */
 
-    .set-up-cleaning-services .nav .nav-link span{
+    .set-up-cleaning-services .nav .nav-link span {
         display: none;
     }
 
     /* book Service page end */
+
+    /*Block Customer - Service Provider Start*/
+
+    .block-customer-table tbody tr{
+        min-width: 40%
+    }
+
+    /*Block Customer - Service Provider End*/
 }
 
 @media (max-width: 768px) {
@@ -240,17 +248,17 @@
         padding-top: 220px;
     }
 
-    .home .home-content .payment-process {
-        display: block;
-    }
+        .home .home-content .payment-process {
+            display: block;
+        }
 
-    .home .home-content .payment-process .arrow img {
-        transform: rotate(90deg);
-    }
+            .home .home-content .payment-process .arrow img {
+                transform: rotate(90deg);
+            }
 
-    .home .home-content .payment-process .arrow .rotateImg {
-        transform: rotate(265deg) scaleX(-1);
-    }
+            .home .home-content .payment-process .arrow .rotateImg {
+                transform: rotate(265deg) scaleX(-1);
+            }
 
     /* become-a-pro Page */
 
@@ -278,28 +286,48 @@
 
     /* Convert Datatable into Card view start */
 
-    .main-content table {
+    .main-content table.card-view-small-screen {
         border: 0px !important;
     }
 
-    .main-content table thead {
-        display: none;
-    }
+        .main-content table.card-view-small-screen thead {
+            display: none;
+        }
 
-    .main-content table tbody tr {
-        display: flex;
-        flex-direction: column;
-        min-width: 270px;
-        max-width: 460px;
-        align-items: center;
-        margin: 10px auto;
-    }
+        .main-content table.card-view-small-screen tbody tr {
+            display: flex;
+            flex-direction: column;
+            min-width: 270px;
+            max-width: 460px;
+            align-items: center;
+            margin: 10px auto;
+        }
 
-    .main-content table tbody tr td {
-        border-bottom: 0px !important;
-    }
+            .main-content table.card-view-small-screen tbody tr td {
+                border-bottom: 0px !important;
+            }
 
     /* Convert Datatable into Card view end */
+
+    /*Service Provider Rating Page Start*/
+
+    .rating-table tbody tr .minWidth-25 {
+        min-width: 50%;
+    }
+
+    .rating-table tbody tr .minWidth-50 {
+        min-width: 100%;
+    }
+
+    /*Service Provider Rating Page end*/
+
+    /*Block Customer - Service Provider Start*/
+
+    .block-customer-table tbody tr {
+        min-width: 43%
+    }
+
+    /*Block Customer - Service Provider End*/
 }
 
 @media (max-width: 576px) {
@@ -316,16 +344,17 @@
         font-size: 30px;
     }
 
-    section .star-title::before {
-        bottom: -18px;
-    }
+        section .star-title::before {
+            bottom: -18px;
+        }
 
-    section .star-title::after {
-        bottom: -30px;
-    }
+        section .star-title::after {
+            bottom: -30px;
+        }
 
     .max-width,
-    .max-width-1104 {
+    .max-width-1104,
+    .max-width-1400 {
         padding: 0px 15px;
     }
 
@@ -340,28 +369,28 @@
         padding: 220px 5px 15px 5px;
     }
 
-    .home .home-content .title {
-        font-size: 25px;
-    }
+        .home .home-content .title {
+            font-size: 25px;
+        }
 
-    .home .home-content .home-text h2 {
-        font-size: 35px;
-    }
+        .home .home-content .home-text h2 {
+            font-size: 35px;
+        }
 
-    .home .home-content .home-text ul li {
-        font-size: 14px;
-    }
+        .home .home-content .home-text ul li {
+            font-size: 14px;
+        }
 
-    .home .home-content .payment-process h6 {
-        font-size: 15px;
-        line-height: 20px;
-    }
+        .home .home-content .payment-process h6 {
+            font-size: 15px;
+            line-height: 20px;
+        }
 
-    .home .home-content .button button {
-        padding: 8px 20px;
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
+        .home .home-content .button button {
+            padding: 8px 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
 
     .helperland .row h3 {
         font-size: 24px;
@@ -400,7 +429,7 @@
         padding-right: 10px;
     }
 
-    .set-up-cleaning-services .img-card-inputTag{
+    .set-up-cleaning-services .img-card-inputTag {
         display: none;
     }
 
@@ -417,9 +446,18 @@
         padding-left: 5px;
         padding-right: 5px;
     }
+
+    /*Block Customer - Service Provider Start*/
+
+    .block-customer-table tbody tr {
+        min-width: 90%
+    }
+
+    /*Block Customer - Service Provider End*/
 }
 
 @media (max-width: 420px) {
+
     .home .home-content .payment-process .payment-process-box {
         margin: 0px 10px;
     }
@@ -428,7 +466,7 @@
         padding-left: 10px;
     }
 
-    .helperland .row img{
+    .helperland .row img {
         height: auto;
     }
 
@@ -448,7 +486,15 @@
         display: none;
     }
 
-    #ServiceDetailModel .button-group{
+    #ServiceDetailModel .button-group {
         text-align: center;
     }
+
+    /*Service Provider Rating Page Start*/
+
+    .rating-table tbody tr .minWidth-25 {
+        min-width: 100%;
+    }
+
+    /*Service Provider Rating Page end*/
 }

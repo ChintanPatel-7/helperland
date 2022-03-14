@@ -151,6 +151,8 @@ function CheckPostalCode() {
                     $('#lblBasicServiceHours').html(_basicServiceHour + " Hrs");
 
                     TotalPayment();
+
+                    $('#PostalCodeErrorMessage').html("");
                 }
                 else {
                     $('#PostalCodeErrorMessage').html("We are not providing service in this area. We’ll notify you if any helper would start working near your area.");
@@ -238,7 +240,7 @@ function CancelConfirmServiceTime() {
 
 //3rd Tab - Your Detail -- start
 function FillCustomerAddressList() {
-    $("#customerAddressList").html("Loading Addresses...").load('/Home/GetCustomerAddressList?userId=' + _logInUserId);
+    $("#customerAddressList").html("Loading Addresses...").load('/Home/GetCustomerAddressList?userId=' + _logInUserId + '&postalCode=' + $('#PostalCode').val());
     $('#UserPostalCode').val($('#PostalCode').val());
 }
 

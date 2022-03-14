@@ -38,8 +38,7 @@ namespace Helperland.Repository
 
         public IEnumerable<ServiceRequest> GetCurrentServiceRequestByCustomerId(int customerId)
         {
-            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ServiceStartDate > DateTime.Now
-            && x.UserId == customerId && x.Status != (int)ServiceRequestStatusEnum.Cancelled
+            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.UserId == customerId && x.Status != (int)ServiceRequestStatusEnum.Cancelled
             && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequests;
         }

@@ -52,7 +52,8 @@ namespace Helperland.Controllers
                 {
                     UserID = _user.UserId.ToString(),
                     UserName = _user.FirstName + " " + _user.LastName,
-                    UserType = ((UserTypeEnum)userTypeId).ToString()
+                    UserType = ((UserTypeEnum)userTypeId).ToString(),
+                    Email = _user.Email
                 };
 
                 HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
@@ -275,7 +276,8 @@ namespace Helperland.Controllers
                     Mobile = model.MobileNumber,
                     UserTypeId = (int)UserTypeEnum.ServiceProvider,
                     CreatedDate = DateTime.Now,
-                    IsApproved = false
+                    IsApproved = false,
+                    UserProfilePicture = "/img/admin-panel/sp-avtar/avatar-hat.png"
                 };
 
                 _userRepository.Add(_user);

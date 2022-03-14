@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Helperland.Repository
+namespace Helperland.ViewModels
 {
     public class UserViewModel
     {
@@ -38,8 +38,8 @@ namespace Helperland.Repository
         [JsonPropertyName("dateOfBirth")]
         public string DateOfBirth { get; set; }
 
-        //[JsonPropertyName("userProfilePicture")]
-        //public string UserProfilePicture { get; set; }
+        [JsonPropertyName("userProfilePicture")]
+        public string UserProfilePicture { get; set; }
 
         [JsonPropertyName("zipCode")]
         public string ZipCode { get; set; }
@@ -50,7 +50,10 @@ namespace Helperland.Repository
         [JsonPropertyName("languageId")]
         public int LanguageId { get; set; }
 
-        //[JsonPropertyName("nationalityId")]
-        //public int NationalityId { get; set; }
+        [JsonPropertyName("nationalityId")]
+        public int NationalityId { get; set; }
+
+        [JsonPropertyName("userAddress")]
+        public UserAddressViewModel UserAddress { get; set; }
     }
 }

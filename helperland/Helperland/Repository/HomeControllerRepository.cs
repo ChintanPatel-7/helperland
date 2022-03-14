@@ -20,18 +20,28 @@ namespace Helperland.Repository
 
         #region User Table
 
-        public List<User> GetUserByPostalCode(string postalCode)
+        public List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId)
         {
-            return _helperlandContext.Users.Where(x => x.ZipCode == postalCode && x.IsApproved == true).ToList();
+            var users = from sp in _helperlandContext.Users
+                        join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds on sp.UserId equals favoriteAndBlocked.UserId into spList
+                        from favoriteAndBlocked in spList.DefaultIfEmpty()
+                        join cust in _helperlandContext.Users on favoriteAndBlocked.TargetUserId equals cust.UserId into CustList
+                        from tempCust in CustList.DefaultIfEmpty()
+                        where sp.ZipCode == postalCode 
+                        && (favoriteAndBlocked.TargetUserId == customerId || favoriteAndBlocked.Equals(null))
+                        && (favoriteAndBlocked.IsBlocked == false || favoriteAndBlocked.Equals(null))
+                        select sp;
+            
+            return users.ToList();
         }
 
         #endregion User Table
 
         #region UserAddress Table
 
-        public List<UserAddress> GetUserAddress(int userId)
+        public List<UserAddress> GetUserAddress(int userId, string postalCode)
         {
-            List<UserAddress> userAddressList = _helperlandContext.UserAddresses.Where(x => x.UserId == userId).ToList();
+            List<UserAddress> userAddressList = _helperlandContext.UserAddresses.Where(x => x.UserId == userId && x.PostalCode == postalCode).ToList();
             return userAddressList;
         }
 
