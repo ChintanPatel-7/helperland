@@ -151,7 +151,7 @@
                         name: 'ServiceProvider',
                         render: function (data, type, row) {
 
-                            if (row.user == null) {
+                            if (row.serviceProvider == null) {
                                 return "";
                             }
                             else {
@@ -166,17 +166,17 @@
 
 
                                 if (count == 0) {
-                                    return "<div><img src='" + row.user.userProfilePicture + "' class='cap-img float-start' alt='cap image'> " +
-                                        "<div class='name-rating'> <label>" + row.user.firstName + " " + row.user.lastName + "</label> <div> " + "Not Rated";
+                                    return "<div><img src='" + row.serviceProvider.userProfilePicture + "' class='cap-img float-start' alt='cap image'> " +
+                                        "<div class='name-rating'> <label>" + row.serviceProvider.firstName + " " + row.serviceProvider.lastName + "</label> <div> " + "Not Rated";
                                 }
 
                                 spRating = (totalRating / count);
 
                                 var spRatingRounded = Math.round(spRating * 10) / 10;
 
-                                return "<div><img src='" + row.user.userProfilePicture + "' class='cap-img float-start' alt='cap image'> " +
-                                    "<div class='name-rating'> <label>" + row.user.firstName + " " + row.user.lastName + "</label> <div> " +
-                                    "<input id='sprating_" + row.user.userId + "_" + row.serviceRequestId + "' class='spRating' value='" + spRatingRounded + "' type='text' title='' hidden>";
+                                return "<div><img src='" + row.serviceProvider.userProfilePicture + "' class='cap-img float-start' alt='cap image'> " +
+                                    "<div class='name-rating'> <label>" + row.serviceProvider.firstName + " " + row.serviceProvider.lastName + "</label> <div> " +
+                                    "<input id='sprating_" + row.serviceProvider.userId + "_" + row.serviceRequestId + "' class='spRating' value='" + spRatingRounded + "' type='text' title='' hidden>";
                             }
                         }
                     },

@@ -132,14 +132,14 @@ namespace Helperland.Repository
 
         public IEnumerable<ServiceRequest> GetUpcomingServiceRequestsListByServiceProviderId(int serviceProviderId)
         {
-            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceProviderId
+            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Include(x => x.User).Where(x => x.ServiceProviderId == serviceProviderId
             && x.Status == (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequests;
         }
 
         public IEnumerable<ServiceRequest> GetServiceRequestsHistoryListByServiceProviderId(int serviceProviderId)
         {
-            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceProviderId
+            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Include(x => x.User).Where(x => x.ServiceProviderId == serviceProviderId
             && x.Status == (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequests;
         }

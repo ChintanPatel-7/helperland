@@ -78,10 +78,10 @@ namespace Helperland.Controllers
                         serviceRequest = serviceRequest.OrderByDescending(s => s.ServiceStartDate);
                         break;
                     case "ServiceProvider_asc":
-                        serviceRequest = serviceRequest.OrderBy(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);  //check once for sorting
+                        serviceRequest = serviceRequest.OrderBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);  //check once for sorting
                         break;
                     case "ServiceProvider_desc":
-                        serviceRequest = serviceRequest.OrderByDescending(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);
+                        serviceRequest = serviceRequest.OrderByDescending(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);
                         break;
                     case "TotalCost_asc":
                         serviceRequest = serviceRequest.OrderBy(s => s.TotalCost);
@@ -101,7 +101,7 @@ namespace Helperland.Controllers
                 {
                     if (temp.ServiceProviderId != null)
                     {
-                        temp.User = _customerControllerRepository.GetUserByPK(Convert.ToInt32(temp.ServiceProviderId));
+                        //temp.User = _customerControllerRepository.GetUserByPK(Convert.ToInt32(temp.ServiceProviderId));
                         temp.Ratings = _customerControllerRepository.GetRatingsByServiceProviderId(temp.ServiceProviderId);
                     }
                 }
@@ -303,10 +303,10 @@ namespace Helperland.Controllers
                         serviceRequestList = serviceRequestList.OrderByDescending(s => s.ServiceStartDate);
                         break;
                     case "ServiceProvider_asc":
-                        serviceRequestList = serviceRequestList.OrderBy(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);  //check once for sorting
+                        serviceRequestList = serviceRequestList.OrderBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);  //check once for sorting
                         break;
                     case "ServiceProvider_desc":
-                        serviceRequestList = serviceRequestList.OrderByDescending(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);
+                        serviceRequestList = serviceRequestList.OrderByDescending(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);
                         break;
                     case "TotalCost_asc":
                         serviceRequestList = serviceRequestList.OrderBy(s => s.TotalCost);
@@ -326,7 +326,7 @@ namespace Helperland.Controllers
                 {
                     if (temp.ServiceProviderId != null)
                     {
-                        temp.User = _customerControllerRepository.GetUserByPK(Convert.ToInt32(temp.ServiceProviderId));
+                        //temp.User = _customerControllerRepository.GetUserByPK(Convert.ToInt32(temp.ServiceProviderId));
                         temp.Ratings = _customerControllerRepository.GetRatingsByServiceProviderId(temp.ServiceProviderId);
                     }
                 }

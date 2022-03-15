@@ -1,6 +1,7 @@
 ﻿using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Helperland.Repository
 
         public IEnumerable<ServiceRequest> GetCurrentServiceRequestByCustomerId(int customerId)
         {
-            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.UserId == customerId && x.Status != (int)ServiceRequestStatusEnum.Cancelled
+            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Include(x => x.ServiceProvider).Where(x => x.UserId == customerId && x.Status != (int)ServiceRequestStatusEnum.Cancelled
             && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequests;
         }
@@ -60,7 +61,7 @@ namespace Helperland.Repository
 
         public IEnumerable<ServiceRequest> GetServiceRequestHistoryListByCustomerId(int customerId)
         {
-            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.UserId == customerId &&
+            IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Include(x => x.ServiceProvider).Where(x => x.UserId == customerId &&
                 (x.Status == (int)ServiceRequestStatusEnum.Cancelled || x.Status == (int)ServiceRequestStatusEnum.Completed)).ToList();
             return serviceRequests;
         }

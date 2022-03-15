@@ -91,10 +91,10 @@ namespace Helperland.Controllers
                         serviceRequest = serviceRequest.OrderByDescending(s => s.ServiceStartDate);
                         break;
                     case "CustomerName_asc":
-                        serviceRequest = serviceRequest.OrderBy(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);  //check once for sorting
+                        serviceRequest = serviceRequest.OrderBy(s => s.User.FirstName).ThenBy(s => s.User.LastName);  //check once for sorting
                         break;
                     case "CustomerName_desc":
-                        serviceRequest = serviceRequest.OrderByDescending(s => s.User == null ? string.Empty : s.User.FirstName).ThenBy(s => s.User == null ? string.Empty : s.User.LastName);
+                        serviceRequest = serviceRequest.OrderByDescending(s => s.User.FirstName).ThenBy(s => s.User.LastName);
                         break;
                     case "TotalCost_asc":
                         serviceRequest = serviceRequest.OrderBy(s => s.TotalCost);
@@ -294,7 +294,7 @@ namespace Helperland.Controllers
 
                 foreach (ServiceRequest temp in data)
                 {
-                    temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
+                    //temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
                     temp.ServiceRequestAddresses = _serviceProviderControllerRepository.ServiceRequestAddressByServiceRequestId(temp.ServiceRequestId);
                 }
 
@@ -415,7 +415,7 @@ namespace Helperland.Controllers
 
                 foreach (ServiceRequest temp in data)
                 {
-                    temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
+                    //temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
                     temp.ServiceRequestAddresses = _serviceProviderControllerRepository.ServiceRequestAddressByServiceRequestId(temp.ServiceRequestId);
                 }
 
