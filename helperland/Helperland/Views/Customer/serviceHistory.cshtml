@@ -285,13 +285,13 @@
                     ServiceStartDate(tblData[i].serviceStartDate) + " " + ServiceTime(tblData[i].serviceStartDate, 0) + " - " +
                     ServiceTime(tblData[i].serviceStartDate, tblData[i].serviceHours) + ",";
                 
-                if (tblData[i].user == null) {
+                if (tblData[i].serviceProvider == null) {
                     csvContent += ",";
                 }
                 else {
-                    csvContent += tblData[i].user.firstName + " " + tblData[i].user.lastName + ",";
+                    csvContent += tblData[i].serviceProvider.firstName + " " + tblData[i].serviceProvider.lastName + ",";
                 }
-
+                
                 csvContent += tblData[i].totalCost + "$,";
 
                 if (tblData[i].status == @compeleted) {

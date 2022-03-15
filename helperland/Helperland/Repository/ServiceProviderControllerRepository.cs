@@ -74,7 +74,7 @@ namespace Helperland.Repository
             //IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ZipCode == postalCode
             //&& x.Status != (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled
             //&& x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
-            IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests
+            IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
                                                           join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
@@ -92,7 +92,7 @@ namespace Helperland.Repository
             //IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ZipCode == postalCode
             //&& x.Status != (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled
             //&& x.Status != (int)ServiceRequestStatusEnum.Completed && x.HasPets == false).ToList();
-            IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests
+            IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
                                                           join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()

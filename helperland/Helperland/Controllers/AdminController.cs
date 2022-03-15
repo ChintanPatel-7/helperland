@@ -21,5 +21,10 @@ namespace Helperland.Controllers
         {
             return View();
         }
+
+        public IActionResult ServiceRequests()
+        {
+            return View();
+        }
     }
 }

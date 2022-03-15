@@ -181,3 +181,4 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\MyRatings.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\BlockCustomer.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Helperland.csproj.AssemblyReference.cache
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ServiceRequests.cshtml.g.cs

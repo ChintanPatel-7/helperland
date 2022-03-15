@@ -112,7 +112,7 @@ namespace Helperland.Controllers
 
                 foreach (ServiceRequest temp in data)
                 {
-                    temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
+                    //temp.User = _serviceProviderControllerRepository.GetUserByPK(Convert.ToInt32(temp.UserId));
                     temp.ServiceRequestAddresses = _serviceProviderControllerRepository.ServiceRequestAddressByServiceRequestId(temp.ServiceRequestId);
                 }
 
