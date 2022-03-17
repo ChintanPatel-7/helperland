@@ -1,38 +1,12 @@
 $(document).ready(function () {
 
-    $('#user-management').DataTable({
-        paging: true,
-        ordering: true,
-        searching: false,
-        info: false,
-        "columnDefs": [
-            { "orderable": false, "targets": 1 },
-            { "orderable": false, "targets": 2 },
-            { "orderable": false, "targets": 4 },
-            { "orderable": false, "targets": 7 }
-        ],
-        "oLanguage": {
-            "sInfo": "Total Records: _TOTAL_"
-        },
-        "dom": '<"top">rt<"bottom"lip><"clear">',
-        responsive: true,
-        "order": []
-    });
-
-    $('#service-requests').DataTable({
-        paging: true,
-        ordering: true,
-        searching: false,
-        info: false,
-        "columnDefs": [
-            { "orderable": false, "targets": 5 }
-        ],
-        "oLanguage": {
-            "sInfo": "Total Records: _TOTAL_"
-        },
-        "dom": '<"top">rt<"bottom"lip><"clear">',
-        responsive: true,
-        "order": []
+    var url = window.location.href;
+    // hightlight active link
+    $("#sideBarAdminPanel li a").each(function () {
+        // checks if its the same on the address bar
+        if (url == (this.href)) {
+            $(this).addClass("active");
+        }
     });
 
     $(".sub-menu ul").hide();
@@ -58,3 +32,22 @@ $(document).ready(function () {
     });
 
 });
+
+function DateFormatDDMMYYYY(inputDate) {
+    const date = new Date(inputDate);
+    return AppendZero(date.getDate().toString()) + "/" + AppendZero((date.getMonth() + 1).toString()) + "/" + date.getFullYear().toString();
+}
+
+function ServiceTime(inputDate, totalHour) {
+    const date = new Date(inputDate);
+    date.setMinutes(date.getMinutes() + (totalHour * 60));
+    return AppendZero(date.getHours().toString()) + ":" + AppendZero(date.getMinutes().toString());
+}
+
+//appent 0 to single digit number for month and date
+function AppendZero(input) {
+    if (input.length == 1) {
+        return '0' + input;
+    }
+    return input;
+}

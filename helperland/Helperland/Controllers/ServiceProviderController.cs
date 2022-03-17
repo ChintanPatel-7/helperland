@@ -197,7 +197,7 @@ namespace Helperland.Controllers
 
             serviceRequest.ServiceProviderId = Convert.ToInt32(sessionUser.UserID);
             serviceRequest.SpacceptedDate = DateTime.Now;
-            serviceRequest.Status = (int)ServiceRequestStatusEnum.Accepted;
+            serviceRequest.Status = (int)ServiceRequestStatusEnum.Pending;
 
             serviceRequest.ModifiedBy = Convert.ToInt32(sessionUser.UserID);
             serviceRequest.ModifiedDate = DateTime.Now;

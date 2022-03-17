@@ -32,6 +32,7 @@ namespace Helperland
             services.AddScoped<IHomeControllerRepository, HomeControllerRepository>();
             services.AddScoped<ICustomerControllerRepository, CustomerControllerRepository>();
             services.AddScoped<IServiceProviderControllerRepository, ServiceProviderControllerRepository>();
+            services.AddScoped<IAdminControllerRepository, AdminControllerRepository>();
 
             //services.AddMvc().AddNewtonsoftJson(options =>
             //{

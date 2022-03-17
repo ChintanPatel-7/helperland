@@ -16,6 +16,10 @@
     {
         path = "NewServiceRequests";
     }
+    else if (sessionUser.UserType == UserTypeEnum.Admin.ToString())
+    {
+        path = "ServiceRequests";
+    }
 }
 
 <!DOCTYPE html>

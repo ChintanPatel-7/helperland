@@ -79,7 +79,7 @@ namespace Helperland.Repository
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Accepted
+                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Pending
                                                             && serviceRequest.Status != (int)ServiceRequestStatusEnum.Cancelled
                                                             && serviceRequest.Status != (int)ServiceRequestStatusEnum.Completed
                                                             && blocked.IsBlocked != true
@@ -97,7 +97,7 @@ namespace Helperland.Repository
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Accepted
+                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Pending
                                                             && serviceRequest.Status != (int)ServiceRequestStatusEnum.Cancelled
                                                             && serviceRequest.Status != (int)ServiceRequestStatusEnum.Completed
                                                             && blocked.IsBlocked != true && serviceRequest.HasPets == false
@@ -117,7 +117,7 @@ namespace Helperland.Repository
         public List<ServiceRequest> GetServiceRequestListByServiceProviderId(int serviceProviderId)
         {
             List<ServiceRequest> serviceRequestList = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceProviderId
-            && x.Status == (int)ServiceRequestStatusEnum.Accepted
+            && x.Status == (int)ServiceRequestStatusEnum.Pending
             && x.Status != (int)ServiceRequestStatusEnum.Cancelled
             && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequestList;
@@ -133,7 +133,7 @@ namespace Helperland.Repository
         public IEnumerable<ServiceRequest> GetUpcomingServiceRequestsListByServiceProviderId(int serviceProviderId)
         {
             IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Include(x => x.User).Where(x => x.ServiceProviderId == serviceProviderId
-            && x.Status == (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
+            && x.Status == (int)ServiceRequestStatusEnum.Pending && x.Status != (int)ServiceRequestStatusEnum.Cancelled && x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             return serviceRequests;
         }
 

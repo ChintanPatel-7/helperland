@@ -78,7 +78,7 @@ namespace Helperland.Controllers
                         serviceRequest = serviceRequest.OrderByDescending(s => s.ServiceStartDate);
                         break;
                     case "ServiceProvider_asc":
-                        serviceRequest = serviceRequest.OrderBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);  //check once for sorting
+                        serviceRequest = serviceRequest.OrderBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);
                         break;
                     case "ServiceProvider_desc":
                         serviceRequest = serviceRequest.OrderByDescending(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.FirstName).ThenBy(s => s.ServiceProvider == null ? string.Empty : s.ServiceProvider.LastName);
