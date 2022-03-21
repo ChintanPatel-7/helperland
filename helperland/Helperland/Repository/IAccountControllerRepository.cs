@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Helperland.Repository
 {
-    public interface IUserRepository
+    public interface IAccountControllerRepository
     {
-        
-
+        //User Table
         User GetUserByEmailAndPassword(string email, string password);
 
         User GetUserByEmail(string email);

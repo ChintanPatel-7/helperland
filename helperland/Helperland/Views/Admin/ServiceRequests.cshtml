@@ -209,7 +209,7 @@
                     {
                         name: 'ServiceProvider',
                         render: function (data, type, row) {
-                            console.log(row);
+                            
                             if (row.serviceProvider == null) {
                                 return "";
                             }
@@ -429,6 +429,14 @@
                     if (resp.status == "ok") {
                         $('#EditServiceRequestModel').modal('hide');
                         $('#tblServiceRequests').DataTable().ajax.reload();
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Service Request Edit',
+                            text: 'You have successfully edit Service Request : ' + $("#HiddenServiceRequestId").val(),
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
                     }
                     else if (resp.status == "Error") {
                         BootstrapAlert("ErrorMessageEditServiceRequestModel", resp.errorMessage, "danger");

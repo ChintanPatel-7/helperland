@@ -11,14 +11,10 @@
     </button>
 </div>
 <div class="user-search-box">
-    @*<select class="form-select input-element width-205" aria-label="User name">
-            <option selected hidden value="">User name</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>*@
+    <select class="form-control input-element width-205" id="UserName" aria-label="User name">
+    </select>
 
-    <input class="form-control input-element width-205" id="UserName" placeholder="User Name" />
+    @*<input class="form-control input-element width-205" id="UserName" placeholder="User Name" />*@
 
     <select class="form-select input-element width-215" aria-label="User role" id="UserType">
         <option selected value="">User role</option>
@@ -62,10 +58,16 @@
     </table>
 </div>
 
-@section Scripts{ 
+@section Scripts{
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            $("#UserName").select2({
+                placeholder: "Select a User name",
+                //theme: "bootstrap4",
+                allowClear: true
+            });
 
             $('#tblUserManagement').DataTable({
                 paging: true,
@@ -135,7 +137,7 @@
                         name: 'Mobile',
                     },
                     {
-                        data: 'zipCode', 
+                        data: 'zipCode',
                         name: 'Zipcode',
                     },
                     {
@@ -161,7 +163,7 @@
                             htmlContent = htmlContent + "<div class='dropdown'><button class='btn dropdown-toggle' type='button' id='dropdownMenuButton1'" +
                                 "data-bs-toggle='dropdown' aria-expanded='false'><img src='../img/admin-panel/group-38.png' alt='dot' class='position-relative'>" +
                                 "</button><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>";
-                            console.log(row)
+
                             if (row.isActive == true) {
                                 htmlContent = htmlContent + "<li><a class='dropdown-item' onclick='UpdateUserStatus(" + row.userId + ", false)'>Deactivate</a></li>";
                             }
@@ -172,7 +174,7 @@
                             if (row.isApproved == false && row.userTypeId == 2) {
                                 htmlContent = htmlContent + "<li><a class='dropdown-item' onclick='ApprovedServiceProvider(" + row.userId + ")'>Approve</a></li>";
                             }
-                            
+
                             htmlContent = htmlContent + "</ul></div >";
 
                             return htmlContent;
@@ -208,12 +210,84 @@
             $('#tblUserManagement').DataTable().ajax.reload();
         }
 
-        function UpdateUserStatus(userId, isApproved) {
-            console.log(userId + " - " + isApproved)
+        function UpdateUserStatus(userId, isActive) {
+
+            var user = {};
+
+            user.userId = userId;
+            user.isActive = isActive;
+
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Admin/UpdateUserActiveStatus',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(user),
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    if (resp.status == "ok") {
+                        $('#tblUserManagement').DataTable().ajax.reload();
+
+                        if (isActive == true) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Update User Active Status',
+                                text: 'You have successfully Activate User : ' + userId,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Update User Active Status',
+                                text: 'You have successfully Deactivate User : ' + userId,
+                                allowOutsideClick: false,
+                                allowEscapeKey: false
+                            })
+                        }
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
         }
 
         function ApprovedServiceProvider(userId) {
-            console.log(userId )
+
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Admin/ApproveServiceProvider',
+                type: 'post',
+                dataType: 'json',
+                data: { "userId": userId },
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    if (resp.status = "ok") {
+                        $('#tblUserManagement').DataTable().ajax.reload();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Approved Success',
+                            text: 'You have successfully Approved Service provider : ' + userId,
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+
         }
 
     </script>

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Helperland.Repository
 {
-    public class UserRepository : IUserRepository
+    public class AccountControllerRepository : IAccountControllerRepository
     {
         private readonly HelperlandContext _helperlandContext;
 
-        public UserRepository(HelperlandContext helperlandContext)
+        public AccountControllerRepository(HelperlandContext helperlandContext)
         {
             this._helperlandContext = helperlandContext;
         }
 
-        
+        #region
 
         public User GetUserByEmailAndPassword(string email, string password)
         {
@@ -41,5 +41,7 @@ namespace Helperland.Repository
             _helperlandContext.SaveChanges();
             return user;
         }
+
+        #endregion
     }
 }

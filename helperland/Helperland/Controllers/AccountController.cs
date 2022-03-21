@@ -24,25 +24,25 @@ namespace Helperland.Controllers
         private readonly HelperlandContext _helperlandContext;
         private readonly IConfiguration _configuration;
         private readonly IDataProtectionProvider _dataProtectionProvider;
-        private readonly IUserRepository _userRepository;
+        private readonly IAccountControllerRepository _accountControllerRepository;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly string _Key = "MSIHELPERLAND";
         private User _user;
 
         public AccountController(HelperlandContext helperlandContext, IConfiguration configuration, IHostingEnvironment hostingEnvironment,
-            IDataProtectionProvider dataProtectionProvider, IUserRepository userRepository)
+            IDataProtectionProvider dataProtectionProvider, IAccountControllerRepository accountControllerRepository)
         {
             this._helperlandContext = helperlandContext;
             this._configuration = configuration;
             this._hostingEnvironment = hostingEnvironment;
             this._dataProtectionProvider = dataProtectionProvider;
-            this._userRepository = userRepository;
+            this._accountControllerRepository = accountControllerRepository;
         }
 
         [HttpPost]
         public JsonResult Login([FromBody] LoginViewModel model)
         {
-            _user = _userRepository.GetUserByEmailAndPassword(model.Email.ToString().Trim(), model.Password.ToString().Trim());
+            _user = _accountControllerRepository.GetUserByEmailAndPassword(model.Email.ToString().Trim(), model.Password.ToString().Trim());
 
             if (_user != null && _user.IsApproved == true)
             {
@@ -98,7 +98,7 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult ForgotPassword([FromBody] ForgotPasswordViewModel model)
         {
-            _user = _userRepository.GetUserByEmail(model.Email.ToString().Trim());
+            _user = _accountControllerRepository.GetUserByEmail(model.Email.ToString().Trim());
 
             if (_user != null)
             {
@@ -165,7 +165,7 @@ namespace Helperland.Controllers
 
             string[] resetPasswordToken = decrypt.Split("_$_");
 
-            _user = _userRepository.GetUserByEmail(resetPasswordToken[0].ToString().Trim());
+            _user = _accountControllerRepository.GetUserByEmail(resetPasswordToken[0].ToString().Trim());
 
             DateTime tokenDate = Convert.ToDateTime(resetPasswordToken[1]).AddMinutes(30);
             DateTime currentDateTime = DateTime.Now;
@@ -203,7 +203,7 @@ namespace Helperland.Controllers
                 _user.ModifiedBy = _user.UserId;
                 _user.ModifiedDate = DateTime.Now;
 
-                _userRepository.Update(_user);
+                _accountControllerRepository.Update(_user);
 
                 ViewBag.Messsage = "Success";
 
@@ -244,7 +244,7 @@ namespace Helperland.Controllers
                     IsApproved = true
                 };
 
-                _userRepository.Add(_user);
+                _accountControllerRepository.Add(_user);
 
                 TempData["SuccessMessage"] = "Register Successfully.";
 
@@ -280,7 +280,7 @@ namespace Helperland.Controllers
                     UserProfilePicture = "/img/admin-panel/sp-avtar/avatar-hat.png"
                 };
 
-                _userRepository.Add(_user);
+                _accountControllerRepository.Add(_user);
 
                 TempData["SuccessMessage"] = "Register Successfully. You can login after admin can approved your request.";
 

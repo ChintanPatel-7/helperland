@@ -75,6 +75,7 @@ html {
 
 .navbar {
     background-color: #1fb6ff;
+    z-index: 1099;
 }
 
     .navbar .container-fluid {
@@ -756,4 +757,30 @@ tr td .rating-count {
     }
 /*Model end*/
 
+/*select2 Css start*/
+
+.select2-selection.select2-selection--single {
+    height: 46px !important;
+    border-color: #dedddd;
+    padding: 0.55rem 2.25rem 0.375rem 0.75rem;
+}
+
+.select2-selection__rendered{
+    padding: 0px !important;
+}
+
+.select2-selection__arrow {
+    top: 9px !important;
+    right: 6px !important;
+}
+
+.select2-dropdown{
+    top: -20px;
+}
+
+.select2-dropdown,
+select2-search__field {
+    border-color: #dedddd;
+}
+/*select2 Css end*/
 

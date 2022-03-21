@@ -38,6 +38,50 @@ namespace Helperland.Controllers
         }
 
         [HttpPost]
+        public JsonResult UpdateUserActiveStatus([FromBody] UserViewModel model)
+        {
+            User serviceProvider = _adminControllerRepository.GetUserByPK(Convert.ToInt32(model.UserId));
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            serviceProvider.IsActive = model.IsActive;
+            serviceProvider.ModifiedBy = Convert.ToInt32(sessionUser.UserID);
+            serviceProvider.ModifiedDate = DateTime.Now;
+
+            _adminControllerRepository.UpdateUser(serviceProvider);
+
+            return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+        }
+
+        [HttpPost]
+        public JsonResult ApproveServiceProvider(string userId)
+        {
+            User serviceProvider = _adminControllerRepository.GetUserByPK(Convert.ToInt32(userId));
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            serviceProvider.IsApproved = true;
+            serviceProvider.ModifiedBy = Convert.ToInt32(sessionUser.UserID);
+            serviceProvider.ModifiedDate = DateTime.Now;
+
+            _adminControllerRepository.UpdateUser(serviceProvider);
+
+            return Json(new SingleEntity<User> { Result = serviceProvider, Status = "ok", ErrorMessage = null });
+        }
+
+        [HttpPost]
         public IActionResult GetUserList()
         {
             try
@@ -290,8 +334,6 @@ namespace Helperland.Controllers
 
             DateTime newServiceRequestStartDateTime = Convert.ToDateTime(model.ServiceStartDate + " " + model.ServiceStartTime);
             DateTime newServiceRequestEndDateTime = newServiceRequestStartDateTime.AddMinutes(serviceRequest.ServiceHours * 60);
-            //DateTime newServiceRequestStartDateTime = serviceRequest.ServiceStartDate.AddMinutes(-60);
-            //DateTime newServiceRequestEndDateTime = serviceRequest.ServiceStartDate.AddMinutes((serviceRequest.ServiceHours * 60) + 60);
 
             DateTime dateLimit = Convert.ToDateTime(model.ServiceStartDate).AddHours(21);
 
@@ -373,7 +415,7 @@ namespace Helperland.Controllers
             emailModel.To = customer.Email;
             mailHelper.SendServiceRequestMail(emailModel);
 
-            if(serviceRequest.ServiceProviderId != null)
+            if (serviceRequest.ServiceProviderId != null)
             {
                 User serviceProvider = _adminControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.ServiceProviderId));
 

@@ -47,6 +47,13 @@ namespace Helperland.Repository
             return users;
         }
 
+        public User UpdateUser(User user)
+        {
+            _helperlandContext.Users.Update(user);
+            _helperlandContext.SaveChanges();
+            return user;
+        }
+
         #endregion User Table
 
         #region ServiceRequest Table

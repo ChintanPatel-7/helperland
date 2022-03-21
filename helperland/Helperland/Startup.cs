@@ -27,11 +27,11 @@ namespace Helperland
             services.AddControllersWithViews();
             services.AddDbContext<HelperlandContext>();
             services.AddSession();
-            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IHomeControllerRepository, HomeControllerRepository>();
             services.AddScoped<ICustomerControllerRepository, CustomerControllerRepository>();
             services.AddScoped<IServiceProviderControllerRepository, ServiceProviderControllerRepository>();
+            services.AddScoped<IAccountControllerRepository, AccountControllerRepository>();
             services.AddScoped<IAdminControllerRepository, AdminControllerRepository>();
 
             //services.AddMvc().AddNewtonsoftJson(options =>
