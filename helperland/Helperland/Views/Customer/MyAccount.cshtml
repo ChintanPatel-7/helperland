@@ -404,8 +404,7 @@
                         $("#UserStreetName").val(resp.result.addressLine1);
                         $("#UserHouseNumber").val(resp.result.addressLine2);
                         $("#UserPostalCode").val(resp.result.postalCode);
-                        FillCityAddressModel(resp.result.postalCode);
-                        $("#UserCity").val(resp.result.city);
+                        FillCityAddressModel(resp.result.postalCode, resp.result.city);
                         $("#UserPhoneNumber").val(resp.result.mobile);
                     }
 
@@ -428,12 +427,12 @@
             var postalCode = $("#UserPostalCode").val();
 
             if (RegExpressPostalCode.test(postalCode)) {
-                FillCityAddressModel(postalCode);
+                FillCityAddressModel(postalCode, "");
             }
 
         });
 
-        function FillCityAddressModel(postalCode) {
+        function FillCityAddressModel(postalCode, selectedCity) {
 
             $('#preloader').removeClass("d-none");
 
@@ -450,6 +449,13 @@
                     resp.forEach((city) => {
                         $('#UserCity').append($("<option></option>").val(city.cityName).html(city.cityName));
                     });
+
+                    if (selectedCity != "") {
+                        $('#UserCity').val(selectedCity);
+                    }
+                    else {
+                        $("#UserCity").val($("#UserCity option:first").val());
+                    }
                 },
                 error: function (err) {
                     console.log(err);

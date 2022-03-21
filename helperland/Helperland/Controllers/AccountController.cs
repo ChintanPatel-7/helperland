@@ -67,32 +67,32 @@ namespace Helperland.Controllers
 
                 if (_user.UserTypeId == (int)UserTypeEnum.Admin)
                 {
-                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Admin/UserManagement" });
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Admin/UserManagement" });
                     //return RedirectToAction("UserManagement", "Admin");
                 }
                 else if (_user.UserTypeId == (int)UserTypeEnum.ServiceProvider)
                 {
-                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "ServiceProvider/UpcomingService" });
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "ServiceProvider/UpcomingService" });
                     //return RedirectToAction("UpcomingService", "ServiceProvider");
                 }
                 else if (_user.UserTypeId == (int)UserTypeEnum.Customer)
                 {
-                    return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Customer/Dashboard" });
+                    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null, Url = "Customer/Dashboard" });
                     //return RedirectToAction("ServiceHistory", "Customer");
                 }
             }
             else if (_user != null && _user.IsApproved == false)
             {
-                return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You have not yet approved by Admin" });
+                return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You have not yet approved by Admin" });
                 //TempData["ErrorMessage"] = "You have not yet approved by Admin";
             }
             else
             {
-                return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Username or password is invalid" });
+                return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Username or password is invalid" });
                 //TempData["ErrorMessage"] = "Username or password is invalid";
             }
 
-            return Json(new SingeEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -128,9 +128,9 @@ namespace Helperland.Controllers
             }
             else
             {
-                return Json(new SingeEntity<ForgotPasswordViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter Register email Address" });
+                return Json(new SingleEntity<ForgotPasswordViewModel> { Result = model, Status = "Error", ErrorMessage = "Please Enter Register email Address" });
             }
-            return Json(new SingeEntity<ForgotPasswordViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<ForgotPasswordViewModel> { Result = model, Status = "ok", ErrorMessage = null });
             //return View("~/Views/home/index.cshtml", model);
         }
 

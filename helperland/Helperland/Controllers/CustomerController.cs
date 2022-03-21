@@ -153,7 +153,7 @@ namespace Helperland.Controllers
 
             if (newServiceRequestEndDateTime > dateLimit)
             {
-                return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = "Could not completed the service request, because service booking request is must be completed within 21:00 time" });
+                return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = "Could not completed the service request, because service booking request is must be completed within 21:00 time" });
             }
 
             if (serviceRequest.ServiceProviderId != null)
@@ -183,7 +183,7 @@ namespace Helperland.Controllers
 
                 if (serviceRequestConflict == true)
                 {
-                    return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = errorMessage });
+                    return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "Error", ErrorMessage = errorMessage });
                 }
             }
 
@@ -213,10 +213,10 @@ namespace Helperland.Controllers
                 emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " has been rescheduled by customer. New date and time are " +
                     serviceRequest.ServiceStartDate.ToShortDateString() + " " + serviceRequest.ServiceStartDate.ToShortTimeString() + ".";
 
-                mailHelper.SendServiceRequestToServiceProvider(emailModel);
+                mailHelper.SendServiceRequestMail(emailModel);
             }
 
-            return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -250,10 +250,10 @@ namespace Helperland.Controllers
                 emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " cancelled by customer." +
                     " Reason for cancel service request : " + model.Comments + ".";
 
-                mailHelper.SendServiceRequestToServiceProvider(emailModel);
+                mailHelper.SendServiceRequestMail(emailModel);
             }
 
-            return Json(new SingeEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         public IActionResult ServiceHistory()
@@ -382,7 +382,7 @@ namespace Helperland.Controllers
 
             ratingViewModel.ServiceProvider = _customerControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.ServiceProviderId));
 
-            return Json(new SingeEntity<RatingViewModel> { Result = ratingViewModel, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<RatingViewModel> { Result = ratingViewModel, Status = "ok", ErrorMessage = null });
         }
 
         public JsonResult SubmitRatingFromCustomer([FromBody] RatingViewModel model)
@@ -410,7 +410,7 @@ namespace Helperland.Controllers
 
             _customerControllerRepository.AddRating(rating);
 
-            return Json(new SingeEntity<RatingViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<RatingViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         public IActionResult MyAccount()
@@ -430,7 +430,7 @@ namespace Helperland.Controllers
 
             User customer = _customerControllerRepository.GetUserByPK(Convert.ToInt32(sessionUser.UserID));
 
-            return Json(new SingeEntity<User> { Result = customer, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<User> { Result = customer, Status = "ok", ErrorMessage = null });
         }
 
         public JsonResult GetCustomerAddresses()
@@ -445,7 +445,7 @@ namespace Helperland.Controllers
 
             List<UserAddress> customerAddresses = _customerControllerRepository.GetUserAddressByUserId(Convert.ToInt32(sessionUser.UserID));
 
-            return Json(new SingeEntity<List<UserAddress>> { Result = customerAddresses, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<List<UserAddress>> { Result = customerAddresses, Status = "ok", ErrorMessage = null });
         }
 
         public JsonResult DeleteCustomerAddress(string addressId)
@@ -462,7 +462,7 @@ namespace Helperland.Controllers
 
             _customerControllerRepository.DeleteUserAddress(customerAddress);
 
-            return Json(new SingeEntity<UserAddress> { Result = customerAddress, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<UserAddress> { Result = customerAddress, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -485,7 +485,7 @@ namespace Helperland.Controllers
 
             UserAddress customerAddress = _customerControllerRepository.GetUserAddressByPK(Convert.ToInt32(addressId), Convert.ToInt32(sessionUser.UserID));
 
-            return Json(new SingeEntity<UserAddress> { Result = customerAddress, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<UserAddress> { Result = customerAddress, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -523,7 +523,7 @@ namespace Helperland.Controllers
                 userAddress = _customerControllerRepository.UpdateUserAddress(userAddress);
             }
 
-            return Json(new SingeEntity<UserAddressViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<UserAddressViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -541,14 +541,14 @@ namespace Helperland.Controllers
 
             if(model.Password != customer.Password)
             {
-                return Json(new SingeEntity<UserViewModel> { Result = model, Status = "Error", ErrorMessage = "Your current password is wrong!" });
+                return Json(new SingleEntity<UserViewModel> { Result = model, Status = "Error", ErrorMessage = "Your current password is wrong!" });
             }
 
             customer.Password = model.NewPassword.ToString().Trim();
 
             _customerControllerRepository.UpdateUser(customer);
 
-            return Json(new SingeEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 
         [HttpPost]
@@ -580,7 +580,7 @@ namespace Helperland.Controllers
 
             _customerControllerRepository.UpdateUser(customer);
 
-            return Json(new SingeEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+            return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
     }
 }

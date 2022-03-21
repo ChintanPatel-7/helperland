@@ -111,7 +111,7 @@ namespace Helperland.Core
             }
         }
 
-        public bool SendServiceRequestToServiceProvider(EmailModel model)
+        public bool SendServiceRequestMail(EmailModel model)
         {
             try
             {

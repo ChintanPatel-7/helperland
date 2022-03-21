@@ -2,8 +2,11 @@
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
+using Helperland.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,46 +176,46 @@ namespace Helperland.Controllers
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                //var searchUserName = Request.Form["searchUserName"].FirstOrDefault();
-                //var searchUserType = Request.Form["searchUserType"].FirstOrDefault();
-                //var searchPhoneNumber = Request.Form["searchPhoneNumber"].FirstOrDefault();
-                //var searchZipcode = Request.Form["searchZipcode"].FirstOrDefault();
-                //var searchRegistrationStartDate = Request.Form["searchRegistrationStartDate"].FirstOrDefault();
-                //var searchRegistrationEndDate = Request.Form["searchRegistrationEndDate"].FirstOrDefault();
+                var searchServiceRequestId = Request.Form["searchServiceRequestId"].FirstOrDefault();
+                var searchCustomerName = Request.Form["searchCustomerName"].FirstOrDefault();
+                var searchServiceProviderName = Request.Form["searchServiceProviderName"].FirstOrDefault();
+                var searchStatus = Request.Form["searchStatus"].FirstOrDefault();
+                var searchServiceStartDate = Request.Form["searchServiceStartDate"].FirstOrDefault();
+                var searchServiceEndDate = Request.Form["searchServiceEndDate"].FirstOrDefault();
 
                 IEnumerable<ServiceRequest> serviceRequestList = _adminControllerRepository.GetServiceRequestList();
 
-                //if (!string.IsNullOrEmpty(searchUserName))
-                //{
-                //    userList = userList.Where(x => (x.FirstName.ToString().ToLower() + " " + x.LastName.ToString().ToLower()).Contains(searchUserName.ToLower()));
-                //}
+                if (!string.IsNullOrEmpty(searchServiceRequestId))
+                {
+                    serviceRequestList = serviceRequestList.Where(x => x.ServiceRequestId == Convert.ToInt32(searchServiceRequestId));
+                }
 
-                //if (!string.IsNullOrEmpty(searchUserType))
-                //{
-                //    userList = userList.Where(x => x.UserTypeId.ToString().Contains(searchUserType));
-                //}
+                if (!string.IsNullOrEmpty(searchCustomerName))
+                {
+                    serviceRequestList = serviceRequestList.Where(x => (x.User.FirstName.ToString().ToLower() + " " + x.User.LastName.ToString().ToLower()).Contains(searchCustomerName.ToLower()));
+                }
 
-                //if (!string.IsNullOrEmpty(searchPhoneNumber))
-                //{
-                //    userList = userList.Where(x => x.Mobile.ToString().Contains(searchPhoneNumber));
-                //}
+                if (!string.IsNullOrEmpty(searchServiceProviderName))
+                {
+                    serviceRequestList = serviceRequestList.Where(x => x.ServiceProvider != null && (x.ServiceProvider.FirstName.ToString().ToLower() + " " + x.ServiceProvider.LastName.ToString().ToLower()).Contains(searchServiceProviderName.ToLower()));
+                }
 
-                //if (!string.IsNullOrEmpty(searchZipcode))
-                //{
-                //    userList = userList.Where(x => !string.IsNullOrEmpty(x.ZipCode) && x.ZipCode.Contains(searchZipcode));
-                //}
+                if (!string.IsNullOrEmpty(searchStatus))
+                {
+                    serviceRequestList = serviceRequestList.Where(x => x.Status.ToString().Contains(searchStatus));
+                }
 
-                //if (!string.IsNullOrEmpty(searchRegistrationStartDate))
-                //{
-                //    DateTime startDate = Convert.ToDateTime(searchRegistrationStartDate);
-                //    userList = userList.Where(x => x.CreatedDate > startDate);
-                //}
+                if (!string.IsNullOrEmpty(searchServiceStartDate))
+                {
+                    DateTime startDate = Convert.ToDateTime(searchServiceStartDate);
+                    serviceRequestList = serviceRequestList.Where(x => x.CreatedDate > startDate);
+                }
 
-                //if (!string.IsNullOrEmpty(searchRegistrationEndDate))
-                //{
-                //    DateTime endDate = Convert.ToDateTime(searchRegistrationEndDate);
-                //    userList = userList.Where(x => x.CreatedDate < endDate);
-                //}
+                if (!string.IsNullOrEmpty(searchServiceEndDate))
+                {
+                    DateTime endDate = Convert.ToDateTime(searchServiceEndDate);
+                    serviceRequestList = serviceRequestList.Where(x => x.CreatedDate < endDate);
+                }
 
                 var sortOrder = sortColumn + "_" + sortColumnDirection;
 
@@ -263,6 +266,122 @@ namespace Helperland.Controllers
             {
                 throw;
             }
+        }
+
+        [HttpPost]
+        public JsonResult GetServiceRequest(string serviceRequestId)
+        {
+            ServiceRequest serviceRequest = _adminControllerRepository.GetServiceRequestByPK(Convert.ToInt32(serviceRequestId.ToString().Trim()));
+
+            return Json(new SingleEntity<ServiceRequest> { Result = serviceRequest, Status = "ok" });
+        }
+
+        [HttpPost]
+        public JsonResult GetCitiesByPostalCode(string postalCode)
+        {
+            List<City> cities = _adminControllerRepository.GetCitiesByPostalCode(postalCode);
+            return Json(cities);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateServiceRequest([FromBody] EditServiceRequestAdminViewModel model)
+        {
+            ServiceRequest serviceRequest = _adminControllerRepository.GetServiceRequestByPK(model.ServiceRequestId);
+
+            DateTime newServiceRequestStartDateTime = Convert.ToDateTime(model.ServiceStartDate + " " + model.ServiceStartTime);
+            DateTime newServiceRequestEndDateTime = newServiceRequestStartDateTime.AddMinutes(serviceRequest.ServiceHours * 60);
+            //DateTime newServiceRequestStartDateTime = serviceRequest.ServiceStartDate.AddMinutes(-60);
+            //DateTime newServiceRequestEndDateTime = serviceRequest.ServiceStartDate.AddMinutes((serviceRequest.ServiceHours * 60) + 60);
+
+            DateTime dateLimit = Convert.ToDateTime(model.ServiceStartDate).AddHours(21);
+
+            if (newServiceRequestEndDateTime > dateLimit)
+            {
+                return Json(new SingleEntity<EditServiceRequestAdminViewModel> { Result = model, Status = "Error", ErrorMessage = "Could not completed the service request, because service booking request is must be completed within 21:00 time" });
+            }
+
+            newServiceRequestStartDateTime = newServiceRequestStartDateTime.AddMinutes(-60);
+            newServiceRequestEndDateTime = newServiceRequestEndDateTime.AddMinutes(+60);
+
+            if (serviceRequest.ServiceProviderId != null)
+            {
+                List<ServiceRequest> serviceRequestList = _adminControllerRepository.GetFutureServiceRequestByServiceProviderId(Convert.ToInt32(serviceRequest.ServiceProviderId));
+
+                Boolean serviceRequestConflict = false;
+
+                string errorMessage = "";
+
+                foreach (ServiceRequest temp in serviceRequestList)
+                {
+                    if (serviceRequest.ServiceRequestId != temp.ServiceRequestId)
+                    {
+                        DateTime serviceRequestStartDateTime = temp.ServiceStartDate;
+                        DateTime serviceRequestEndDateTime = serviceRequestStartDateTime.AddMinutes(temp.ServiceHours * 60);
+
+                        if (serviceRequestStartDateTime <= newServiceRequestEndDateTime && newServiceRequestStartDateTime <= serviceRequestEndDateTime)
+                        {
+                            serviceRequestConflict = true;
+                            errorMessage = "Another service request has been assigned to the service provider on " + serviceRequestStartDateTime.ToShortDateString()
+                                + " from " + serviceRequestStartDateTime.ToShortTimeString() + " to " + serviceRequestEndDateTime.ToShortTimeString() + ". Either choose another date or pick up a different time slot";
+                            break;
+                        }
+                    }
+                }
+
+                if (serviceRequestConflict == true)
+                {
+                    return Json(new SingleEntity<EditServiceRequestAdminViewModel> { Result = model, Status = "Error", ErrorMessage = errorMessage });
+                }
+            }
+
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            serviceRequest.ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate + " " + model.ServiceStartTime);
+            serviceRequest.ModifiedBy = Convert.ToInt32(sessionUser.UserID);
+            serviceRequest.ModifiedDate = DateTime.Now;
+
+            serviceRequest = _adminControllerRepository.UpdateServiceRequest(serviceRequest);
+
+            ServiceRequestAddress serviceRequestAddress = _adminControllerRepository.GetServiceRequestAddressByServiceRequestId(serviceRequest.ServiceRequestId);
+
+            serviceRequestAddress.AddressLine1 = model.StreetName;
+            serviceRequestAddress.AddressLine2 = model.HouseNumber;
+            serviceRequestAddress.PostalCode = model.PostalCode;
+            serviceRequestAddress.City = model.City;
+
+            State state = _adminControllerRepository.GetStateByCityName(model.City.ToString().Trim());
+
+            serviceRequestAddress.State = state.StateName;
+
+            serviceRequestAddress = _adminControllerRepository.UpdateServiceRequestAddress(serviceRequestAddress);
+
+            User customer = _adminControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.UserId));
+
+            MailHelper mailHelper = new MailHelper(_configuration);
+            EmailModel emailModel = new EmailModel();
+
+            emailModel.Subject = "Edit ServiceRequest";
+            emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " edited by admin." +
+                " Reason for edit service request : " + model.Reason + ".";
+
+            emailModel.To = customer.Email;
+            mailHelper.SendServiceRequestMail(emailModel);
+
+            if(serviceRequest.ServiceProviderId != null)
+            {
+                User serviceProvider = _adminControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.ServiceProviderId));
+
+                emailModel.To = serviceProvider.Email;
+                mailHelper.SendServiceRequestMail(emailModel);
+            }
+
+            return Json(new SingleEntity<EditServiceRequestAdminViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
     }
 }

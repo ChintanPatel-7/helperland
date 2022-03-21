@@ -238,7 +238,6 @@
 
         $(document).ready(function () {
             FillServiceProviderProfileDetail();
-            FillServiceProviderAddress();
         });
 
         function FillServiceProviderProfileDetail() {
@@ -295,7 +294,7 @@
                         }
 
                         $("#PostalCode").val(resp.result.zipCode);
-
+                        
                         FillCityDropDown(resp.result.zipCode);
                     }
                 },
@@ -321,7 +320,7 @@
                         if (resp.result != null) {
                             $("#StreetName").val(resp.result.addressLine1);
                             $("#HouseNumber").val(resp.result.addressLine2);
-                            $("#City").val(resp.result.city);
+                            $('#City').val(resp.result.city);
                         }
                     }
                 },
@@ -348,11 +347,14 @@
                 success: function (resp) {
 
                     $('#preloader').addClass("d-none");
-
+                    
                     $('#City').empty();
                     resp.forEach((city) => {
                         $('#City').append($("<option></option>").val(city.cityName).html(city.cityName));
                     });
+
+                    FillServiceProviderAddress();
+
                 },
                 error: function (err) {
                     console.log(err);
