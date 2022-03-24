@@ -265,7 +265,7 @@ namespace Helperland.Controllers
                     }
                     emailModel.To = user.Email;
                     emailModel.Body = emailModel.Body.Replace("{{DisplayName}}", user.FirstName.ToString() + " " + user.LastName.ToString());
-                    mailHelper.SendServiceRequestMail(emailModel);
+                    mailHelper.SendMail(emailModel);
                 }
             }
 

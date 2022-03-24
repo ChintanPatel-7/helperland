@@ -162,9 +162,9 @@ namespace Helperland.Repository
             return _helperlandContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
         }
 
-        public List<User> GetUserByPostalCode(string postalCode)
+        public List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId)
         {
-            return _helperlandContext.Users.Where(x => x.ZipCode == postalCode).ToList();
+            return _helperlandContext.Users.Where(x => x.ZipCode == postalCode).Include(x => x.FavoriteAndBlockedUsers.Where(c => c.TargetUserId == customerId)).ToList();
         }
 
         public User UpdateUser(User user)

@@ -14,6 +14,7 @@ namespace Helperland.Repository
         //User Table
         User GetUserByPK(int userId);
         IEnumerable<User> GetUserList();
+        IEnumerable<User> GetUserListByUserTypeId(int userTypeId);
         User UpdateUser(User user);
 
         //ServiceRequest Table

@@ -35,7 +35,7 @@ namespace Helperland.Repository
         //User Table
         User GetUserByPK(int userId);
         User UpdateUser(User user);
-        List<User> GetUserByPostalCode(string postalCode);
+        List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId);
 
         //UserAddress Table
         UserAddress GetUserAddressByUserId(int userId);

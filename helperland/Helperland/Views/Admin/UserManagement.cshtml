@@ -41,6 +41,10 @@
 
 </div>
 
+<div class="mb-3 mt-3 text-end">
+    <button class="width-84 export-btn" onclick="ExportUsersDetail()">Export</button>
+</div>
+
 <div class="data-table">
     <table id="tblUserManagement">
         <thead>
@@ -60,16 +64,34 @@
 
 @section Scripts{
     <script type="text/javascript">
+        var table;
 
         $(document).ready(function () {
 
             $("#UserName").select2({
                 placeholder: "Select a User name",
                 //theme: "bootstrap4",
-                allowClear: true
+                allowClear: true,
+                //multiple: true,
+                ajax: {
+                    url: "/Admin/SearchUser",
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query =
+                        {
+                            term: params.term,
+                        };
+                        return query;
+                    },
+                    processResults: function (result) {
+                        return {
+                            results: result
+                        };
+                    }
+                }
             });
 
-            $('#tblUserManagement').DataTable({
+            table = $('#tblUserManagement').DataTable({
                 paging: true,
                 processing: true,
                 serverSide: true,
@@ -286,9 +308,47 @@
                     console.log(err);
                 }
             });
-
-
         }
 
+        function ExportUsersDetail() {
+            var tblData = table.data();
+            let csvContent = "data:text/csv;charset=utf-8,";
+
+            csvContent += "User name, Date of Registration, User Type, Phone, Postal Code, Status\n";
+
+            for (let i = 0; i < tblData.length; i++) {
+                
+                csvContent += tblData[i].firstName + " " + tblData[i].lastName + ",";
+                csvContent += DateFormatDDMMYYYY(tblData[i].createdDate) + ",";
+
+                if (tblData[i].userTypeId == 1) {
+                    csvContent += "Admin,";
+                }
+                else if (tblData[i].userTypeId == 2) {
+                    csvContent += "Service Provider,";
+                }
+                else {
+                    csvContent += "Customer,";
+                }
+
+                csvContent += tblData[i].mobile + ",";
+                csvContent += tblData[i].zipCode + ",";
+
+                if (tblData[i].status == true) {
+                    csvContent += "Active,";
+                }
+                else {
+                    csvContent += "Inactive,";
+                }
+                csvContent += "\n";
+            }
+
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "UsersDetails.csv");
+            document.body.appendChild(link); // Required for FF
+            link.click();
+        }
     </script>
 }

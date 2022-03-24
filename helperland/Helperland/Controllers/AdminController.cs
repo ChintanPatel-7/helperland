@@ -1,4 +1,5 @@
 ﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
@@ -20,11 +21,13 @@ namespace Helperland.Controllers
     {
         private readonly IAdminControllerRepository _adminControllerRepository;
         private readonly IConfiguration _configuration;
+        private readonly HelperlandContext _helperlandContext;
 
-        public AdminController(IAdminControllerRepository adminControllerRepository, IConfiguration configuration)
+        public AdminController(IAdminControllerRepository adminControllerRepository, IConfiguration configuration, HelperlandContext helperlandContext)
         {
             this._adminControllerRepository = adminControllerRepository;
             this._configuration = configuration;
+            this._helperlandContext = helperlandContext;
         }
 
         public IActionResult Index()
@@ -197,6 +200,35 @@ namespace Helperland.Controllers
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        public JsonResult SearchUser(string userType, string term)
+        {
+            IEnumerable<User> users;
+
+            if (!string.IsNullOrEmpty(term))
+            {
+                if (userType == "customer")
+                {
+                    users = _adminControllerRepository.GetUserListByUserTypeId((int)UserTypeEnum.Customer);
+                }
+                else if (userType == "serviceProvider")
+                {
+                    users = _adminControllerRepository.GetUserListByUserTypeId((int)UserTypeEnum.ServiceProvider);
+                }
+                else
+                {
+                    users = _adminControllerRepository.GetUserList();
+                }
+
+                var data = users.Where(a => a.FirstName.ToString().ToLower().Contains(term.ToLower())
+                || a.LastName.ToString().ToLower().Contains(term.ToLower())).Select(x => new { id = x.FirstName + " " + x.LastName, text = x.FirstName + " " + x.LastName }).ToList().Distinct();
+                return Json(data);
+            }
+            else
+            {
+                return Json("");
             }
         }
 
@@ -413,17 +445,78 @@ namespace Helperland.Controllers
                 " Reason for edit service request : " + model.Reason + ".";
 
             emailModel.To = customer.Email;
-            mailHelper.SendServiceRequestMail(emailModel);
+            mailHelper.SendMail(emailModel);
 
             if (serviceRequest.ServiceProviderId != null)
             {
                 User serviceProvider = _adminControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.ServiceProviderId));
 
                 emailModel.To = serviceProvider.Email;
-                mailHelper.SendServiceRequestMail(emailModel);
+                mailHelper.SendMail(emailModel);
             }
 
             return Json(new SingleEntity<EditServiceRequestAdminViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+        }
+
+        [HttpPost]
+        public JsonResult CancelServiceRequest(int serviceRequestId)
+        {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            ServiceRequest serviceRequest = _adminControllerRepository.GetServiceRequestByPK(serviceRequestId);
+
+            serviceRequest.Status = (int)ServiceRequestStatusEnum.Cancelled;
+            serviceRequest.ModifiedBy = Convert.ToInt32(sessionUser.UserID);
+            serviceRequest.ModifiedDate = DateTime.Now;
+
+            serviceRequest = _adminControllerRepository.UpdateServiceRequest(serviceRequest);
+
+            return Json(new SingleEntity<ServiceRequest> { Result = serviceRequest, Status = "ok", ErrorMessage = null });
+        }
+
+        [HttpPost]
+        public JsonResult RefundAmountServiceRequest([FromBody] ServiceRequestViewModel model)
+        {
+            ServiceRequest serviceRequest = _adminControllerRepository.GetServiceRequestByPK(Convert.ToInt32(model.ServiceRequestId));
+
+            serviceRequest.RefundedAmount = Convert.ToDecimal(model.RefundedAmount);
+            serviceRequest.ModifiedBy = GetLogInUserId();
+            serviceRequest.ModifiedDate = DateTime.Now;
+
+            serviceRequest = _adminControllerRepository.UpdateServiceRequest(serviceRequest);
+
+            MailHelper mailHelper = new MailHelper(_configuration);
+            EmailModel emailModel = new EmailModel();
+
+            User customer = _adminControllerRepository.GetUserByPK(serviceRequest.UserId);
+
+            emailModel.Subject = "Refund Service Request";
+            emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " refunded by admin. Refund amount is " + serviceRequest.RefundedAmount + "." +
+                " Reason for Refund service request : " + model.Reason + ".";
+
+            emailModel.To = customer.Email;
+            mailHelper.SendMail(emailModel);
+
+            return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+        }
+
+        private int GetLogInUserId()
+        {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            return Convert.ToInt32(sessionUser.UserID);
         }
     }
 }

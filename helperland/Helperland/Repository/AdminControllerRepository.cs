@@ -47,6 +47,12 @@ namespace Helperland.Repository
             return users;
         }
 
+        public IEnumerable<User> GetUserListByUserTypeId(int userTypeId)
+        {
+            var users = _helperlandContext.Users.Where(x => x.UserTypeId == userTypeId);
+            return users;
+        }
+
         public User UpdateUser(User user)
         {
             _helperlandContext.Users.Update(user);

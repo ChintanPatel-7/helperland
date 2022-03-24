@@ -11,23 +11,15 @@
 
     <input type="text" class="form-control input-element width-110" id="ServiceRequestId" placeholder="Service Id">
 
-    <input type="text" class="form-control input-element width-152" id="CustomerName" placeholder="Customer Name" />
+    @*<input type="text" class="form-control input-element width-152"  placeholder="Customer Name" />
 
-    <input type="text" class="form-control input-element width-205" id="ServiceProviderName" placeholder="Service Provider Name" />
+        <input type="text" class="form-control input-element width-205" placeholder="Service Provider Name" />*@
 
-    @*<select class="form-select input-element width-127" aria-label="User name">
-            <option value="" disabled selected hidden>Customer</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
+    <select id="CustomerName" class="form-control input-element width-205" aria-label="User name">
+    </select>
 
-        <select class="form-select input-element width-152" aria-label="User role">
-            <option value="" disabled selected hidden>Service Provider</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>*@
+    <select id="ServiceProviderName" class="form-control input-element width-205" aria-label="User role">
+    </select>
 
     <select class="form-select input-element width-120" id="Status" aria-label="User role">
         <option value="" selected>Status</option>
@@ -64,7 +56,7 @@
     </table>
 </div>
 
-<!-- Address Modal -->
+<!-- Edit ServiceRequest Modal -->
 <div class="modal" id="EditServiceRequestModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -72,7 +64,6 @@
                 <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <h3 class="mb-3 mt-1">
                     Edit Service Request
-                    <input type="hidden" id="HiddenServiceRequestId" />
                 </h3>
                 <div id="ErrorMessageEditServiceRequestModel"></div>
                 <div class="row">
@@ -131,10 +122,131 @@
     </div>
 </div>
 
+<input type="hidden" id="HiddenServiceRequestId" />
+
+<!-- Refund Amount Modal -->
+<div class="modal" id="RefundAmountModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close model-btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h3 class="mb-3 mt-1">
+                    Refund Amount
+                </h3>
+                <div id="ErrorMessageEditServiceRequestModel"></div>
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>Paid Amount</div>
+                                <div>
+                                    <label id="lblPaidAmount"></label> $
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>Refunded Amount</div>
+                                <div>
+                                    <label id="lblRefundedAmount"></label> $
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <div>In Balance Amount</div>
+                        <div>
+                            <label id="lblBalanceAmount"></label> $
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <label class="form-label">Amount</label>
+                        <div class="input-group">
+                            <input type="number" id="txtAmountToRefund" class="form-control" />
+                            <select class="form-select bg-grey" id="ddlRefundType">
+                                <option value="Percentage" selected>Percentage</option>
+                                <option value="Fixed">Fixed</option>
+                            </select>
+                        </div>
+                        <span id="ErrorMessageAmountToRefund" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <label class="form-label">Calculate</label>
+                        <div class="input-group">
+                            <label class="input-group-text bg-grey w-50 d-flex align-items-center justify-content-center" for="inputGroupSelect02">Calculate</label>
+                            <input type="text" id="txtCalculatedAmount" class="form-control bg-grey" disabled />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 mb-3">
+                        <label class="form-label">Why do you want to Refund Amount?</label>
+                        <textarea class="form-control" id="RefundAmountReason" placeholder="Why do you want to Refund Amount?" rows="3"></textarea>
+                        <span id="ErrorMessageRefundAmountReason" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button class="button-lightBlue w-100" onclick="RefundAmountServiceRequest()">
+                            Refund
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            $("#CustomerName").select2({
+                placeholder: "Select a Customer name",
+                //theme: "bootstrap4",
+                allowClear: true,
+                //multiple: true,
+                ajax: {
+                    url: "/Admin/SearchUser?userType=customer",
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query =
+                        {
+                            term: params.term,
+                        };
+                        return query;
+                    },
+                    processResults: function (result) {
+                        return {
+                            results: result
+                        };
+                    }
+                }
+            });
+
+            $("#ServiceProviderName").select2({
+                placeholder: "Select a Service Provider name",
+                //theme: "bootstrap4",
+                allowClear: true,
+                //multiple: true,
+                ajax: {
+                    url: "/Admin/SearchUser?userType=serviceProvider",
+                    contentType: "application/json; charset=utf-8",
+                    data: function (params) {
+                        var query =
+                        {
+                            term: params.term,
+                        };
+                        return query;
+                    },
+                    processResults: function (result) {
+                        return {
+                            results: result
+                        };
+                    }
+                }
+            });
 
             $('#tblServiceRequests').on('draw.dt', function () { //every time ajax call, this code execute
                 $(".spRating").rating({
@@ -209,7 +321,7 @@
                     {
                         name: 'ServiceProvider',
                         render: function (data, type, row) {
-                            
+
                             if (row.serviceProvider == null) {
                                 return "";
                             }
@@ -265,7 +377,11 @@
                                 " class='position-relative'></button><ul class='dropdown-menu' aria-labelledby='dropdownMenuButton1'>";
 
                             if (row.status == '1' || row.status == '2') {
-                                htmlContent = htmlContent + "<li><a class='dropdown-item' onclick='EditServiceRequest(" + row.serviceRequestId + ")' >Edit & Reschedule</a></li>";
+                                htmlContent = htmlContent + "<li><a class='dropdown-item' onclick='EditServiceRequest(" + row.serviceRequestId + ")' >Edit & Reschedule</a></li>" +
+                                    "<li><a class='dropdown-item' onclick='CancelServiceRequest(" + row.serviceRequestId + ")' >Cancel</a></li>";
+                            }
+                            else if (row.status == '4') {
+                                htmlContent = htmlContent + "<li><a class='dropdown-item' onclick='OpenRefundAmountModel(" + row.serviceRequestId + ")' >Refund</a></li>";
                             }
 
                             htmlContent = htmlContent + "<li><a class='dropdown-item' >History Log</a></li>";
@@ -324,7 +440,7 @@
                     $('#preloader').addClass("d-none");
 
                     $("#HiddenServiceRequestId").val(resp.result.serviceRequestId);
-                    
+
                     $("#ServiceDate").val(DateFormateYYYYMMDD(resp.result.serviceStartDate));
 
                     var currentDate = new Date();
@@ -346,6 +462,35 @@
                     });
                     $('#EditServiceRequestModel').modal('show');
 
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function CancelServiceRequest(serviceRequestId) {
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Admin/CancelServiceRequest',
+                type: 'post',
+                dataType: 'json',
+                data: { "serviceRequestId": serviceRequestId },
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    if (resp.status = "ok") {
+                        $('#tblServiceRequests').DataTable().ajax.reload();
+                        //Swal.fire({
+                        //    icon: 'success',
+                        //    title: 'Approved Success',
+                        //    text: 'You have successfully Approved Service provider : ' + userId,
+                        //    allowOutsideClick: false,
+                        //    allowEscapeKey: false
+                        //})
+                    }
                 },
                 error: function (err) {
                     console.log(err);
@@ -402,7 +547,7 @@
                 $("#ErrorMessageReason").html() != "") {
                 return;
             }
-            
+
             var serviceRequest = {};
 
             serviceRequest.serviceRequestId = $("#HiddenServiceRequestId").val();
@@ -476,6 +621,153 @@
                     }
                     else {
                         $("#City").val($("#City option:first").val());
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function OpenRefundAmountModel(serviceRequestId) {
+            
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Admin/GetServiceRequest',
+                type: 'post',
+                dataType: 'json',
+                data: { "serviceRequestId": serviceRequestId },
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+                    
+                    $("#HiddenServiceRequestId").val(serviceRequestId);
+
+                    $("#lblPaidAmount").text(resp.result.totalCost);
+
+                    if (resp.result.refundedAmount == null) {
+                        $("#lblRefundedAmount").text("0");
+                        $("#lblBalanceAmount").text(resp.result.totalCost);
+                    }
+                    else {
+                        $("#lblRefundedAmount").text(resp.result.refundedAmount);
+
+                        var totalCost = parseFloat(resp.result.totalCost);
+                        var refundedAmount = parseFloat(resp.result.refundedAmount)
+                        
+                        var balanceAmount = totalCost - refundedAmount;
+
+                        $("#lblBalanceAmount").text(balanceAmount.toFixed(2));
+                    }
+
+                    $('#RefundAmountModel').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#RefundAmountModel').modal('show');
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        $('#txtAmountToRefund').change(function () {
+            CalculateAmount();
+        });
+
+        $('#ddlRefundType').change(function () {
+            CalculateAmount();
+        });
+
+        function CalculateAmount() {
+            
+            if ($('#txtAmountToRefund').val() == "") {
+                $("#ErrorMessageAmountToRefund").text("Please enter amount to refund");
+                return;
+            }
+            
+            var amountToRefund = parseFloat($('#txtAmountToRefund').val());
+            var paidAmount = parseFloat($('#lblPaidAmount').text());
+            var refundedAmount = parseFloat($('#lblRefundedAmount').text());
+            var finalAmount = 0;
+
+            if ($('#ddlRefundType option:selected').val() == "Percentage") {
+                finalAmount = (amountToRefund * paidAmount) / 100;
+            }
+            else {
+                finalAmount = amountToRefund;
+            }
+
+            if ((finalAmount + refundedAmount) > paidAmount) {
+                $("#ErrorMessageAmountToRefund").text("Refund amount must be less than Paid amount");
+                return;
+            }
+            else {
+                $("#ErrorMessageAmountToRefund").text("");
+            }
+
+            $("#txtCalculatedAmount").val(finalAmount.toFixed(2));
+        }
+
+        function RefundAmountServiceRequest() {
+            
+            if ($('#txtAmountToRefund').val() == "") {
+                $("#ErrorMessageAmountToRefund").text("Please enter amount to refund");
+            }
+            else {
+                $("#ErrorMessageAmountToRefund").text("");
+            }
+
+            if ($("#RefundAmountReason").val() == "") {
+                $("#ErrorMessageRefundAmountReason").text("Please enter Refund Amount Reason");
+            }
+            else {
+                $("#ErrorMessageRefundAmountReason").text("");
+            }
+
+            if ($("#ErrorMessageAmountToRefund").text() != "" || $("#ErrorMessageAmountToRefund").text() != "" || $("#ErrorMessageRefundAmountReason").text() != "") {
+                return;
+            }
+
+            var refundedAmount = parseFloat($('#lblRefundedAmount').text());
+            var calculatedAmount = parseFloat($("#txtCalculatedAmount").val());
+            var serviceRequest = {};
+
+            serviceRequest.serviceRequestId = $("#HiddenServiceRequestId").val();
+            serviceRequest.refundedAmount = refundedAmount + calculatedAmount;
+            serviceRequest.reason = $("#RefundAmountReason").val();
+
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Admin/RefundAmountServiceRequest',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(serviceRequest),
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    if (resp.status == "ok") {
+                        $('#RefundAmountModel').modal('hide');
+
+                        $("#txtAmountToRefund").val("");
+                        $("#txtCalculatedAmount").val("");
+                        $("#RefundAmountReason").val("");
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Service Request Refunded',
+                            text: 'You have successfully Refunded Service Request : ' + $("#HiddenServiceRequestId").val(),
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
+                    }
+                    else if (resp.status == "Error") {
+                        BootstrapAlert("ErrorMessageEditServiceRequestModel", resp.errorMessage, "danger");
                     }
                 },
                 error: function (err) {

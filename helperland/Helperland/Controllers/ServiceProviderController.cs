@@ -206,10 +206,17 @@ namespace Helperland.Controllers
 
             _serviceProviderControllerRepository.UpdateServiceRequest(serviceRequest);
 
-            List<User> userList = _serviceProviderControllerRepository.GetUserByPostalCode(serviceRequest.ZipCode);
+            List<User> userList = _serviceProviderControllerRepository.GetUserByPostalCodeAndCustomerId(serviceRequest.ZipCode, serviceRequest.UserId);
 
             foreach (User temp in userList)
             {
+                if (temp.FavoriteAndBlockedUsers.Count > 0)
+                {
+                    if (temp.FavoriteAndBlockedUsers.ToArray()[0].IsBlocked)
+                    {
+                        break;
+                    }
+                }
                 if (temp.UserId != serviceRequest.ServiceProviderId)
                 {
                     MailHelper mailHelper = new MailHelper(_configuration);
@@ -219,7 +226,7 @@ namespace Helperland.Controllers
                     emailModel.Subject = "Service Request no more available";
                     emailModel.Body = "Service request " + serviceRequest.ServiceRequestId + " is no more available. It has been assigned to another provider.";
 
-                    mailHelper.SendServiceRequestMail(emailModel);
+                    mailHelper.SendMail(emailModel);
                 }
             }
 

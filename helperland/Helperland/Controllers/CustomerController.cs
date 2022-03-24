@@ -213,7 +213,7 @@ namespace Helperland.Controllers
                 emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " has been rescheduled by customer. New date and time are " +
                     serviceRequest.ServiceStartDate.ToShortDateString() + " " + serviceRequest.ServiceStartDate.ToShortTimeString() + ".";
 
-                mailHelper.SendServiceRequestMail(emailModel);
+                mailHelper.SendMail(emailModel);
             }
 
             return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });
@@ -250,7 +250,7 @@ namespace Helperland.Controllers
                 emailModel.Body = "Service Request " + serviceRequest.ServiceRequestId + " cancelled by customer." +
                     " Reason for cancel service request : " + model.Comments + ".";
 
-                mailHelper.SendServiceRequestMail(emailModel);
+                mailHelper.SendMail(emailModel);
             }
 
             return Json(new SingleEntity<ServiceRequestViewModel> { Result = model, Status = "ok", ErrorMessage = null });

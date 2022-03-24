@@ -422,8 +422,11 @@ button {
 
 /*Input element End*/
 
-/* DataTable Start */
+.modal{
+    z-index: 1199;
+}
 
+/* DataTable Start */
 .main-content table.dataTable thead .sorting .sort-img {
     content: url(../img/admin-panel/sort.png);
     width: 14px;
@@ -673,9 +676,22 @@ table tr td .dropdown ul {
     text-align: center;
 }*/
 
+.export-btn {
+    padding: 0px 15px;
+    background-color: #1fb6ff;
+    color: white;
+    height: 46px;
+    border: 0px;
+    border-radius: 5px;
+}
+
 /* user management page end */
 
 /* service-requests Page Start */
+
+.bg-grey {
+    background-color: #eee;
+}
 
 .calender-icon {
     background: transparent url(../img/admin-panel/icon-calendar-blue.png) 9px center no-repeat !important;
@@ -759,9 +775,15 @@ tr td .rating-count {
 
 /*select2 Css start*/
 
-.select2-selection.select2-selection--single {
+.select2-container {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 20px;
+}
+
+.select2-selection {
     height: 46px !important;
-    border-color: #dedddd;
+    border-color: #dedddd !important;
     padding: 0.55rem 2.25rem 0.375rem 0.75rem;
 }
 
@@ -775,7 +797,8 @@ tr td .rating-count {
 }
 
 .select2-dropdown{
-    top: -20px;
+    top: 0px;
+    left: -8px !important;
 }
 
 .select2-dropdown,
