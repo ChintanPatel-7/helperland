@@ -743,5 +743,10 @@ namespace Helperland.Controllers
 
             return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
+
+        public IActionResult ServiceSchedule()
+        {
+            return View();
+        }
     }
 }

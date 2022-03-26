@@ -2672,41 +2672,42 @@ table.dataTable.no-footer {
         border-radius: 3px;
     }
 /*Rating Page -- Service provide  end*/
-/*Block Customer - Service Provier Start*/
-.block-customer-table {
+
+
+.userlist-table {
     border: 0px !important
 }
 
-    .block-customer-table thead {
+    .userlist-table thead {
         display: none;
     }
 
-    .block-customer-table tbody tr {
+    .userlist-table tbody tr {
         border: 1px solid #e1e1e1 !important;
         display: inline-block;
         min-width: 30%;
         margin: 0px 15px 20px;
     }
 
-        .block-customer-table tbody tr td {
+        .userlist-table tbody tr td {
             display: flex;
             padding: 0px;
             border: 0px !important;
         }
 
-        .block-customer-table tbody tr .content-box {
+        .userlist-table tbody tr .content-box {
             padding: 30px 5px;
             width: 100%;
             display: flex;
             flex-direction: column;
         }
 
-            .block-customer-table tbody tr .content-box .img-avtar {
+            .userlist-table tbody tr .content-box .img-avtar {
                 height: 100px;
                 margin: 30px auto 20px;
             }
 
-            .block-customer-table tbody tr .content-box .user-name {
+            .userlist-table tbody tr .content-box .user-name {
                 color: #4f4f4f;
                 font-size: 18px;
                 line-height: 22px;
@@ -2715,8 +2716,8 @@ table.dataTable.no-footer {
                 margin-bottom: 15px;
             }
 
-            .block-customer-table tbody tr .content-box .button-blocUnblock {
-                width: 80px;
+            .userlist-table tbody tr .content-box .button-blocUnblock {
+                width: 95px;
                 font-size: 14px;
                 padding: 5px;
                 border: none !important;
@@ -2725,20 +2726,24 @@ table.dataTable.no-footer {
                 border-radius: 30px;
             }
 
-            .block-customer-table tbody tr .content-box .button-block {
+            .userlist-table tbody tr .content-box .button-block {
                 background: #ff6b6b;
             }
 
-                .block-customer-table tbody tr .content-box .button-block:hover {
+                .userlist-table tbody tr .content-box .button-block:hover {
                     background: #cc5656 !important;
                 }
 
-            .block-customer-table tbody tr .content-box .button-unblock {
+            .userlist-table tbody tr .content-box .button-unblock {
                 background: #1d7a8c !important
             }
 
-                .block-customer-table tbody tr .content-box .button-unblock:hover {
+                .userlist-table tbody tr .content-box .button-unblock:hover {
                     background-color: #146371 !important;
                 }
 
-/*Block Customer - Service Provier End*/
+    .userlist-table .user-img-table {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }

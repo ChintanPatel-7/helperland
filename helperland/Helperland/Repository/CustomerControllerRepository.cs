@@ -35,6 +35,29 @@ namespace Helperland.Repository
 
         #endregion City Table
 
+        #region FavoriteAndBlocked Table
+
+        public FavoriteAndBlocked GetFavoriteAndBlockedByUserIdAndTargetUserId(int userId, int targetUserId)
+        {
+            return _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == userId && x.TargetUserId == targetUserId).FirstOrDefault();
+        }
+
+        public FavoriteAndBlocked AddFavoriteAndBlocked(FavoriteAndBlocked favoriteAndBlocked)
+        {
+            _helperlandContext.Add(favoriteAndBlocked);
+            _helperlandContext.SaveChanges();
+            return favoriteAndBlocked;
+        }
+
+        public FavoriteAndBlocked UpdateFavoriteAndBlocked(FavoriteAndBlocked favoriteAndBlocked)
+        {
+            _helperlandContext.Update(favoriteAndBlocked);
+            _helperlandContext.SaveChanges();
+            return favoriteAndBlocked;
+        }
+
+        #endregion FavoriteAndBlocked Table
+
         #region ServiceRequest Table
 
         public IEnumerable<ServiceRequest> GetCurrentServiceRequestByCustomerId(int customerId)
@@ -101,6 +124,18 @@ namespace Helperland.Repository
         public User GetUserByPK(int userId)
         {
             return _helperlandContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
+        }
+
+        public IEnumerable<User> GetServiceProviderListWorkWithCustomer(int userId)
+        {
+            IEnumerable<User> users = from serviceProvider in _helperlandContext.Users.Include(x => x.RatingRatingToNavigations)
+                                      .Include(x=> x.FavoriteAndBlockedTargetUsers)
+                                      .Include(x => x.ServiceRequestServiceProviders.Where(y => y.Status == (int)ServiceRequestStatusEnum.Completed))
+                                      join serviceRequest in _helperlandContext.ServiceRequests
+                                      on serviceProvider.UserId equals serviceRequest.ServiceProviderId
+                                      where serviceRequest.UserId == userId
+                                      select serviceProvider;
+            return users.Distinct();
         }
 
         public User UpdateUser(User user)

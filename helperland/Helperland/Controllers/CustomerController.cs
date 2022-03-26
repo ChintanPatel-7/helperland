@@ -539,7 +539,7 @@ namespace Helperland.Controllers
 
             User customer = _customerControllerRepository.GetUserByPK(Convert.ToInt32(sessionUser.UserID));
 
-            if(model.Password != customer.Password)
+            if (model.Password != customer.Password)
             {
                 return Json(new SingleEntity<UserViewModel> { Result = model, Status = "Error", ErrorMessage = "Your current password is wrong!" });
             }
@@ -570,7 +570,7 @@ namespace Helperland.Controllers
             customer.LanguageId = model.LanguageId;
 
 
-            if(model.DateOfBirth != null)
+            if (model.DateOfBirth != null)
             {
                 customer.DateOfBirth = Convert.ToDateTime(model.DateOfBirth);
             }
@@ -582,5 +582,93 @@ namespace Helperland.Controllers
 
             return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
+
+        public IActionResult FavouritePros()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GetServiceProviderListWorkWithCustomer()
+        {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            try
+            {
+                var draw = Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                var serviceRequestList = _customerControllerRepository.GetServiceProviderListWorkWithCustomer(Convert.ToInt32(sessionUser.UserID));
+
+                recordsTotal = serviceRequestList.Count();
+                var data = serviceRequestList.Skip(skip).Take(pageSize).Select(x => new
+                {
+                    UserId = x.UserId,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    UserProfilePicture = x.UserProfilePicture,
+                    Rating = x.RatingRatingToNavigations,
+                    Cleanings = x.ServiceRequestServiceProviders.Count(),
+                    favoriteAndBlockedTargetUsers = x.FavoriteAndBlockedTargetUsers,
+                }).ToList();
+
+                var jsonData = new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data };
+                return Ok(jsonData);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult UpdateServiceProviderFavoriteBlockStatus([FromBody] FavoriteAndBlockedViewModel model)
+        {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            FavoriteAndBlocked favoriteAndBlocked = _customerControllerRepository.GetFavoriteAndBlockedByUserIdAndTargetUserId(Convert.ToInt32(sessionUser.UserID), model.TargetUserId);
+
+            if (favoriteAndBlocked == null)
+            {
+                favoriteAndBlocked = new FavoriteAndBlocked
+                {
+                    UserId = Convert.ToInt32(sessionUser.UserID),
+                    TargetUserId = model.TargetUserId,
+                    IsFavorite = model.IsFavorite,
+                    IsBlocked = model.IsBlocked
+                };
+
+                _customerControllerRepository.AddFavoriteAndBlocked(favoriteAndBlocked);
+            }
+            else
+            {
+                favoriteAndBlocked.IsFavorite = model.IsFavorite;
+                favoriteAndBlocked.IsBlocked = model.IsBlocked;
+
+                _customerControllerRepository.UpdateFavoriteAndBlocked(favoriteAndBlocked);
+            }
+
+            return Json(new SingleEntity<FavoriteAndBlockedViewModel> { Result = model, Status = "ok", ErrorMessage = null });
+        }
+
     }
 }

@@ -11,6 +11,11 @@ namespace Helperland.Repository
         //City Table
         List<City> GetCitiesByPostalCode(string postalCode);
 
+        //FavoriteAndBlocked Table
+        FavoriteAndBlocked GetFavoriteAndBlockedByUserIdAndTargetUserId(int userId, int targetUserId);
+        FavoriteAndBlocked AddFavoriteAndBlocked(FavoriteAndBlocked favoriteAndBlocked);
+        FavoriteAndBlocked UpdateFavoriteAndBlocked(FavoriteAndBlocked favoriteAndBlocked);
+
         //ServiceRequest Table
         IEnumerable<ServiceRequest> GetCurrentServiceRequestByCustomerId(int customerId);
 
@@ -32,6 +37,8 @@ namespace Helperland.Repository
         //User Table
 
         User GetUserByPK(int userId);
+
+        IEnumerable<User> GetServiceProviderListWorkWithCustomer(int userId);
 
         User UpdateUser(User user);
 

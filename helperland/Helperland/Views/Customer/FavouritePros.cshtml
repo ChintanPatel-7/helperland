@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "FavouritePros";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="div-table">
+    <table class="table userlist-table" id="tblFavouritePros">
+        <thead>
+            <tr>
+                <td>Service Provider</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+@section UserLayoutScripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#tblFavouritePros').on('draw.dt', function () { //every time ajax call, this code execute
+                $(".spRating").rating({
+                    min: 0,
+                    max: 5,
+                    step: 0.1,
+                    size: "xs",
+                    stars: "5",
+                    showClear: false,
+                    readonly: true,
+                    starCaptions: function (val) {
+                        return val;
+                    },
+                    starCaptionClasses: function () {
+                        return "fs-16";
+                    },
+                });
+            });
+
+            $('#tblFavouritePros').DataTable({
+                paging: true,
+                pagingType: "full_numbers",
+                processing: true,
+                serverSide: true,
+                filter: true,
+                ordering: true,
+                searching: false,
+                info: true,
+                ajax: {
+                    url: "/Customer/GetServiceProviderListWorkWithCustomer",
+                    type: "POST",
+                    datatype: "json",
+                    dataSrc: 'data'
+                },
+                oLanguage: {
+                    sInfo: "Total Records: _TOTAL_",
+                    sProcessing: "<div id='preloader'><div id='loader'></div></div>"
+                },
+
+                columns: [
+                    {
+                        name: 'ServiceDateTime',
+                        render: function (data, type, row) {
+                            console.log(row);
+                            var htmlContent = "";
+
+                            htmlContent = "<div class='content-box'><div class='text-center'><img class='cap-img user-img-table' src = '" + row.userProfilePicture +"' /></div>" +
+                                "<label class='user-name mb-2'>" + row.firstName + " " + row.lastName + "</label>"
+
+
+                            htmlContent = htmlContent + "<div class='text-center mb-2'>";
+
+                            var totalRating = 0;
+                            var spRating = 0;
+                            var count = 0;
+
+                            row.rating.forEach(function (element) {
+                                totalRating = totalRating + element.ratings;
+                                count = count + 1;
+                            });
+
+
+                            if (count == 0) {
+                                htmlContent = htmlContent + "Not Rated";
+                            }
+                            else {
+                                spRating = (totalRating / count);
+
+                                var spRatingRounded = Math.round(spRating * 10) / 10;
+
+                                htmlContent = htmlContent + "<input id='sprating_" + row.userId + "' class='spRating' value='" + spRatingRounded + "' type='text' title='' hidden>";
+                            }
+                            
+                            htmlContent = htmlContent + "</div><div class='text-center mb-3 fs-14'> " + row.cleanings + " Cleanings</div><div class='text-center'>";
+
+                            if (row.favoriteAndBlockedTargetUsers.length > 0) {
+                                if (row.favoriteAndBlockedTargetUsers[0].isFavorite == true) {
+                                    htmlContent = htmlContent + "<button class='button-blocUnblock button-unblock me-2' onclick='UpdateFavoriteBlockStatus(" +
+                                        row.favoriteAndBlockedTargetUsers[0].targetUserId + ", false, " + row.favoriteAndBlockedTargetUsers[0].isBlocked + ")' >UnFavourite</button>";
+                                }
+                                else {
+                                    htmlContent = htmlContent + "<button class='button-blocUnblock button-block me-2' onclick='UpdateFavoriteBlockStatus(" +
+                                        row.userId + ", true, " + row.favoriteAndBlockedTargetUsers[0].isBlocked + ")' >Favourite</button>";
+                                }
+                                if (row.favoriteAndBlockedTargetUsers[0].isBlocked == true) {
+                                    htmlContent = htmlContent + "<button class='button-blocUnblock button-unblock' onclick='UpdateFavoriteBlockStatus(" +
+                                        row.favoriteAndBlockedTargetUsers[0].targetUserId + ", " + row.favoriteAndBlockedTargetUsers[0].isFavorite + ", false)' >Unblock</button></div >";
+                                }
+                                else {
+                                    htmlContent = htmlContent + "<button class='button-blocUnblock button-block' onclick='UpdateFavoriteBlockStatus(" +
+                                        row.userId + ", " + row.favoriteAndBlockedTargetUsers[0].isFavorite + ", true)' >Block</button>";
+                                }
+                            }
+                            else {
+                                htmlContent = htmlContent + "<button class='button-blocUnblock button-block me-2' onclick='UpdateFavoriteBlockStatus(" +
+                                    row.userId + ", true, false)' >Favourite</button>";
+
+                                htmlContent = htmlContent + "<button class='button-blocUnblock button-block' onclick='UpdateFavoriteBlockStatus(" +
+                                    row.userId + ", false, true)' >Block</button>";
+                            }
+                            htmlContent = htmlContent + "</div></div >"
+                            return htmlContent;
+                        }
+                    }
+                ],
+                dom: '<"top">rt<"bottom"lip><"clear">',
+                responsive: true,
+                order: [[0, "desc"]],
+            });
+
+        });
+          
+        function UpdateFavoriteBlockStatus(targetUserId, isFavorite, isBlocked) {
+
+            var favoriteAndBlockedCustomer = {};
+
+            favoriteAndBlockedCustomer.targetUserId = targetUserId;
+            favoriteAndBlockedCustomer.isFavorite = isFavorite;
+            favoriteAndBlockedCustomer.isBlocked = isBlocked;
+
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/Customer/UpdateServiceProviderFavoriteBlockStatus',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(favoriteAndBlockedCustomer),
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    $('#tblFavouritePros').DataTable().ajax.reload();
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+        }
+    </script>
+}
+
+
