@@ -24,6 +24,7 @@ namespace Helperland.Repository
         IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode);
         ServiceRequest GetServiceRequestByPK(int serviceRequestId);
         List<ServiceRequest> GetServiceRequestListByServiceProviderId(int serviceProviderId);
+        IEnumerable<ServiceRequest> GetServiceRequestListForCalendarByServiceProviderId(int serviceProviderId);
         ServiceRequest UpdateServiceRequest(ServiceRequest serviceRequest);
         IEnumerable<ServiceRequest> GetUpcomingServiceRequestsListByServiceProviderId(int serviceProviderId);
         IEnumerable<ServiceRequest> GetServiceRequestsHistoryListByServiceProviderId(int serviceProviderId);

@@ -676,11 +676,11 @@ namespace Helperland.Controllers
             serviceProvider.NationalityId = model.NationalityId;
             serviceProvider.Gender = model.Gender;
 
-            if(model.DateOfBirth != null)
+            if (model.DateOfBirth != null)
             {
                 serviceProvider.DateOfBirth = Convert.ToDateTime(model.DateOfBirth);
             }
-            
+
             serviceProvider.ZipCode = model.ZipCode;
             serviceProvider.WorksWithPets = model.WorksWithPets;
             serviceProvider.UserProfilePicture = model.UserProfilePicture;
@@ -747,6 +747,33 @@ namespace Helperland.Controllers
         public IActionResult ServiceSchedule()
         {
             return View();
+        }
+
+        public IActionResult GetServiceRequestListForCalender()
+        {
+            var events = _serviceProviderControllerRepository.GetServiceRequestListForCalendarByServiceProviderId(GetLogInUserId());
+            var mainData = events.Select(x => new
+            {
+                serviceRequestId = x.ServiceRequestId,
+                serviceStartDate = x.ServiceStartDate,
+                serviceEndDate = x.ServiceStartDate.AddHours(x.ServiceHours),
+                serviceStatus = Enum.GetName(typeof(ServiceRequestStatusEnum), x.Status)
+            }).ToList();
+            var jsonData = new { Data = mainData };
+            return Ok(jsonData);
+        }
+
+        private int GetLogInUserId()
+        {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            return Convert.ToInt32(sessionUser.UserID);
         }
     }
 }

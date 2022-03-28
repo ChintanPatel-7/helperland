@@ -4,5 +4,127 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>ServiceSchedule</h1>
+<div class="main-content position-relative">
+    <ul class="calendar-legend">
+        <li class="completed">Completed</li>
+        <li class="upcoming">Upcoming</li>
+    </ul>
+    <div id='calendar'></div>
+</div>
 
+@section UserLayoutScripts{
+ 
+    <script type="text/javascript">
+
+        var events = [];
+
+        $(document).ready(function () {
+
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/ServiceProvider/GetServiceRequestListForCalender',
+                type: 'post',
+                dataType: 'json',
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+                    
+                    resp.data.forEach((element) => {
+                        events.push({
+                            id: element.serviceRequestId,
+                            title: eventTitle(element.serviceStartDate, element.serviceEndDate),
+                            start: element.serviceStartDate,
+                            end: element.serviceEndDate,
+                            borderColor: (element.serviceStatus == "Completed") ? "#efefef" : "#1d7a8c",
+                            backgroundColor: (element.serviceStatus == "Completed") ? "#efefef" : "#1d7a8c",
+                            textColor: (element.serviceStatus == "Completed") ? "#7d7979" : "#fff",
+                            allDay: true,
+                            className: "text-center fw-bold"
+                        });
+                    });
+
+                    var calendarEl = document.getElementById('calendar');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: ''
+                        },
+                        events: events,
+                        eventClick: function (calEvent, jsEvent, view) {
+                            OpenServiceRequestModal(calEvent.event.id);
+                        },
+                        contentHeight: 600
+                    });
+
+                    calendar.render();
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+
+        function OpenServiceRequestModal(serviceRequestId) {
+            $('#preloader').removeClass("d-none");
+
+            $.ajax({
+                url: '/ServiceProvider/GetServiceRequestWithCustomerDetails',
+                type: 'post',
+                dataType: 'json',
+                data: { "serviceRequestId": serviceRequestId },
+                success: function (resp) {
+
+                    $('#preloader').addClass("d-none");
+
+                    $("#lblSpServiceRequestDateTime").html("<b>" + ServiceStartDate(resp.data.serviceStartDate) + "</b> " +
+                        "<b>" + ServiceTime(resp.data.serviceStartDate, 0) + "-" +
+                        ServiceTime(resp.data.serviceStartDate, resp.data.serviceHours) + "</b>");
+                    $("#lblSpDuration").text(resp.data.serviceHours);
+                    $("#lblSpServiceRequestId").text(resp.data.serviceRequestId);
+
+                    $("#lblSpExtraServices").text(resp.extraServiceRequest);
+                    $("#lblSpTotalAmount").html("<b>" + resp.data.totalCost + " $</b>");
+
+                    $("#lblSpCustomerName").text(resp.data.user.firstName + " " + resp.data.user.lastName);
+
+                    var serviceAddress = resp.data.serviceRequestAddresses[0];
+
+                    $("#lblSpServiceAddress").text(serviceAddress.addressLine1 + " " + serviceAddress.addressLine2 + ", " + serviceAddress.postalCode + " " + serviceAddress.city)
+                    $("#lblSpPhone").text(serviceAddress.mobile);   // User Or ServiceAddress
+                    $("#lblSpEmail").text(resp.data.user.email);
+
+                    $("#lblSpComments").text(resp.data.comments);
+
+                    if (resp.data.hasPets == false) {
+                        $("#lblSpHasPet").html("<img src='../img/admin-panel/not-included.png'/> I don't have pets at home");
+                    }
+                    else {
+                        $("#lblSpHasPet ").html("<img src='../img/admin-panel/included.png'/> I have pets at home");
+                    }
+
+                    $('#SpPanelServiceDetailModel').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#SpPanelServiceDetailModel').modal('show');
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+
+        function eventTitle(eventStartTime, eventEndTime) {
+            var start = new Date(eventStartTime);
+            var end = new Date(eventEndTime);
+            return AppendZero(start.getHours().toString()) + ":" + AppendZero(start.getMinutes().toString()) + " - " +
+                AppendZero(end.getHours().toString()) + ":" + AppendZero(end.getMinutes().toString());
+        }
+
+    </script>
+
+}

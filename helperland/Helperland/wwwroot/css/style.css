@@ -2747,3 +2747,50 @@ table.dataTable.no-footer {
         height: 100px;
         margin-bottom: 15px;
     }
+
+
+/*calendar start*/
+
+#calendar a {
+    color: #004b91;
+    text-decoration: none;
+}
+
+.main-content .calendar-legend {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    right: 0;
+    top: 0;
+}
+
+    .main-content .calendar-legend li {
+        margin-left: 10px;
+        display: inline-block;
+        font-size: 14px;
+        line-height: 44px;
+        position: relative;
+        padding-left: 22px;
+    }
+
+        .main-content .calendar-legend li:before {
+            content: "";
+            position: absolute;
+            height: 17px;
+            width: 17px;
+            display: block;
+            left: 0;
+            top: 50%;
+            margin-top: -9px;
+        }
+
+    .main-content .calendar-legend .completed:before {
+        background: #efefef;
+        border: 1px solid #e1e1e1;
+    }
+
+    .main-content .calendar-legend .upcoming:before {
+        background: #1d7a8c;
+    }
+/*calendar end*/

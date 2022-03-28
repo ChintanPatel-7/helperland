@@ -32,21 +32,13 @@
     <!--favicon icon-->
     <link rel="icon" type="image/x-icon" href="~/img/logo/favicon_img.png">
 
+    @RenderSection("Stylesheet", required: false)
+
     <!-- Bootstrap css -->
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
-    <!-- DataTable -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-
-    <!-- sweetalert2 -->
-    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
-
     <!-- Fontawsome 6 -->
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
-
-    <!--Star Rating Css-->
-    <link href="~/lib/bootstrap-star-rating/css/star-rating.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.css" rel="stylesheet" />
 
     <!-- JQuery -->
     <script src="~/lib/jquery/jquery.js"></script>
@@ -348,11 +340,7 @@
     <script src="~/js/main.js"></script>
     <!-- Bootstrap Js-->
     <script src="~/lib/bootstrap/js/bootstrap.bundle.js"></script>
-    <!-- sweetalert2 -->
-    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
-    <!-- Rating -->
-    <script src="~/lib/bootstrap-star-rating/js/star-rating.js"></script>
-    <script src="~/lib/bootstrap-star-rating/themes/krajee-svg/theme.js"></script>
+    
     @RenderSection("Scripts", required: false)
 
 </body>

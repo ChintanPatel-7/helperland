@@ -123,6 +123,13 @@ namespace Helperland.Repository
             return serviceRequestList;
         }
 
+        public IEnumerable<ServiceRequest> GetServiceRequestListForCalendarByServiceProviderId(int serviceProviderId)
+        {
+            var serviceRequestList = _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == serviceProviderId
+            && (x.Status == (int)ServiceRequestStatusEnum.Pending || x.Status == (int)ServiceRequestStatusEnum.Completed));
+            return serviceRequestList;
+        }
+
         public ServiceRequest UpdateServiceRequest(ServiceRequest serviceRequest)
         {
             _helperlandContext.ServiceRequests.Update(serviceRequest);
