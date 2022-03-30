@@ -8,7 +8,12 @@ namespace Helperland.Repository
 {
     public interface IHomeControllerRepository
     {
+        // FavoriteAndBlocked Table
+        FavoriteAndBlocked GetFavoriteAndBlockedByServiceProviderIdAndCustomerId(int serviceProviderId, int customerId);
+
         // User Table
+        User GetUserByPK(int userId);
+        List<User> GetFavouriteServiceProviderList(int customerId);
         List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId);
 
         // UserAddress Table

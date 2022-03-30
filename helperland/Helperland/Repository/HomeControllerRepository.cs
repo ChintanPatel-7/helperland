@@ -18,7 +18,30 @@ namespace Helperland.Repository
         }
         #endregion Constructor
 
+        #region FavoriteAndBlocked Table
+
+        public FavoriteAndBlocked GetFavoriteAndBlockedByServiceProviderIdAndCustomerId(int serviceProviderId, int customerId)
+        {
+            return _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == serviceProviderId && x.TargetUserId == customerId).FirstOrDefault();
+        }
+
+        #endregion FavoriteAndBlocked Table
+
         #region User Table
+
+        public User GetUserByPK(int userId)
+        {
+            return _helperlandContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
+        }
+
+        public List<User> GetFavouriteServiceProviderList(int customerId)
+        {
+            List<User> users = _helperlandContext.Users.Join(_helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == customerId && x.IsFavorite == true),
+                                                            u => u.UserId,
+                                                            f => f.TargetUserId,
+                                                            (user, favouriteBlock) => user).ToList();
+            return users;
+        }
 
         public List<User> GetUserByPostalCodeAndCustomerId(string postalCode, int customerId)
         {

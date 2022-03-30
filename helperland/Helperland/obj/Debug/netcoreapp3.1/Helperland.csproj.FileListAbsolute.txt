@@ -184,3 +184,4 @@ D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcorea
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Admin\ServiceRequests.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Customer\FavouritePros.cshtml.g.cs
 D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\ServiceProvider\ServiceSchedule.cshtml.g.cs
+D:\Company\Training\PSD to HTML\website\helperland\Helperland\obj\Debug\netcoreapp3.1\Razor\Views\Home\BookServiceServiceProviderList.cshtml.g.cs

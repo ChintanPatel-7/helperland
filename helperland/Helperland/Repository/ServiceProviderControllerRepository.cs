@@ -69,38 +69,32 @@ namespace Helperland.Repository
 
         #region ServiceRequest Table
 
-        public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCode(string postalCode)
+        public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCode(string postalCode, int serviceProviderId)
         {
-            //IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ZipCode == postalCode
-            //&& x.Status != (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled
-            //&& x.Status != (int)ServiceRequestStatusEnum.Completed).ToList();
             IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
                                                           join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Pending
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Cancelled
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Completed
+                                                            && serviceRequest.Status == (int)ServiceRequestStatusEnum.New
+                                                            && blocked.UserId == serviceProviderId
                                                             && blocked.IsBlocked != true
+                                                            && (serviceRequest.ServiceProviderId == null || serviceRequest.ServiceProviderId == serviceProviderId)
                                                           select serviceRequest;
-            return serviceRequests;
+            return serviceRequests.Distinct();
         }
 
-        public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode)
+        public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode, int serviceProviderId)
         {
-            //IEnumerable<ServiceRequest> serviceRequests = _helperlandContext.ServiceRequests.Where(x => x.ZipCode == postalCode
-            //&& x.Status != (int)ServiceRequestStatusEnum.Accepted && x.Status != (int)ServiceRequestStatusEnum.Cancelled
-            //&& x.Status != (int)ServiceRequestStatusEnum.Completed && x.HasPets == false).ToList();
             IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
                                                           join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Pending
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Cancelled
-                                                            && serviceRequest.Status != (int)ServiceRequestStatusEnum.Completed
-                                                            && blocked.IsBlocked != true && serviceRequest.HasPets == false
+                                                            && serviceRequest.Status == (int)ServiceRequestStatusEnum.New
+                                                            && blocked.UserId == serviceProviderId
+                                                            && blocked.IsBlocked != true && serviceRequest.HasPets == false 
+                                                            && (serviceRequest.ServiceProviderId == null || serviceRequest.ServiceProviderId == serviceProviderId)
                                                           select serviceRequest;
             return serviceRequests;
         }
@@ -108,9 +102,6 @@ namespace Helperland.Repository
         public ServiceRequest GetServiceRequestByPK(int serviceRequestId)
         {
             ServiceRequest serviceRequest = _helperlandContext.ServiceRequests.Where(x => x.ServiceRequestId == serviceRequestId).Include(c => c.User).Include(c => c.ServiceRequestAddresses).Include(c => c.ServiceRequestExtras).FirstOrDefault();
-            //serviceRequest.ServiceRequestExtras = _helperlandContext.ServiceRequestExtras.Where(x => x.ServiceRequestId == serviceRequestId).ToList();
-            //serviceRequest.ServiceRequestAddresses = _helperlandContext.ServiceRequestAddresses.Where(x => x.ServiceRequestId == serviceRequestId).ToList();
-            //serviceRequest.User = _helperlandContext.Users.Where(x => x.UserId == serviceRequest.UserId).FirstOrDefault();
             return serviceRequest;
         }
 

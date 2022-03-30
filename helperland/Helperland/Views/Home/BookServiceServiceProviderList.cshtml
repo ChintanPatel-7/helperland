@@ -1,0 +1,24 @@
+﻿@model List<User>
+
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <h6 class="fw-bold">Your Favourite Service Providers</h6>
+    <hr class="w-100 mt-1 mb-1">
+    <label>You can choose your favourite service provider from the below list</label>
+    <div class="d-flex flex-wrap">
+        @foreach (User sp in Model)
+        {
+            <div class="sp-box text-center">
+                <img src="@sp.UserProfilePicture" class='mt-4' /><br />
+                <label class="fw-bold">@sp.FirstName @sp.LastName</label><br />
+                <label class="selectBtn" for="spId_@sp.UserId">Select</label>
+                <input id="spId_@sp.UserId" type="checkbox" name="serviceProviderList" value="@sp.UserId" onchange="SelectServiceProvider('spId_@sp.UserId')" hidden />
+            </div>
+        }
+    </div>
+}
+

@@ -53,6 +53,9 @@ namespace Helperland.ViewModels
         [JsonPropertyName("userAddressId")]
         public string UserAddressId { get; set; }
 
+        [JsonPropertyName("serviceProviderId")]
+        public int ServiceProviderId { get; set; }
+
         [JsonPropertyName("paymentDone")]
         public bool PaymentDone { get; set; }
 

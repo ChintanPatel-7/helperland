@@ -20,8 +20,8 @@ namespace Helperland.Repository
         IEnumerable<Rating> GetServiceProviderRatingByServiceProviderId(int serviceProviderId, decimal ratings);
 
         //ServiceRequest Table
-        IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCode(string postalCode);
-        IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode);
+        IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCode(string postalCode, int serviceProviderId);
+        IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode, int serviceProviderId);
         ServiceRequest GetServiceRequestByPK(int serviceRequestId);
         List<ServiceRequest> GetServiceRequestListByServiceProviderId(int serviceProviderId);
         IEnumerable<ServiceRequest> GetServiceRequestListForCalendarByServiceProviderId(int serviceProviderId);

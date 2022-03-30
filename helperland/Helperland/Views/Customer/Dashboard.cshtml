@@ -142,15 +142,15 @@
                     {
                         name: 'ServiceProvider',
                         render: function (data, type, row) {
-                            
+                            console.log(row)
                             if (row.serviceProvider == null) {
                                 return "";
                             }
-                            else {
+                            else if (row.status == 2) {
                                 var totalRating = 0;
                                 var spRating = 0;
                                 var count = 0;
-                                
+
                                 row.ratings.forEach(function (element) {
                                     totalRating = totalRating + element.ratings;
                                     count = count + 1;
@@ -169,6 +169,9 @@
                                 return "<div><img src='" + row.serviceProvider.userProfilePicture + "' class='cap-img float-start' alt='cap image'> " +
                                     "<div class='name-rating'> <label>" + row.serviceProvider.firstName + " " + row.serviceProvider.lastName + "</label> <div> " +
                                     "<input id='sprating_" + row.serviceProvider.userId + "_" + row.serviceRequestId + "' class='spRating' value='" + spRatingRounded + "' type='text' title='' hidden>";
+                            }
+                            else {
+                                return "";
                             }
                         }
                     },

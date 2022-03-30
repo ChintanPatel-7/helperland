@@ -186,6 +186,33 @@ namespace Helperland.Controllers
             return Json(userAddress);
         }
 
+        public IActionResult GetFavouriteServiceProviderList()
+        {
+            string user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            List<User> serviceProvider = _homeControllerRepository.GetFavouriteServiceProviderList(Convert.ToInt32(sessionUser.UserID));
+            return View("BookServiceServiceProviderList", serviceProvider);
+        }
+
+        [HttpPost]
+        public JsonResult CheckServiceProviderBlockCustomer(string serviceProviderId)
+        {
+            string user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
+            FavoriteAndBlocked favoriteAndBlocked = _homeControllerRepository.GetFavoriteAndBlockedByServiceProviderIdAndCustomerId(Convert.ToInt32(serviceProviderId), Convert.ToInt32(sessionUser.UserID));
+            return Json(new SingleEntity<FavoriteAndBlocked> { Result = favoriteAndBlocked, Status = "Ok"});
+        }
+
         [HttpPost]
         public JsonResult BookCustomerServiceRequest([FromBody] ServiceRequestViewModel model)
         {
@@ -210,6 +237,11 @@ namespace Helperland.Controllers
                 Status = (int)ServiceRequestStatusEnum.New,
                 RecordVersion = Guid.NewGuid()
             };
+
+            if(model.ServiceProviderId != 0)
+            {
+                serviceRequest.ServiceProviderId = Convert.ToInt32(model.ServiceProviderId);
+            }
 
             _homeControllerRepository.AddServiceRequest(serviceRequest);
 
@@ -243,30 +275,51 @@ namespace Helperland.Controllers
                 _homeControllerRepository.AddServiceRequestExtra(serviceRequestExtra);
             }
 
-            List<User> serviceProviders = _homeControllerRepository.GetUserByPostalCodeAndCustomerId(model.PostalCode.ToString().Trim(), Convert.ToInt32(serviceRequest.UserId));
-
-            if (serviceProviders.Any())
+            if(serviceRequest.ServiceProviderId == null)
             {
+                List<User> serviceProviders = _homeControllerRepository.GetUserByPostalCodeAndCustomerId(model.PostalCode.ToString().Trim(), Convert.ToInt32(serviceRequest.UserId));
+
+                if (serviceProviders.Any())
+                {
+                    MailHelper mailHelper = new MailHelper(_configuration);
+                    EmailModel emailModel = new EmailModel();
+
+                    emailModel.Subject = "Customer Service Request";
+                    emailModel.Body = "Hi {{DisplayName}},<br> There is new Service Request in your area.<br> " +
+                        "Service Request Id :" + serviceRequest.ServiceRequestId + "<br> " +
+                        "Address : " + serviceRequestAddress.AddressLine1 + " " + serviceRequestAddress.AddressLine2 + ", " + serviceRequestAddress.City + ", " + serviceRequestAddress.State + " <br> " +
+                        "Postal Code:" + serviceRequestAddress.PostalCode + " <br> " +
+                        "Click on Link to accept request : <a href=\"http://" + this.Request.Host.ToString() + "/ServiceProvider/NewServiceRequest\">Accept Now</a>";
+
+                    foreach (User user in serviceProviders)
+                    {
+                        if (model.HasPets == true && user.WorksWithPets == false)
+                        {
+                            continue;
+                        }
+                        emailModel.To = user.Email;
+                        emailModel.Body = emailModel.Body.Replace("{{DisplayName}}", user.FirstName.ToString() + " " + user.LastName.ToString());
+                        mailHelper.SendMail(emailModel);
+                    }
+                }
+            }
+            else
+            {
+                //Direct Assign Sp
+                User sp = _homeControllerRepository.GetUserByPK(Convert.ToInt32(serviceRequest.ServiceProviderId));
+
                 MailHelper mailHelper = new MailHelper(_configuration);
                 EmailModel emailModel = new EmailModel();
 
                 emailModel.Subject = "Customer Service Request";
-                emailModel.Body = "Hi {{DisplayName}},<br> There is new Service Request in your area.<br> " +
+                emailModel.Body = "Hi {{DisplayName}},<br> There is new Service Request for you.<br> " +
                     "Service Request Id :" + serviceRequest.ServiceRequestId + "<br> " +
                     "Address : " + serviceRequestAddress.AddressLine1 + " " + serviceRequestAddress.AddressLine2 + ", " + serviceRequestAddress.City + ", " + serviceRequestAddress.State + " <br> " +
                     "Postal Code:" + serviceRequestAddress.PostalCode + " <br> " +
                     "Click on Link to accept request : <a href=\"http://" + this.Request.Host.ToString() + "/ServiceProvider/NewServiceRequest\">Accept Now</a>";
-
-                foreach (User user in serviceProviders)
-                {
-                    if (model.HasPets == true && user.WorksWithPets == false)
-                    {
-                        continue;
-                    }
-                    emailModel.To = user.Email;
-                    emailModel.Body = emailModel.Body.Replace("{{DisplayName}}", user.FirstName.ToString() + " " + user.LastName.ToString());
-                    mailHelper.SendMail(emailModel);
-                }
+                emailModel.To = sp.Email;
+                emailModel.Body = emailModel.Body.Replace("{{DisplayName}}", sp.FirstName.ToString() + " " + sp.LastName.ToString());
+                mailHelper.SendMail(emailModel);
             }
 
             return Json(model);

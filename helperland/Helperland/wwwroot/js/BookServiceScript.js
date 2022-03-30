@@ -208,6 +208,7 @@ function ScheduleAndPlanCompeleted(userId) {
         //Load log in user Address List And City DropDown in your Detail tab 
         FillCustomerAddressList();
         FillCityDropDown();
+        FillFavouriteServiceProviderList();
 
         //clear div error message for your Detail Tab
         $('#Your-Details-tabContent-ErrorMessage').html("");
@@ -242,6 +243,10 @@ function CancelConfirmServiceTime() {
 function FillCustomerAddressList() {
     $("#customerAddressList").html("Loading Addresses...").load('/Home/GetCustomerAddressList?userId=' + _logInUserId + '&postalCode=' + $('#PostalCode').val());
     $('#UserPostalCode').val($('#PostalCode').val());
+}
+
+function FillFavouriteServiceProviderList() {
+    $("#divFavouriteServiceProvider").html("Loading Service provider...").load('/Home/GetFavouriteServiceProviderList');
 }
 
 function FillCityDropDown() {
@@ -355,6 +360,68 @@ function SelectCustomerAddress(isAddrssListAvailable) {
         }
     }
 }
+
+function SelectServiceProvider(selectedSp) {
+    var selectedCheckBox = $("#" + selectedSp);
+
+    var selectedValue = "";
+    if (selectedCheckBox.is(':checked')) {
+        selectedValue = selectedCheckBox.val();
+    }
+
+    $.each($("input[name='serviceProviderList']"), function () {
+        if ($(this).val() == selectedValue) {
+            CheckServiceProviderBlockCustomer(selectedValue, $(this).attr("id"));
+        }
+        else {
+            $(this).parent().find('.selectBtn').removeClass('active');
+            $(this).parent().find('img').removeClass('active');
+            $(this).prop('checked', false);
+        }
+    });
+}
+
+function CheckServiceProviderBlockCustomer(serviceProviderId, chkId) {
+    $('#preloader').removeClass("d-none");
+
+    $.ajax({
+        url: '/Home/CheckServiceProviderBlockCustomer',
+        type: 'post',
+        dataType: 'json',
+        data: { "serviceProviderId": serviceProviderId },
+        success: function (resp) {
+
+            $('#preloader').addClass("d-none");
+            console.log(resp);
+            if (resp.status == "Ok") {
+                if (resp.result != null) {
+                    if (resp.result.isBlocked == false) {
+                        $("#" + chkId).parent().find('.selectBtn').addClass('active');
+                        $("#" + chkId).parent().find('img').addClass('active');
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Service Provider Block',
+                            text: 'You can not select this service provider because this service provider block you.',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
+                        })
+                    }
+                }
+                else {
+                    $("#" + chkId).parent().find('.selectBtn').addClass('active');
+                    $("#" + chkId).parent().find('img').addClass('active');
+                }
+            }
+            
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    });
+}
+
 //3rd Tab - Your Detail -- end
 
 //4th Tab - Make Payment -- Start
@@ -401,7 +468,7 @@ function CompleteBooking() {
     if ($('#ErrorMessageCardNumber').text() != "" || $("#ErrorMessageCardExpiryDate").text() != "" || $("#ErrorMessageCardCVC").text() != "" || $('#ErrorMessageTermsAndCondition').text() != "") {
         return;
     }
-    
+
     var ServiceRequest = {};
 
     ServiceRequest.userId = _logInUserId;
@@ -434,6 +501,10 @@ function CompleteBooking() {
     //Tab - 3
 
     ServiceRequest.userAddressId = $('input[name=UserAddressListYourDetailTab]:checked').attr("id");
+
+    if ($("input[name=serviceProviderList]:checked").length > 0) {
+        ServiceRequest.serviceProviderId = $("input[name=serviceProviderList]:checked").val();
+    }
 
     //Tab - 4
 

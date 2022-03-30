@@ -141,7 +141,7 @@
                         var serviceAddress = resp.data.serviceRequestAddresses[0];
 
                         $("#lblSpServiceAddress").text(serviceAddress.addressLine1 + " " + serviceAddress.addressLine2 + ", " + serviceAddress.postalCode + " " + serviceAddress.city)
-                        $("#lblSpPhone").text(serviceAddress.mobile);   // User Or ServiceAddress
+                        $("#lblSpPhone").text(serviceAddress.mobile);  
                         $("#lblSpEmail").text(resp.data.user.email);
 
                         $("#lblSpComments").text(resp.data.comments);

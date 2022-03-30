@@ -67,11 +67,11 @@ namespace Helperland.Controllers
 
                 if (includePetatHome.ToString().Trim() == "true")
                 {
-                    serviceRequest = _serviceProviderControllerRepository.GetNewServiceRequestsListByPostalCode(serviceProvider.ZipCode);
+                    serviceRequest = _serviceProviderControllerRepository.GetNewServiceRequestsListByPostalCode(serviceProvider.ZipCode, Convert.ToInt32(sessionUser.UserID));
                 }
                 else
                 {
-                    serviceRequest = _serviceProviderControllerRepository.GetNewServiceRequestsListByPostalCodeExcludePetAtHome(serviceProvider.ZipCode);
+                    serviceRequest = _serviceProviderControllerRepository.GetNewServiceRequestsListByPostalCodeExcludePetAtHome(serviceProvider.ZipCode, Convert.ToInt32(sessionUser.UserID));
                 }
 
                 var sortOrder = sortColumn + "_" + sortColumnDirection;
@@ -155,7 +155,26 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult AcceptServiceRequest([FromBody] ServiceRequestViewModel model)
         {
+            var user = HttpContext.Session.GetString("User");
+            SessionUser sessionUser = new SessionUser();
+
+            if (user != null)
+            {
+                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
+            }
+
             ServiceRequest serviceRequest = _serviceProviderControllerRepository.GetServiceRequestByPK(Convert.ToInt32(model.ServiceRequestId));
+
+            bool isDirectAssign = false;
+
+            if (serviceRequest.ServiceProviderId == null)
+            {
+                serviceRequest.ServiceProviderId = Convert.ToInt32(sessionUser.UserID);
+            }
+            else
+            {
+                isDirectAssign = true;
+            }
 
             if (serviceRequest.RecordVersion.ToString() != model.RecordVersion)
             {
@@ -164,14 +183,6 @@ namespace Helperland.Controllers
 
             DateTime newServiceRequestStartDateTime = serviceRequest.ServiceStartDate.AddMinutes(-60);
             DateTime newServiceRequestEndDateTime = serviceRequest.ServiceStartDate.AddMinutes((serviceRequest.ServiceHours * 60) + 60);
-
-            var user = HttpContext.Session.GetString("User");
-            SessionUser sessionUser = new SessionUser();
-
-            if (user != null)
-            {
-                sessionUser = JsonConvert.DeserializeObject<SessionUser>(user);
-            }
 
             List<ServiceRequest> serviceRequestList = _serviceProviderControllerRepository.GetServiceRequestListByServiceProviderId(Convert.ToInt32(sessionUser.UserID));
             Boolean serviceRequestConflict = false;
@@ -192,10 +203,21 @@ namespace Helperland.Controllers
 
             if (serviceRequestConflict == true)
             {
+                if(isDirectAssign == true)
+                {
+                    User customer = _serviceProviderControllerRepository.GetUserByPK(serviceRequest.UserId);
+                    MailHelper mailHelper = new MailHelper(_configuration);
+                    EmailModel emailModel = new EmailModel();
+
+                    emailModel.To = customer.Email;
+                    emailModel.Subject = "Service Request time Comflict";
+                    emailModel.Body = "Service request " + serviceRequest.ServiceRequestId + " is time conflict with other service request of service provider.";
+
+                    mailHelper.SendMail(emailModel);
+                }
                 return Json(new SingleEntity<ServiceRequest> { Result = serviceRequest, Status = "Error", ErrorMessage = errorMessage });
             }
-
-            serviceRequest.ServiceProviderId = Convert.ToInt32(sessionUser.UserID);
+            
             serviceRequest.SpacceptedDate = DateTime.Now;
             serviceRequest.Status = (int)ServiceRequestStatusEnum.Pending;
 
@@ -206,30 +228,33 @@ namespace Helperland.Controllers
 
             _serviceProviderControllerRepository.UpdateServiceRequest(serviceRequest);
 
-            List<User> userList = _serviceProviderControllerRepository.GetUserByPostalCodeAndCustomerId(serviceRequest.ZipCode, serviceRequest.UserId);
-
-            foreach (User temp in userList)
+            if(isDirectAssign == false)
             {
-                if (temp.FavoriteAndBlockedUsers.Count > 0)
+                List<User> userList = _serviceProviderControllerRepository.GetUserByPostalCodeAndCustomerId(serviceRequest.ZipCode, serviceRequest.UserId);
+
+                foreach (User temp in userList)
                 {
-                    if (temp.FavoriteAndBlockedUsers.ToArray()[0].IsBlocked)
+                    if (temp.FavoriteAndBlockedUsers.Count > 0)
                     {
-                        break;
+                        if (temp.FavoriteAndBlockedUsers.ToArray()[0].IsBlocked)
+                        {
+                            continue;
+                        }
+                    }
+                    if (temp.UserId != serviceRequest.ServiceProviderId)
+                    {
+                        MailHelper mailHelper = new MailHelper(_configuration);
+                        EmailModel emailModel = new EmailModel();
+
+                        emailModel.To = temp.Email;
+                        emailModel.Subject = "Service Request no more available";
+                        emailModel.Body = "Service request " + serviceRequest.ServiceRequestId + " is no more available. It has been assigned to another provider.";
+
+                        mailHelper.SendMail(emailModel);
                     }
                 }
-                if (temp.UserId != serviceRequest.ServiceProviderId)
-                {
-                    MailHelper mailHelper = new MailHelper(_configuration);
-                    EmailModel emailModel = new EmailModel();
-
-                    emailModel.To = temp.Email;
-                    emailModel.Subject = "Service Request no more available";
-                    emailModel.Body = "Service request " + serviceRequest.ServiceRequestId + " is no more available. It has been assigned to another provider.";
-
-                    mailHelper.SendMail(emailModel);
-                }
             }
-
+            
             return Json(new SingleEntity<ServiceRequest> { Result = serviceRequest, Status = "ok" });
         }
 
@@ -506,58 +531,10 @@ namespace Helperland.Controllers
 
                 var includePetatHome = Request.Form["includePetatHome"].FirstOrDefault();
 
-                //IEnumerable<User> customerList = (from customer in _helperlandContext.Users
-                //                    join serviceRequest in _helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == Convert.ToInt32(sessionUser.UserID))
-                //                    on customer.UserId equals serviceRequest.UserId
-                //                    //join favoriteAndBlockeds in _helperlandContext.FavoriteAndBlockeds
-                //                    //on customer.UserId equals favoriteAndBlockeds.UserId
-                //                    select new User
-                //                    {
-                //                        UserId = customer.UserId,
-                //                        //FavoriteAndBlockedUsers = _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == 1).ToList()
-                //                    }).Include(x => x.FavoriteAndBlockedTargetUsers).Distinct();
-
                 var customerList = _helperlandContext.Users.Join(_helperlandContext.ServiceRequests.Where(x => x.ServiceProviderId == Convert.ToInt32(sessionUser.UserID)),
                                                                          u => u.UserId,
                                                                          s => s.UserId,
                                                                          (user, serviceRequest) => user).Distinct();
-
-                //List<User> customerList = _helperlandContext.Users.Join(_helperlandContext.ServiceRequests
-                //                                                        .Where(x => x.ServiceProviderId == Convert.ToInt32(sessionUser.UserID)
-                //                                                                && x.Status == (int)ServiceRequestStatusEnum.Completed),
-                //                                                        u => u.UserId,
-                //                                                        s => s.UserId,
-                //                                                        (user, serviceRequest) => new User
-                //                                                        {
-                //                                                            UserId = user.UserId,
-                //                                                            FirstName = user.FirstName
-                //                                                        }).Join(_helperlandContext.FavoriteAndBlockeds
-                //                                                                .Where(x => x.UserId == Convert.ToInt32(sessionUser.UserID)),
-                //                                                                s => s.UserId,
-                //                                                                f => f.UserId,
-                //                                                                (user, favourite) => new {user, favourite }).SelectMany(
-                //                                                                                            x => x.favourite.DefaultIfEmpty()
-                //    ).Distinct().ToList();
-
-                //var customerList = (from sr in _helperlandContext.ServiceRequests
-                //                       join
-                //                       usr in _helperlandContext.Users
-                //                       on
-                //                       sr.UserId equals usr.UserId
-                //                       where sr.ServiceProviderId == Convert.ToInt32(sessionUser.UserID) && sr.Status == (int)ServiceRequestStatusEnum.Completed
-                //                       select new
-                //                       {
-                //                           serviceproviderid = sr.ServiceProviderId,
-                //                           customername = usr.FirstName,
-                //                           customername2 = usr.LastName,
-                //                           customerprofile = usr.UserProfilePicture,
-                //                           customeruserid = usr.UserId,
-                //                           blockeduser = _helperlandContext.FavoriteAndBlockeds.Where(x => x.TargetUserId == usr.UserId).FirstOrDefault()
-                //                       }).Distinct();
-
-                //return Json(serviceRequests);
-
-                //List<User> customerList = _serviceProviderControllerRepository.GetUnblockedCustomerListByServiceProviderId(Convert.ToInt32(sessionUser.UserID));
 
                 recordsTotal = customerList.Count();
                 var data = customerList.Skip(skip).Take(pageSize).ToList();
