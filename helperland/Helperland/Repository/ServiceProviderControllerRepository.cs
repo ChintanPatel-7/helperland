@@ -72,13 +72,13 @@ namespace Helperland.Repository
         public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCode(string postalCode, int serviceProviderId)
         {
             IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
-                                                          join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
+                                                          join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == serviceProviderId)
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
                                                             && serviceRequest.Status == (int)ServiceRequestStatusEnum.New
-                                                            && blocked.UserId == serviceProviderId
-                                                            && blocked.IsBlocked != true
+                                                            && (blocked == null || blocked.UserId == serviceProviderId)
+                                                            && (blocked == null || blocked.IsBlocked == false)
                                                             && (serviceRequest.ServiceProviderId == null || serviceRequest.ServiceProviderId == serviceProviderId)
                                                           select serviceRequest;
             return serviceRequests.Distinct();
@@ -87,13 +87,14 @@ namespace Helperland.Repository
         public IEnumerable<ServiceRequest> GetNewServiceRequestsListByPostalCodeExcludePetAtHome(string postalCode, int serviceProviderId)
         {
             IEnumerable<ServiceRequest> serviceRequests = from serviceRequest in _helperlandContext.ServiceRequests.Include(x => x.User)
-                                                          join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds
+                                                          join favoriteAndBlocked in _helperlandContext.FavoriteAndBlockeds.Where(x => x.UserId == serviceProviderId)
                                                           on serviceRequest.UserId equals favoriteAndBlocked.TargetUserId into blockedCustomer
                                                           from blocked in blockedCustomer.DefaultIfEmpty()
                                                           where serviceRequest.ZipCode == postalCode
                                                             && serviceRequest.Status == (int)ServiceRequestStatusEnum.New
-                                                            && blocked.UserId == serviceProviderId
-                                                            && blocked.IsBlocked != true && serviceRequest.HasPets == false 
+                                                            && (blocked == null || blocked.UserId == serviceProviderId)
+                                                            && (blocked == null || blocked.IsBlocked == false) 
+                                                            && serviceRequest.HasPets == false 
                                                             && (serviceRequest.ServiceProviderId == null || serviceRequest.ServiceProviderId == serviceProviderId)
                                                           select serviceRequest;
             return serviceRequests;

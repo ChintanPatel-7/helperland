@@ -129,7 +129,7 @@ namespace Helperland.Repository
         public IEnumerable<User> GetServiceProviderListWorkWithCustomer(int userId)
         {
             IEnumerable<User> users = from serviceProvider in _helperlandContext.Users.Include(x => x.RatingRatingToNavigations)
-                                      .Include(x=> x.FavoriteAndBlockedTargetUsers)
+                                      .Include(x=> x.FavoriteAndBlockedTargetUsers.Where(x => x.UserId == userId))
                                       .Include(x => x.ServiceRequestServiceProviders.Where(y => y.Status == (int)ServiceRequestStatusEnum.Completed))
                                       join serviceRequest in _helperlandContext.ServiceRequests
                                       on serviceProvider.UserId equals serviceRequest.ServiceProviderId

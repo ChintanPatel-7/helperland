@@ -93,7 +93,7 @@
                             }
                             
                             htmlContent = htmlContent + "</div><div class='text-center mb-3 fs-14'> " + row.cleanings + " Cleanings</div><div class='text-center'>";
-
+                            console.log(row);
                             if (row.favoriteAndBlockedTargetUsers.length > 0) {
                                 if (row.favoriteAndBlockedTargetUsers[0].isFavorite == true) {
                                     htmlContent = htmlContent + "<button class='button-blocUnblock button-unblock me-2' onclick='UpdateFavoriteBlockStatus(" +

@@ -667,6 +667,10 @@ namespace Helperland.Controllers
 
             _serviceProviderControllerRepository.UpdateUser(serviceProvider);
 
+            sessionUser.UserName = serviceProvider.FirstName + " " + serviceProvider.LastName;
+
+            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
+
             UserAddress userAddress = _serviceProviderControllerRepository.GetUserAddressByUserId(Convert.ToInt32(sessionUser.UserID));
 
             if (userAddress == null)

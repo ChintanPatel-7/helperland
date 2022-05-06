@@ -580,6 +580,10 @@ namespace Helperland.Controllers
 
             _customerControllerRepository.UpdateUser(customer);
 
+            sessionUser.UserName = customer.FirstName + " " + customer   .LastName;
+
+            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(sessionUser));
+
             return Json(new SingleEntity<UserViewModel> { Result = model, Status = "ok", ErrorMessage = null });
         }
 

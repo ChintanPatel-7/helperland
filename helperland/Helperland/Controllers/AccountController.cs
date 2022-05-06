@@ -44,7 +44,7 @@ namespace Helperland.Controllers
         {
             _user = _accountControllerRepository.GetUserByEmailAndPassword(model.Email.ToString().Trim(), model.Password.ToString().Trim());
 
-            if (_user != null && _user.IsApproved == true)
+            if (_user != null && _user.IsApproved == true /*&& _user.IsActive == true*/)
             {
                 int userTypeId = Convert.ToInt32(_user.UserTypeId);
 
@@ -82,6 +82,10 @@ namespace Helperland.Controllers
             {
                 return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You have not yet approved by Admin" });
             }
+            //else if (_user != null && _user.IsActive == false)
+            //{
+            //    return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "You are deavtivate by Admin" });
+            //}
             else
             {
                 return Json(new SingleEntity<LoginViewModel> { Result = model, Status = "Error", ErrorMessage = "Username or password is invalid" });

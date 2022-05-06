@@ -276,7 +276,7 @@ input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 30px;
     background: transparent url(../img/book-service/calendar-book-service.png) 9px center no-repeat !important;
-    left: -25px;
+    left: 0px;
     /* padding-left: 0px !important; */
     position: absolute;
     z-index: 999;
